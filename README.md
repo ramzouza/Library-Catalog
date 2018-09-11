@@ -1,5 +1,9 @@
 # Library-Catalog
+
 Web application for a Software Architecture and Design course
+
+[Check out the wiki](https://github.com/ramzouza/Library-Catalog/wiki)
+
 
 ## Collaborators of TEAM 13
 
@@ -10,6 +14,6 @@ Web application for a Software Architecture and Design course
 * **Skander Ben Mekki** -
 * **Eric Kokmanian** -
 * **Yanis Sibachir** -
-* **Jon Mongeau** - 
+* **Jon Mongeau** - [Jon Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  -
 * **Yann Cedric** -
