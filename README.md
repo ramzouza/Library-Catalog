@@ -3,7 +3,7 @@ Web application for a Software Architecture and Design course
 
 ## Collaborators of TEAM 13
 
-Ramez Zaid (*) - 27753349 - ramezzaid@outlook.com
+Ramez Zaid (*) - [Ramez Zaid](https://github.com/ramzouza) 
 
 William Lussier -
 
@@ -17,7 +17,7 @@ Eric Kokmanian -
 
 Yanis Sibachir -
 
-Jon Mongeau - 40006501 - jon@jonmongeau.com 
+Jon Mongeau - 
 
 Ribal Aladeeb -
 
