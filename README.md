@@ -8,7 +8,7 @@ Web application for a Software Architecture and Design course
 ## Collaborators of TEAM 13
 
 * **Ramez Zaid** (*) - [Ramez Zaid](https://github.com/ramzouza) 
-* **William Lussier**  -
+* **William Lussier**  - [William Lussier](https://github.com/lussier115) 
 * **Berfin Saricam** -
 * **Karl-Joey Chami** -
 * **Skander Ben Mekki** -
