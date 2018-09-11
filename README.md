@@ -12,7 +12,7 @@ Web application for a Software Architecture and Design course
 * **Berfin Saricam** -
 * **Karl-Joey Chami** -
 * **Skander Ben Mekki** -
-* **Eric Kokmanian** -
+* **Eric Kokmanian** - [Eric Kokmanian](https://github.com/EricKokmanian)
 * **Yanis Sibachir** -
 * **Jon Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  -
