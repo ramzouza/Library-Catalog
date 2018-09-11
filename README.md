@@ -10,7 +10,7 @@ Web application for a Software Architecture and Design course
 * **Ramez Zaid** (*) - [Ramez Zaid](https://github.com/ramzouza) 
 * **William Lussier**  -
 * **Berfin Saricam** - [Berfin Saricam](https://github.com/GitBsrc) 
-* **Karl-Joey Chami** -
+* **Karl-Joey Chami** - [Karl-Joey Chami] (https://github.com/karlchami)
 * **Skander Ben Mekki** -
 * **Eric Kokmanian** -
 * **Yanis Sibachir** -
