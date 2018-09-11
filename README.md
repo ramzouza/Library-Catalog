@@ -5,7 +5,7 @@ Web application for a Software Architecture and Design course
 [Check out the wiki](https://github.com/ramzouza/Library-Catalog/wiki)
 
 
-## Collaborators of TEAM 13 
+## Collaborators of TEAM 13
 
 * **Ramez Zaid** (*) - [Ramez Zaid](https://github.com/ramzouza) 
 * **William Lussier**  -
@@ -14,6 +14,6 @@ Web application for a Software Architecture and Design course
 * **Skander Ben Mekki** -
 * **Eric Kokmanian** -
 * **Yanis Sibachir** -
-* **Jon Mongeau** - [Jon Mongeau](https://github.com/jonthemango)
+* **Jon Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  -
 * **Yann Cedric** -
