@@ -9,11 +9,11 @@ Web application for a Software Architecture and Design course
 
 * **Ramez Zaid** (*) - [Ramez Zaid](https://github.com/ramzouza) 
 * **William Lussier**  -
-* **Berfin Saricam** -
+* **Berfin Saricam** - [Berfin Saricam](https://github.com/GitBsrc) 
 * **Karl-Joey Chami** -
 * **Skander Ben Mekki** -
 * **Eric Kokmanian** -
 * **Yanis Sibachir** -
-* **Jon Mongeau** - [Jon Mongeau](https://github.com/jonthemango)
+* **Jon Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  -
 * **Yann Cedric** -
