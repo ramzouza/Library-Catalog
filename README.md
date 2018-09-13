@@ -1,9 +1,6 @@
 # Library-Catalog
-
 Web application for a Software Architecture and Design course
-
 [Check out the wiki](https://github.com/ramzouza/Library-Catalog/wiki)
-
 
 ## Collaborators of TEAM 13
 
