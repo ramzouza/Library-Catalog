@@ -1,0 +1,5 @@
+[alias]
+	ss = status
+	llg = log --graph --all --decorate
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(green)(%ar)%C(reset) %C()%s%C(reset) %C(blue)- %an%C(reset)%C(yellow)%d%C(reset)' --all
+
