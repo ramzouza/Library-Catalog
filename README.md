@@ -14,3 +14,4 @@ Web application for a Software Architecture and Design course
 * **Jon Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  - [Ribal Aladeeb](https://github.com/ribal-aladeeb)
 * **Yann Cedric** - [Yann Cedric](https://github.com/YannCedric)
+NEW LINE
