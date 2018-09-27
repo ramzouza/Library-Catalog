@@ -5,8 +5,24 @@ using System.Web;
 
 namespace lib_Catalog.Models
 {
-    public class User
+    public abstract class User
     {
+        public User()
+        {
+
+        }
+        public User(String email, String passwordHashed, String phoneNumber, String physicalAddress, String firstName, String lastName)
+        {
+            this.Email = email;
+            this.Password_hash = passwordHashed;
+            this.IsActive = false;
+            this.PhoneNumber = phoneNumber;
+            this.PhysicalAddress = physicalAddress;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+
+        }
+
         public int Id { get; set; }
 
         public string Password_hash { get; set; }
@@ -17,10 +33,11 @@ namespace lib_Catalog.Models
 
         public string LastName { get; set; }
 
-        public string PhysicalAddress { get; set;}
+        public string PhysicalAddress { get; set; }
 
-        public string Email { get; }
+        public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
+
     }
 }
