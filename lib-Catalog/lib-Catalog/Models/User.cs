@@ -5,7 +5,7 @@ using System.Web;
 
 namespace lib_Catalog.Models
 {
-    public class User : User
+    public class User
     {
         public int Id { get; set; }
 
@@ -17,9 +17,9 @@ namespace lib_Catalog.Models
 
         public string LastName { get; set; }
 
-        public string PhysicalAddress { get; set; }
+        public string PhysicalAddress { get; set;}
 
-        public string Email { get; set; }
+        public string Email { get; }
 
         public string PhoneNumber { get; set; }
     }
