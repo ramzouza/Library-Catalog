@@ -14,8 +14,11 @@ class Login extends Component {
         <span style={{width:'100%', padding: '0px 40px', textAlign: 'right', fontSize: 15}}>
             Password Forgot ?
         </span>
-        <Link to="/" >
-          <button style={button} type="button">Login</button>
+
+        <Link to="/" style={{ width: '100%',textDecoration: 'none' }}>
+          <button style={button} type="button">
+            Login
+          </button>
         </Link>
 
       </div>
