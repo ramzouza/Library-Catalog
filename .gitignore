@@ -1,41 +1,24 @@
-# Autosave files
+.DS_STORE
+node_modules
+scripts/flow/*/.flowconfig
 *~
-
-# build
-[Oo]bj/
-[Bb]in/
-packages/
-TestResults/
-
-# globs
-Makefile.in
-*.DS_Store
-*.sln.cache
-*.suo
-*.cache
-*.pidb
-*.userprefs
-*.usertasks
-config.log
-config.make
-config.status
-aclocal.m4
-install-sh
-autom4te.cache/
-*.user
-*.tar.gz
-tarballs/
-test-results/
-Thumbs.db
-.vs/
-
-# Mac bundle stuff
-*.dmg
-*.app
-
-# resharper
-*_Resharper.*
-*.Resharper
-
-# dotCover
-*.dotCover
+*.pyc
+.grunt
+_SpecRunner.html
+__benchmarks__
+build/
+remote-repo/
+coverage/
+.module-cache
+fixtures/dom/public/react-dom.js
+fixtures/dom/public/react.js
+test/the-files-to-test.generated.js
+*.log*
+chrome-user-data
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
