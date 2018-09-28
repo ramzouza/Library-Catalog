@@ -16,7 +16,7 @@ class LoggedUsers extends Component {
       <div style={main(show)}>
         <Navbar/>
         <div style={body}>
-          mlsmflkmsd
+          All users
         </div>
         
       </div>
