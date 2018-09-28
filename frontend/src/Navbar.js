@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import cookie from 'react-cookies'
 
 class Navbar extends Component {
   render() {
+    const logged = cookie.load('logged')
     return (
       <div style={main} >
         <div></div>
@@ -13,7 +16,9 @@ class Navbar extends Component {
           </Link>
 
           <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
-            <div style={{padding: 15}}>Log out</div>
+          <div onClick={_ => {
+            cookie.save('logged', 'no')
+          }} style={{padding: 15}}>Log out</div>
           </Link>
 
           <Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>

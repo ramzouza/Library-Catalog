@@ -8,4 +8,4 @@ docker run \
 --env MYSQL_ROOT_PASSWORD=ribalestbeau \
 --env MYSQL_USER=soen343 \
 --env MYSQL_PASSWORD=ilovedocker \
-mysql:8
+mysql:5

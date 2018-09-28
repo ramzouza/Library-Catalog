@@ -5,18 +5,36 @@ import Login from './Login'
 import Logged from './Logged'
 import NewUser from './NewUser'
 import LoggedUsers from './LoggedUsers'
-
+import cookie from 'react-cookies'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 class App extends Component {
+
+  constructor(props){
+    super(props)
+
+  }
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.keepOnPage);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.keepOnPage);
+  }
+  
+  keepOnPage(e) {
+    // e.returnValue = '';
+  }
   render() {
+    const logged = cookie.load('logged') == 'yes'
     return (
       <div style={main}>
         <Router>
           <Switch>
-            <Route exact path="/login" component={Login} />
+            {!logged?<Route exact path="/login" component={Login}/>: null }
             <Route exact path="/" component={Logged} />
-            <Route exact path="/newuser" component={NewUser} />
-            <Route exact path="/loggedusers" component={LoggedUsers} />
+            {logged?<Route initial exact path="/newuser" component={NewUser} />: null }
+            {logged?<Route exact path="/loggedusers" component={LoggedUsers} />: null}
           </Switch>
         </Router>
       </div>

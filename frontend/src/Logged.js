@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
 import Search from './Search';
+import { Redirect } from 'react-router-dom';
+import cookie from 'react-cookies'
 
 class Logged extends Component {
   constructor(){
@@ -13,12 +15,15 @@ class Logged extends Component {
 
 
   render() {
+    const logged = cookie.load('logged') == 'yes'
+    console.log(logged)
     return (
       <div style={main} >
         <Navbar/>
         <div style={body}>
             <Search/>
         </div>
+        {!logged ? <Redirect to="/login"/> : null}
       </div>
     );
   }
