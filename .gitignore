@@ -22,8 +22,5 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
-<<<<<<< HEAD
 *lock.json
-=======
 frontend/package-lock\.json
->>>>>>> d97b6ad8fd776210f86e230e345c5a9d0a47f63b
