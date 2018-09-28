@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ribalestbeau
+      MYSQL_USER: soen343
+      MYSQL_PASSWORD: ilovedocker
+    ports:
+      - 3306:3306
+      - 33060:33060
+    volumes:
+      - type: volume
+        source: sql343db
+        target: /var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
