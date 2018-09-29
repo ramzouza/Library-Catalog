@@ -6,25 +6,35 @@ import cookie from 'react-cookies'
 class Navbar extends Component {
   render() {
     const logged = cookie.load('logged') === 'yes'
+    const admin = cookie.load('admin') === 'yes'
+
     return (
       <div style={main} >
+      
         {!logged?<Redirect to="/login"/> : null}
+
         <div/>
         <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',}}>
-          
-          <Link to="/newuser" style={{textDecoration: 'none', color:'white' }}>
+        
+        { admin?         
+         (<Link to="/newuser" style={{textDecoration: 'none', color:'white' }}>
             <div style={{padding: 15}}>Create User</div>
-          </Link>
+          </Link>)
+          : null }
+
 
           <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
-          <div onClick={_ => {
-            cookie.save('logged', 'no')
-          }} style={{padding: 15}}>Log out</div>
+          <div onClick={ _ => {
+                cookie.save('logged', 'no') }} 
+                style={{padding: 15}}>Log out</div>
           </Link>
-
-          <Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>
-            <div style={{padding: 15}}>Logged Users</div>
-          </Link>
+          
+          { admin? 
+           (<Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>
+              <div style={{padding: 15}}>Logged Users</div>
+            </Link>)
+          : null }
+          
 
         </div>
       </div>

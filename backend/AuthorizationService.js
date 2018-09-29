@@ -25,7 +25,7 @@ class AuthorizationService {
             } else{
                 const pass_hash = this.bestHashEver(password),
                         isAuthorized= pass_hash == results[0].password_hash,
-                        isAdmin=results.isAdmin
+                        isAdmin=results[0].isAdmin
 
                 if(isAuthorized)
                     UserCatalog.SetIsActive(email, 1, (r)=> r)
