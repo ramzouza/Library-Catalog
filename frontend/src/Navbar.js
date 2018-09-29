@@ -5,10 +5,11 @@ import cookie from 'react-cookies'
 
 class Navbar extends Component {
   render() {
-    const logged = cookie.load('logged')
+    const logged = cookie.load('logged') === 'yes'
     return (
       <div style={main} >
-        <div></div>
+        {!logged?<Redirect to="/login"/> : null}
+        <div/>
         <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',}}>
           
           <Link to="/newuser" style={{textDecoration: 'none', color:'white' }}>

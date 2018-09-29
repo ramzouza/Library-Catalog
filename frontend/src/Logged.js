@@ -15,7 +15,7 @@ class Logged extends Component {
 
 
   render() {
-    const logged = cookie.load('logged') == 'yes'
+    const logged = cookie.load('logged') === 'yes'
     console.log(logged)
     return (
       <div style={main} >
