@@ -32,11 +32,16 @@ class Login extends Component {
               .then(response => response.json())
               .then( response => {
                 alert(response.message)
-                console.log(response)
+                
                 if(response.status === 0){
+                  
+                  if(response.results.isAdmin === 1)
+                    cookie.save('admin', 'yes')
+                  
                   cookie.save('logged', 'yes')
                   this.props.history.push('/')
                 }
+
               })
           }}>
             Login
