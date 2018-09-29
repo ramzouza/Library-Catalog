@@ -34,9 +34,9 @@ class Login extends Component {
                 alert(response.message)
                 console.log(response)
                 if(response.status === 0){
-                  const admin = response.result.isAdmin
+                  // const admin = response.result.isAdmin
                   cookie.save('logged', 'yes')
-                  cookie.save('isadmin', 'yes')
+                  // cookie.save('isadmin', 'yes')
                   this.props.history.push('/')
                 }
               })
