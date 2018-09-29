@@ -20,7 +20,7 @@ class Login extends Component {
         
         <input onChange={evt => {this.setState({email: evt.target.value})}} style={input} type="text"  placeholder="Email" ></input>
         
-        <input onChange={evt => {this.setState({password: evt.target.value})}} style={input} type="text"  placeholder="Password" ></input>
+        <input onChange={evt => {this.setState({password: evt.target.value})}} style={input} type="password"  placeholder="Password" ></input>
         
         <span style={{width:'100%', padding: '0px 40px', textAlign: 'right', fontSize: 15}}>
             Password Forgot ?
