@@ -23,13 +23,14 @@ class AuthorizationService {
             if(results.length == 0  || status == 1){
                 handler({status: 1, results})
             } else{
-                const pass_hash = this.bestHashEver(password),
-                        isAuthorized= pass_hash == results[0].password_hash,
-                        isAdmin=results[0].isAdmin
+                const pass_hash = this.bestHashEver(password)
+                const isAuthorized= pass_hash == results[0].password_hash
+                const isAdmin=results[0].isAdmin
+                const id=results[0].id
 
                 if(isAuthorized)
                     UserCatalog.SetIsActive(email, 1, (r)=> r)
-                handler({status: isAuthorized?0:1, results: {isAuthorized,isAdmin}})
+                handler({status: isAuthorized?0:1, results: {id,isAuthorized,isAdmin}})
             }
         })
     }

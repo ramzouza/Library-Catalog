@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import fetch from 'node-fetch'
 import cookie from 'react-cookies'
-
-const API = 'http://localhost:3000'
+import { apiCall } from './ApiCall';
 
 class Login extends Component {
   constructor(){
@@ -28,17 +26,21 @@ class Login extends Component {
 
           <button style={button} type="button" onClick={ _ => {
             const {email, password} = this.state
-            fetch(API+'/login', {headers: { 'Content-Type': 'application/json' },method: 'POST', body: JSON.stringify({email, password})})
+            apiCall('/login', {email, password})
               .then(response => response.json())
               .then( response => {
                 alert(response.message)
-                
+
                 if(response.status === 0){
                   
-                  if(response.results.isAdmin === 1)
-                    cookie.save('admin', 'yes')
-                  
+                  const isAdmin = response.results.isAdmin === 1 ? 'yes' : 'no'
+                  const id = response.results.id
+
+                  cookie.save('admin', isAdmin)
+                  cookie.save('id', id)
+                  cookie.save('email', email)
                   cookie.save('logged', 'yes')
+                  apiCall('/connect', {id})
                   this.props.history.push('/')
                 }
 
