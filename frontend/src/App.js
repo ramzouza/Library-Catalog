@@ -6,8 +6,18 @@ import Logged from './Logged'
 import NewUser from './NewUser'
 import LoggedUsers from './LoggedUsers'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {API} from './URLs'
+import cookie from 'react-cookies'
+import { apiCall } from './ApiCall';
 
 class App extends Component {
+
+  componentWillMount(){
+    const id = cookie.load('id')
+    
+    if(id) 
+      apiCall('/connect', {id})
+  }
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.keepOnPage);
@@ -18,7 +28,13 @@ class App extends Component {
   }
   
   keepOnPage(e) {
-    // e.returnValue = '';
+    e.returnValue = '';
+    
+    const id = cookie.load('id')
+    
+    console.log('id',id)
+    if(id)
+      apiCall('/disconnect', {id})
   }
   render() {
     return (

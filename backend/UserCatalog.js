@@ -18,11 +18,11 @@ class UserCatalog {
         
         this.GetUser(user.email, ({status,results})=>{
             if(status == 1 || results.length == 0){
-                connection.query(`INSERT INTO users SET ?`, user , function (error, results) {
+                connection.query(`INSERT INTO users SET ?`, {id:0,...user} , function (error, results) {
                     if (error) 
-                        handler({status:1 ,error});
+                        handler({status:1, message:'Error',error});
                     else
-                        handler({status: 0, results: results});
+                        handler({status: 0, message:'Ok',results: results});
             })
             } else 
                 handler({status: 1, message:'User exists already'})
@@ -34,6 +34,13 @@ class UserCatalog {
 
     static GetUser(email, handler){
         connection.query(`SELECT * FROM users where email='${email}'`, function (error, results) {
+            if (error) handler({status:1 ,error});
+            handler({status: 0, results: results});
+        })
+    }
+
+    static GetUserById(id, handler){
+        connection.query(`SELECT * FROM users where id='${id}'`, function (error, results) {
             if (error) handler({status:1 ,error});
             handler({status: 0, results: results});
         })
@@ -51,10 +58,10 @@ class UserCatalog {
         })
     }
 
-    static SetIsActive(email,isActive, handler){
+    static SetIsActive(id,isActive, handler){
         connection.query(`UPDATE users
-                            SET isActive = ${isActive}
-                            WHERE email = '${email}'`, function (error, results) {
+                            SET isActive=${isActive}
+                            WHERE id='${id}'`, function (error, results) {
             if (error) handler({status:1 ,error});
             else{
                 handler({status: 0, results: results });

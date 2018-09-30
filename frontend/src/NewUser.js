@@ -6,13 +6,17 @@ class NewUser extends Component {
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New User</span>
         
-        <input style={input} type="text" placeholder="Username" ></input>
+        <input style={input} type="text" placeholder="First Name" ></input>
+
+        <input style={input} type="text" placeholder="Last Name" ></input>
         
         <input style={input} type="text" placeholder="Password" ></input>
         
         <input style={input} type="text" placeholder="Email" ></input>
         
         <input style={input} type="text" placeholder="Address" ></input>
+
+        <input style={input} type="text" placeholder="Phone Number" ></input>
         
         <div style={{display: 'flex', alignItems:'center'}}>
             Admin 
@@ -48,6 +52,7 @@ const input = {
     textAlign: 'center',
     padding: 10,
     borderRadius: 5,
+    margin: 5
 }
 
 const button = {

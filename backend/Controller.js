@@ -42,12 +42,21 @@ app.post('/login', async (req, res) => {
     })
 })
 
-app.post('/logout', async (req, res) => {
-    const {email} = req.body
-    UserCatalog.SetIsActive(email,0,(result)=>{
+app.post('/disconnect', async (req, res) => {
+    const {id} = req.body
+    UserCatalog.SetIsActive(id,0,(result)=>{
         res.status(200)
         res.json({status: 'logged out'})
-        logger(`POST - [/logout] - ${200} - ${email} `)
+        logger(`POST - [/disconnect] - ${200} - ${id} `)
+    })
+})
+
+app.post('/connect', async (req, res) => {
+    const {id} = req.body
+    UserCatalog.SetIsActive(id,1,(result)=>{
+        res.status(200)
+        res.json({status: 'logged out'})
+        logger(`POST - [/connect] - ${200} - ${id} `)
     })
 })
 

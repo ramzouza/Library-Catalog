@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies'
+import { apiCall } from './ApiCall';
 
 class Navbar extends Component {
   render() {
@@ -10,7 +11,7 @@ class Navbar extends Component {
 
     return (
       <div style={main} >
-      
+
         {!logged?<Redirect to="/login"/> : null}
 
         <div/>
@@ -24,8 +25,16 @@ class Navbar extends Component {
 
 
           <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
+          
           <div onClick={ _ => {
-                cookie.save('logged', 'no') }} 
+                const id = cookie.load('id')  
+                cookie.remove('logged') 
+                cookie.remove('admin') 
+                cookie.remove('email')
+                cookie.remove('id')
+                
+                apiCall('/disconnect',{id})
+              }} 
                 style={{padding: 15}}>Log out</div>
           </Link>
           
