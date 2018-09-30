@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { apiCall } from './ApiCall';
+import React, { Component } from 'react'
+import { apiCall } from './ApiCall'
 
 class NewUser extends Component {
   constructor(){
     super()
+
 
     this.state = {password: "",
       isActive: 0,
@@ -40,7 +41,7 @@ class NewUser extends Component {
         .then (json => {
           alert(json.message)
 
-          if(json.status == 0){
+          if(json.status === 0){
             this.props.history.push('/')
           }
 
