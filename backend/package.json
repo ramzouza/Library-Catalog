@@ -5,7 +5,7 @@
   "main": "Conrtoller.js",
   "scripts": {
     "dev": "nodemon Controller",
-    "start": "node Contrloller"
+    "start": "node Controller"
   },
   "author": "",
   "license": "ISC",
