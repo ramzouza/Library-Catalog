@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     logger('GET - [/] ')
 })
 
-app.post('/login', async (req, res) => {
+app.post('/login',  (req, res) => {
     const {email, password} = req.body
     AuthorizationService.AuthorizeUser(email,password, function({status, results}){
         if(status == 1){
@@ -42,7 +42,7 @@ app.post('/login', async (req, res) => {
     })
 })
 
-app.post('/disconnect', async (req, res) => {
+app.post('/disconnect',  (req, res) => {
     const {id} = req.body
     UserCatalog.SetIsActive(id,0,(result)=>{
         res.status(200)
@@ -51,7 +51,7 @@ app.post('/disconnect', async (req, res) => {
     })
 })
 
-app.post('/connect', async (req, res) => {
+app.post('/connect',  (req, res) => {
     const {id} = req.body
     UserCatalog.SetIsActive(id,1,(result)=>{
         res.status(200)
@@ -60,7 +60,7 @@ app.post('/connect', async (req, res) => {
     })
 })
 
-app.post('/createnewuser', async (req, res) => {
+app.post('/createnewuser',  (req, res) => {
     const {password,
         isActive,
         firstName,
@@ -68,6 +68,14 @@ app.post('/createnewuser', async (req, res) => {
         physicalAddress,
         email,
         phoneNumber, isAdmin} = req.body
+
+        console.log('new userr',{password,
+            isActive,
+            firstName,
+            lastName,
+            physicalAddress,
+            email,
+            phoneNumber, isAdmin})
 
     AuthorizationService.MakeNewUser(password,
         isActive,
@@ -88,7 +96,7 @@ app.post('/createnewuser', async (req, res) => {
     })
 })
 
-app.post('/loggedusers', async (req, res) => {
+app.post('/loggedusers', (req, res) => {
     const {isAdmin} = req.body
 
     

@@ -1,29 +1,76 @@
 import React, { Component } from 'react';
+import { apiCall } from './ApiCall';
 
 class NewUser extends Component {
+  constructor(){
+    super()
+
+    this.state = {password: "",
+      isActive: 0,
+      firstName: "",
+      lastName: "",
+      physicalAddress: "",
+      email: "",
+      phoneNumber: "", isAdmin: 0} 
+  }
+
+  handleClick(e){
+    const {password,
+      isActive,
+      firstName,
+      lastName,
+      physicalAddress,
+      email,
+      phoneNumber, isAdmin} = this.state
+    
+      const newUser = {password,
+        isActive,
+        firstName,
+        lastName,
+        physicalAddress,
+        email,
+        phoneNumber, isAdmin}
+
+
+        console.log(newUser)
+
+
+        apiCall('/createnewuser', newUser)
+        .then( res => res.json() )
+        .then (json => {
+          alert(json.message)
+
+          if(json.status == 0){
+            this.props.history.push('/')
+          }
+
+        })
+      
+  }
   render() {
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New User</span>
         
-        <input style={input} type="text" placeholder="First Name" ></input>
+        <input onChange={evt => {this.setState({firstName: evt.target.value})}} style={input} type="text" placeholder="First Name" ></input>
 
-        <input style={input} type="text" placeholder="Last Name" ></input>
+        <input onChange={evt => {this.setState({lastName: evt.target.value})}} style={input} type="text" placeholder="Last Name" ></input>
         
-        <input style={input} type="text" placeholder="Password" ></input>
+        <input onChange={evt => {this.setState({password: evt.target.value})}} style={input} type="password" placeholder="Password" ></input>
         
-        <input style={input} type="text" placeholder="Email" ></input>
+        <input onChange={evt => {this.setState({email: evt.target.value})}} style={input} type="text" placeholder="Email" ></input>
         
-        <input style={input} type="text" placeholder="Address" ></input>
+        <input onChange={evt => {this.setState({address: evt.target.value})}} style={input} type="text" placeholder="Address" ></input>
 
-        <input style={input} type="text" placeholder="Phone Number" ></input>
+        <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} style={input} type="text" placeholder="Phone Number" ></input>
         
         <div style={{display: 'flex', alignItems:'center'}}>
             Admin 
-            <input type="checkbox"></input>
+            <input onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"></input>
         </div>
         
-        <button style={button} type="button">Create</button>
+        <button style={button}
+           onClick={this.handleClick.bind(this)} type="button">Create</button>
 
       </div>
     );
