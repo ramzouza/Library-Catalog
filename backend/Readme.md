@@ -2,6 +2,7 @@
 
 To run the backend server : 
 
+* Make sure you have the latest version of nodejs
 * Move into the backend folder
 * Run `npm install` if you haven't already
 * Run `npm start` to start the server. 
