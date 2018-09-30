@@ -6,7 +6,6 @@ import Logged from './Logged'
 import NewUser from './NewUser'
 import LoggedUsers from './LoggedUsers'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import {API} from './URLs'
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
 
