@@ -14,4 +14,33 @@ Web application for a Software Architecture and Design course
 * **Jon Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Ribal Aladeeb**  - [Ribal Aladeeb](https://github.com/ribal-aladeeb)
 * **Yann Cedric** - [Yann Cedric](https://github.com/YannCedric)
-NEW LINE
+
+# Frontend
+
+To run the frontend application : 
+
+* Move into the frontend folder
+* Run `npm install` if you haven't already
+* Run `npm start` to start the dev server. 
+
+This will start the server and open the browser at http://localhost:3001.  
+React's dev server allows you to perform code changes and automatically reload the web-page. 
+
+>> PS: The frontend application expects a backend server running on port **3000** to work.
+
+# Backend API 
+
+To run the backend server : 
+
+* Make sure you have the latest version of nodejs
+* Move into the backend folder
+* Run `npm install` if you haven't already
+* Run `npm start` to start the server. 
+
+For development, we use `nodemon`.
+* Run `npm run dev` inside the backend folder.  
+That will allow you to perform code changes and automatically reload the server. 
+
+>> PS: The scripts allow for a port parameter. You can run the server on any port adding **-p**. Example: `npm start -p 3001` will start the server on port 3001
+
+
