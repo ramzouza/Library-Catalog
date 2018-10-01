@@ -30,6 +30,13 @@ React's dev server allows you to perform code changes and automatically reload t
 
 # Backend API 
 
+To access the database, go to this address on your browser http://18.221.83.136.
+
+Admin credentials: 
+* **username**: root
+* **password**: ribalestbeau
+* **db**: mysql
+
 To run the backend server : 
 
 * Make sure you have the latest version of nodejs
