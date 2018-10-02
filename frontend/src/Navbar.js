@@ -62,7 +62,7 @@ const  main = {
     width:'100%',
     height: 80,
     fontSize: 25,
-    padding: '0px 15px',
+    // padding: '0px 15px',
     color: 'white',
     boxShadow: '5px 2px 10px rgba(0,0,0,0.5)',
     backgroundColor: 'rgba(0,0,0,0.5)'

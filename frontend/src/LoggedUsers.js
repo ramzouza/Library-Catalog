@@ -28,9 +28,9 @@ class LoggedUsers extends Component {
       <div style={main}>
         <Navbar/>
         <div style={body}>
-          Logged Users
+          <p>Logged Users</p>
           <div style={logStyle}>
-            {logs.map( ({user, isAdmin}) => (<p style={isAdmin ? {color: 'black', textShadow: 'none'} : null}> {user} {isAdmin ? 'Admin' : 'Not Admin'}</p>) )}
+            {logs.map( ({user, isAdmin}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {user}  ({isAdmin})</p> )}
           </div>
         </div>
         
@@ -59,13 +59,15 @@ const body = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   paddingTop: '10%',
+  fontSize: 25,
 }
 
 const logStyle ={
   color: 'white',
+  width: '50%',
   display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
+  flexDirection: 'column',
+  alignItems: 'center',
   fontSize: 20,
   textShadow: '0px 0px 2px black',
 
