@@ -39,7 +39,7 @@ class UserCatalog {
         })
     }
 
-    static GetUserById(id, handler){
+    static GetUserById(id, handler){ // all good, i gotta go live. Ill make a branch and push to it live. You can continue working through here if you like or on that branch wtv
         connection.query(`SELECT * FROM users where id='${id}'`, function (error, results) {
             if (error) handler({status:1 ,error});
             handler({status: 0, results: results});

@@ -60,38 +60,40 @@ app.post('/connect',  (req, res) => {
     })
 })
 
+// curl -X POST -H "Content-Type":"application/json" -d '{"email":"y@gmail.com"}' localhost:3000/createnewuser
 app.post('/createnewuser',  (req, res) => {
-    const {password,
+    const user = {password,
         isActive,
         firstName,
         lastName,
-        physicalAddress,
-        email,
+        physicalAddress, 
+        email, 
         phoneNumber, isAdmin} = req.body
+    id = req.header.id | 1; 
+    
 
-        console.log('new userr',{password,
-            isActive,
-            firstName,
-            lastName,
-            physicalAddress,
-            email,
-            phoneNumber, isAdmin})
-
-    AuthorizationService.MakeNewUser(password,
-        isActive,
-        firstName,
-        lastName,
-        physicalAddress,
-        email,
-        phoneNumber,isAdmin, function({status, message}){
-        if(status == 1){
-            res.status(400)
-            res.json({status, message})
-            logger(`POST - [/createnewuser] - ${400} - ${email} `)
-        } else {
+    AuthorizationService.CanUserDoThis(1,"Admin", ({status, results}) => { 
+        if (results.canDo){ // if user can do the operation then do it
+            AuthorizationService.MakeNewUser(password,
+                isActive,
+                firstName,
+                lastName,
+                physicalAddress,
+                email,
+                phoneNumber,isAdmin, function({status, message}){
+                if(status == 1){
+                    res.status(400)
+                    res.json({status, message})
+                    logger(`POST - [/createnewuser] - ${400} - ${email} `)
+                } else {
+                    res.status(200)
+                    res.json({status, message})
+                    logger(`POST - [/createnewuser] - ${200} - ${email} `)
+                }
+            })
+        } else{ // else error
             res.status(200)
-            res.json({status, message})
-            logger(`POST - [/createnewuser] - ${200} - ${email} `)
+            res.json({status: 0, message:'Cannot add User.'})
         }
     })
 })
