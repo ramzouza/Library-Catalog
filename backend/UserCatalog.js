@@ -14,22 +14,23 @@ connection.connect();
     // WHERE email = ${email};`
 
 class UserCatalog {
-    static MakeNewUser(user, handler){
-        
+
+    static MakeNewUser(user, hash_function, handler){
+        user.password_hash = hash_function(user.password);
+        delete user.password
         this.GetUser(user.email, ({status,results})=>{
             if(status == 1 || results.length == 0){
                 connection.query(`INSERT INTO users SET ?`, {id:0,...user} , function (error, results) {
                     if (error) 
-                        handler({status:1, message:'Error',error});
-                    else
-                        handler({status: 0, message:'Ok',results: results});
+                        handler({status:1, message:'User could not be added. ' + error, error});
+                    else {
+                        handler({status: 0, message:'User Added.', results: results});
+                    }
+                       
             })
             } else 
                 handler({status: 1, message:'User exists already'})
-                
-        })
-        
-        
+        })  
     }
 
     static GetUser(email, handler){
@@ -58,10 +59,30 @@ class UserCatalog {
         })
     }
 
-    static SetIsActive(id,isActive, handler){
-        connection.query(`UPDATE users
-                            SET isActive=${isActive}
-                            WHERE id='${id}'`, function (error, results) {
+    
+    static UpdateUser(id, user, hash_function, handler){
+        user.password_hash = hash_function(user.password);
+        delete user.password
+        connection.query(`UPDATE users SET ? WHERE id='${id}'`, {...user} , function (error, results) {
+            if (error) handler({status:1, error});
+            else {
+                handler({status: 0, results: results});
+            }
+        })
+    }
+
+    
+    static DeleteUser(id, handler){
+        connection.query(`DELETE FROM users WHERE id='${id}'`, function (error, results) {
+            if (error) handler({status:1, error});
+            else {
+                handler({status: 0, results: results});
+            }
+        })
+    }
+
+    static SetIsActive(id, isActive, handler){
+        connection.query(`UPDATE users SET isActive=${isActive} WHERE id='${id}'`, function (error, results) {
             if (error) handler({status:1 ,error});
             else{
                 handler({status: 0, results: results });
