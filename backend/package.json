@@ -4,8 +4,8 @@
   "description": "",
   "main": "Conrtoller.js",
   "scripts": {
-    "dev": "nodemon Controller",
-    "start": "node Controller"
+    "dev": "nodemon Controller --withlog",
+    "start": "node Controller --withlog"
   },
   "author": "",
   "license": "ISC",

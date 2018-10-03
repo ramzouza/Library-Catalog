@@ -3,10 +3,10 @@ const express = require('express')
 const app = express()
 const log = require('fancy-log')
 const argv = require('yargs').argv
-const {p = 3000 , port = p} = argv
+const {p = 3000 , port = p, withlog} = argv
 const bodyParser = require('body-parser')
 const logger = (message, {MODULE, STATUS, MESSAGE}={}) => {
-    log('Controller - '+message)
+    withlog ? log('Controller - '+message) : null
 }
 // ============ Architecture Classes ==========
 const AuthorizationService = require('./AuthorizationService')
