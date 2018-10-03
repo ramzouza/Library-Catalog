@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     res.json({message: 'healthy'})
     logger('GET - [/] ')
 })
-
+    
 app.post('/login',  (req, res) => {
     const {email, password} = req.body
     AuthorizationService.AuthorizeUser(email,password, function({status, results}){
@@ -60,45 +60,54 @@ app.post('/connect',  (req, res) => {
     })
 })
 
+// curl -X POST -H "Content-Type":"application/json" -d '{"email":"y@gmail.com"}' localhost:3000/createnewuser
+/*
+Sample raw JSON request
+{
+	"password":"1234567890",
+	"isActive":false,
+	"firstName":"Mr.",
+	"lastName":"Admin",
+	"physicalAddress":"123",
+	"email":"admin1@gmail.com",
+	"phoneNumber":"123 123 1234",
+	"isAdmin": true
+}
+*/
 app.post('/createnewuser',  (req, res) => {
-    const {password,
+    const user = {password,
         isActive,
         firstName,
         lastName,
-        physicalAddress,
-        email,
+        physicalAddress, 
+        email, 
         phoneNumber, isAdmin} = req.body
+    id = req.header.id | 34242; // for testing purposes
+    logger(id); 
+    
 
-        console.log('new userr',{password,
-            isActive,
-            firstName,
-            lastName,
-            physicalAddress,
-            email,
-            phoneNumber, isAdmin})
-
-    AuthorizationService.MakeNewUser(password,
-        isActive,
-        firstName,
-        lastName,
-        physicalAddress,
-        email,
-        phoneNumber,isAdmin, function({status, message}){
-        if(status == 1){
-            res.status(400)
-            res.json({status, message})
-            logger(`POST - [/createnewuser] - ${400} - ${email} `)
-        } else {
+    AuthorizationService.CanUserDoThis(id,"Admin", ({status, results}) => { 
+        if (results.canDo){ // if user can do the operation then do it
+            UserCatalog.MakeNewUser(user, hash_function=AuthorizationService.BestHashEver, handler=function({status, message}){
+                if(status == 0){
+                    res.status(400)
+                    res.json({status, message})
+                    logger(`POST - [/createnewuser] - ${400} - ${email} `)
+                } else {
+                    res.status(200)
+                    res.json({status, message})
+                    logger(`POST - [/createnewuser] - ${200} - ${email} `)
+                }
+            })
+        } else{ // else error
             res.status(200)
-            res.json({status, message})
-            logger(`POST - [/createnewuser] - ${200} - ${email} `)
+            res.json({status: 0, message:'Cannot add User.'})
         }
     })
 })
 
 app.post('/loggedusers', (req, res) => {
     const {isAdmin} = req.body
-
     
     UserCatalog.ViewLoggedInUsers(function(results){
         if(isAdmin){
