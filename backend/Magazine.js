@@ -1,8 +1,9 @@
 const Resource = require('./Resource.js')
 
-class Magazine {
+class Magazine extends Resource {
 
-    constructor(publisher, language, ISBN_10, ISBN_13){
+    constructor(title,publisher, language, ISBN_10, ISBN_13){
+        super(title)
         this.publisher = publisher
         this.language = language
         this.ISBN_10 = ISBN_10

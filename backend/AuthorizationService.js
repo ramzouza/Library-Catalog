@@ -18,18 +18,18 @@ class AuthorizationService {
             phoneNumber, isAdmin})
     }
 
-    static AuthorizeUser(email, password, handler){
+    static AuthorizeUser(email, password){
         const {status,results} = UserCatalog.GetUserByEmail(email)
 
             if(results.length == 0  || status == 1){
-                handler({status: 1, results})
+                return {status: 1, results}
             } else{
                 const pass_hash = this.bestHashEver(password)
                 const isAuthorized = (pass_hash == results[0].password_hash)
                 const isAdmin = results[0].isAdmin
                 const id = results[0].id
 
-                return ({status: isAuthorized ? 0 : 1, results: {id,isAuthorized,isAdmin}})
+                return {status: isAuthorized ? 0 : 1, results: {id,isAuthorized,isAdmin}}
             }
     }
 

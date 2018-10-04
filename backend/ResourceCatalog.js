@@ -1,7 +1,4 @@
 class ResourceCatalog{
-         
+    static resources = []         
 
 }
-
-
-var Catalog = [];

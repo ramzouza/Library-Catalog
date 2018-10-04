@@ -5,7 +5,7 @@ const chai = require('chai')
   const expect = chai.expect
 
 module.exports.Get =  function (APIroute, description, handler) {
-describe(`${APIroute} route test:`, ()=> {
+describe(`● [${APIroute}] route test`, ()=> {
   it(description, done => {
 
     chai.request(app)
@@ -23,7 +23,7 @@ describe(`${APIroute} route test:`, ()=> {
 })}
 
 module.exports.Post =  function (APIroute, description, data, handler) {
-  describe(`${APIroute} route test :`, ()=> {
+  describe(`● [${APIroute}] route test`, ()=> {
     it(description, done => {
   
       chai.request(app)
