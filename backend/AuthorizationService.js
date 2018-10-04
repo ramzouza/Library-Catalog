@@ -5,34 +5,32 @@ class AuthorizationService {
 
     }
     
-    static MakeNewUser(password, isActive, firstName, lastName, physicalAddress, email, phoneNumber, isAdmin, handler){
+    static MakeNewUser(id,password, isActive, firstName, lastName, physicalAddress, email, phoneNumber, isAdmin){
+        
         const password_hash = this.bestHashEver(password)
-        UserCatalog.MakeNewUser({password_hash,
+
+        return UserCatalog.MakeNewUser({id,password_hash,
             isActive,
             firstName,
             lastName,
             physicalAddress,
             email,
-            phoneNumber, isAdmin}, function ({status, message}){
-                handler({status, message})
-            })
+            phoneNumber, isAdmin})
     }
 
     static AuthorizeUser(email, password, handler){
-        UserCatalog.GetUser(email, ({status,results})=>{
+        const {status,results} = UserCatalog.GetUserByEmail(email)
+
             if(results.length == 0  || status == 1){
                 handler({status: 1, results})
             } else{
                 const pass_hash = this.bestHashEver(password)
-                const isAuthorized= pass_hash == results[0].password_hash
-                const isAdmin=results[0].isAdmin
-                const id=results[0].id
+                const isAuthorized = (pass_hash == results[0].password_hash)
+                const isAdmin = results[0].isAdmin
+                const id = results[0].id
 
-                if(isAuthorized)
-                    UserCatalog.SetIsActive(email, 1, (r)=> r)
-                handler({status: isAuthorized?0:1, results: {id,isAuthorized,isAdmin}})
+                return ({status: isAuthorized ? 0 : 1, results: {id,isAuthorized,isAdmin}})
             }
-        })
     }
 
     static bestHashEver(password){
