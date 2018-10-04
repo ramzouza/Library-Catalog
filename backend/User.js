@@ -1,12 +1,13 @@
 class User {
-    constructor(password_hash,
+    constructor({id,password_hash,
                 isActive,
                 firstName,
                 lastName,
                 physicalAddress,
                 email,
-                phoneNumber,){
+                phoneNumber,isAdmin}){
 
+    this.id = id
    this.password_hash=password_hash
    this.isActive=isActive
    this.firstName=firstName
@@ -14,6 +15,7 @@ class User {
    this.physicalAddress=physicalAddress
    this.email=email
    this.phoneNumber=phoneNumber
+   this.isAdmin=isAdmin
     }
 }
 

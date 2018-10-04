@@ -1,72 +1,72 @@
-const mysql      = require('mysql');
-const connection = mysql.createConnection({
-  host     : '18.221.83.136',
-  user     : 'root',
-  password : 'ribalestbeau',
-  database : 'mysql',
-});
- 
-connection.connect();
+const MySql = require('sync-mysql')
+const User = require('./User')
 
-// ` CREATE TABLE users (password_hash VARCHAR(20), isActive INT, firstName VARCHAR(20), lastName VARCHAR(20), physicalAddress VARCHAR(20), email VARCHAR(20), phoneNumber VARCHAR(20), isAdmin INT);`
-// `UPDATE mytable
-    // SET isActive = ${isActive},
-    // WHERE email = ${email};`
+const connection = new MySql({
+    host: '18.221.83.136',
+    user: 'root',
+    password: 'ribalestbeau',
+    database: 'mysql',
+})
 
 class UserCatalog {
-    static MakeNewUser(user, handler){
-        
-        this.GetUser(user.email, ({status,results})=>{
-            if(status == 1 || results.length == 0){
-                connection.query(`INSERT INTO users SET ?`, {id:0,...user} , function (error, results) {
-                    if (error) 
-                        handler({status:1, message:'Error',error});
-                    else
-                        handler({status: 0, message:'Ok',results: results});
-            })
-            } else 
-                handler({status: 1, message:'User exists already'})
-                
-        })
-        
-        
+    static MakeNewUser(user_data) { // Sync
+
+        const user = new User(user_data)
+        console.log('user -->',user)
+        const { results, error }  = this.GetUserByEmail(user.email)
+
+        if (results.length != 0) // Array is not empty
+            return { status: 1, message: 'User exists already', error }
+
+        try {
+            const data = connection.query(`INSERT INTO users VALUES (${this.objectToQueryString(user)})`)
+            return { status: 0, message: 'Ok', results: data }
+        } catch (error) {
+            return { status: 1, message: 'Error', error }
+        }
     }
 
-    static GetUser(email, handler){
-        connection.query(`SELECT * FROM users where email='${email}'`, function (error, results) {
-            if (error) handler({status:1 ,error});
-            handler({status: 0, results: results});
-        })
+    static GetUserByEmail(email) { // Sync
+        try {
+            const data = connection.query(`SELECT * FROM users where email='${email}'`)
+            return { status: 0, results: data }
+        } catch (error) {
+            return { status: 1, error }
+        }
     }
 
-    static GetUserById(id, handler){
-        connection.query(`SELECT * FROM users where id='${id}'`, function (error, results) {
-            if (error) handler({status:1 ,error});
-            handler({status: 0, results: results});
-        })
+    static GetUserById(id) { // Sync
+        try {
+            const data = connection.query(`SELECT * FROM users where email='${id}'`)
+            return { status: 0, results: data }
+        } catch (error) {
+            return { status: 1, error }
+        }
     }
 
-    static ViewLoggedInUsers(handler){
-        connection.query(`SELECT * FROM users where isActive=1`, function (error, results) {
-            if (error) handler({status:1 ,error});
-            else{
-                const usersArray = results.map(user => {
-                    return {user: user.email, isAdmin: user.isAdmin? 'Admin' : 'Client'}
-                })
-                handler({status: 0, users: usersArray });
-            }
-        })
+    static ViewLoggedInUsers() { // Sync
+        try {
+            const data = connection.query(`SELECT * FROM users where isActive=1`)
+            const usersArray = data.map(user => { return { user: user.email, isAdmin: user.isAdmin ? 'Admin' : 'Client' } })
+
+            return { status: 0, results: data,users: usersArray }
+        } catch (error) {
+            return { status: 1, error }
+        }
     }
 
-    static SetIsActive(id,isActive, handler){
-        connection.query(`UPDATE users
-                            SET isActive=${isActive}
-                            WHERE id='${id}'`, function (error, results) {
-            if (error) handler({status:1 ,error});
-            else{
-                handler({status: 0, results: results });
-            }
-        })
+
+    static SetIsActive(id, isActive) { // Sync
+        try{
+            const data = connection.query(`UPDATE users SET isActive=${isActive} WHERE id='${id}'`)
+            return { status: 0, results: data }
+        } catch (error) {
+            return { status: 1, error}
+        }
+    }
+
+    static objectToQueryString(object) { // Helper. This method turns an object into a string formated for an SQL query
+        return Object.values(object).map(x => "'" + x + "'").join(',');
     }
 }
 

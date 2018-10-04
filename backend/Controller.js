@@ -29,35 +29,34 @@ app.get('/', (req, res) => {
 
 app.post('/login',  (req, res) => {
     const {email, password} = req.body
-    AuthorizationService.AuthorizeUser(email,password, function({status, results}){
-        if(status == 1){
-            res.status(400)
-            res.json({status, results, message: 'Bad Credentials'})
-            logger(`POST - [/login] - ${400} - ${email} `)
-        } else {
-            res.status(200)
-            res.json({status, results, message: 'Welcome'})
-            logger(`POST - [/login] - ${200} - ${email} `)
-        }
-    })
+    const {status, results} = AuthorizationService.AuthorizeUser(email,password)
+    if(status == 1){
+        res.status(400)
+        res.json({status, results, message: 'Bad Credentials'})
+        logger(`POST - [/login] - ${400} - ${email} `)
+    } else {
+        res.status(200)
+        res.json({status, results, message: 'Welcome'})
+        logger(`POST - [/login] - ${200} - ${email} `)
+    }
 })
 
 app.post('/disconnect',  (req, res) => {
     const {id} = req.body
-    UserCatalog.SetIsActive(id,0,(result)=>{
-        res.status(200)
-        res.json({status: 'logged out'})
-        logger(`POST - [/disconnect] - ${200} - ${id} `)
-    })
+    const {status, error} = UserCatalog.SetIsActive(id,0)
+    const ok = status === 0
+    res.status(ok ? 200 : 500)
+    res.json({status: ok?'logged out':'an error occured', error})
+    logger(`POST - [/disconnect] - ${200} - ${id} `)
 })
 
 app.post('/connect',  (req, res) => {
     const {id} = req.body
-    UserCatalog.SetIsActive(id,1,(result)=>{
-        res.status(200)
-        res.json({status: 'logged out'})
-        logger(`POST - [/connect] - ${200} - ${id} `)
-    })
+    const {status, error} = UserCatalog.SetIsActive(id,1)
+    const ok = status === 0
+    res.status(ok ? 200 : 500)
+    res.json({status: ok?'logged out':'an error occured', error})
+    logger(`POST - [/connect] - ${200} - ${id} `)
 })
 
 app.post('/createnewuser',  (req, res) => {
@@ -69,50 +68,41 @@ app.post('/createnewuser',  (req, res) => {
         email,
         phoneNumber, isAdmin} = req.body
 
-        console.log('new userr',{password,
-            isActive,
-            firstName,
-            lastName,
-            physicalAddress,
-            email,
-            phoneNumber, isAdmin})
-
-    AuthorizationService.MakeNewUser(password,
+    const {status, message, error} = AuthorizationService.MakeNewUser(0,password,
         isActive,
         firstName,
         lastName,
         physicalAddress,
         email,
-        phoneNumber,isAdmin, function({status, message}){
+        phoneNumber,isAdmin)
+
         if(status == 1){
             res.status(400)
-            res.json({status, message})
+            res.json({status, message, error})
             logger(`POST - [/createnewuser] - ${400} - ${email} `)
         } else {
             res.status(200)
-            res.json({status, message})
+            res.json({status, message, error})
             logger(`POST - [/createnewuser] - ${200} - ${email} `)
         }
-    })
 })
 
 app.post('/loggedusers', (req, res) => {
     const {isAdmin} = req.body
 
     
-    UserCatalog.ViewLoggedInUsers(function(results){
-        if(isAdmin){
-            const message = `Ok`
-            res.status(200)
-            res.json({status: 0, results: results.users})
-            logger(`POST - [/loggedusers] - ${200} - ${message}`)
-        } else {
-            const message = `You're not an admin`
-            res.status(400)
-            res.json({status: 1, results: [], message})
-            logger(`POST - [/loggedusers] - ${400} - ${message}`)
-        }
-    })
+    if(isAdmin){
+        const {users} = UserCatalog.ViewLoggedInUsers()
+        const message = `Ok`
+        res.status(200)
+        res.json({status: 0, results: users, message})
+        logger(`POST - [/loggedusers] - ${200} - ${message}`)
+    } else {
+        const message = `You're not an admin`
+        res.status(400)
+        res.json({status: 1, results: [], message})
+        logger(`POST - [/loggedusers] - ${400} - ${message}`)
+    }
 })
     
 app.listen(port, ()=> {
