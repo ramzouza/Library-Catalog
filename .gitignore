@@ -23,4 +23,5 @@ chrome-user-data
 *.swp
 *.swo
 *lock.json
-frontend/package-lock\.json
+frontend/package-lock.json
+frontend/package.json
