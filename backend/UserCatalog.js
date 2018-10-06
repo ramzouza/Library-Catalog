@@ -10,19 +10,16 @@ const connection = new MySql({
 
 class UserCatalog {
     static MakeNewUser(user_data) { // Sync
-
-        const user = new User(user_data)
-        console.log('user -->',user)
-        const { results, error }  = this.GetUserByEmail(user.email)
-
+        user_data.id = 0; // For query
+        const user = new User(user_data);
+        const { results, error }  = this.GetUserByEmail(user.email);
         if (results.length != 0) // Array is not empty
             return { status: 1, message: 'User exists already', error }
-
         try {
             const data = connection.query(`INSERT INTO users VALUES (${this.objectToQueryString(user)})`)
             return { status: 0, message: 'Ok', results: data }
         } catch (error) {
-            return { status: 1, message: 'Error', error }
+            return { status: 1, message: 'Error'+error, error }
         }
     }
 
@@ -37,10 +34,10 @@ class UserCatalog {
 
     static GetUserById(id) { // Sync
         try {
-            const data = connection.query(`SELECT * FROM users where email='${id}'`)
-            return { status: 0, results: data }
+            const data = connection.query(`SELECT * FROM users where id='${id}'`)
+            return { status: 0, message: "User found.", results: data }
         } catch (error) {
-            return { status: 1, error }
+            return { status: 1, message: "Error getting user by id.", error }
         }
     }
 
