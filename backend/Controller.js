@@ -59,11 +59,23 @@ app.post('/connect',  (req, res) => {
     logger(`POST - [/connect] - ${200} - ${id} `)
 })
 
+/*
+{
+	"password":"1234567890",
+	"isActive":0,
+	"firstName":"Mr.",
+	"lastName":"Admin",
+	"physicalAddress":"123",
+	"email":"admin3gmail.com",
+	"phoneNumber":"123 123 1234",
+	"isAdmin": 1
+	
+}
+*/
 app.post('/createnewuser',  (req, res) => {
     // check if the sender is authenticated
-    const sender_id = 34242; // will always suceed if no data sent.
+    const sender_id = req.body.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin=true);
-    console.log('AUTH ===> ',auth);
     if (!auth.isAuthorized){
         res.status(400)
         res.json({status:1, message:"Not Authorized"})
@@ -83,16 +95,40 @@ app.post('/createnewuser',  (req, res) => {
     delete user.password;
     
     // make the user 
-    const {status, message, error} = UserCatalog.MakeNewUser(user);
+    const {status, message, error, results} = UserCatalog.MakeNewUser(user);
 
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
-        logger(`POST - [/createnewuser] - ${400} - ${email} `)
+        logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
+    } else {
+        res.status(200)
+        res.json({status, message, user_id: results.insertId, error})
+        logger(`POST - [/createnewuser] - ${200} - ${sender_id} `)
+    }
+})
+
+app.delete('/deleteuser', (req, res) => {
+    // check if the sender is authenticated
+    const sender_id = req.body.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin=true);
+    if (!auth.isAuthorized){
+        res.status(400)
+        res.json({status:1, message:"Not Authorized"})
+        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
+    }
+    const deleted_user_id = req.body.user_id;
+
+    const {status, message, error } = UserCatalog.DeleteUserById(deleted_user_id);
+    console.log("MESSAGE" + message);
+    if(status == 1){
+        res.status(400)
+        res.json({status, message, error})
+        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
     } else {
         res.status(200)
         res.json({status, message, error})
-        logger(`POST - [/createnewuser] - ${200} - ${email} `)
+        logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
     }
 })
 

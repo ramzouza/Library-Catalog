@@ -37,7 +37,17 @@ class UserCatalog {
             const data = connection.query(`SELECT * FROM users where id='${id}'`)
             return { status: 0, message: "User found.", results: data }
         } catch (error) {
-            return { status: 1, message: "Error getting user by id.", error }
+            return { status: 1, message : "Error...", error }
+        }
+    }
+
+    static DeleteUserById(id) {
+        console.log("id", id)
+        try {
+            const data = connection.query(`DELETE FROM users where id=${id}`);
+            return { status: 0, message: "User Deleted.", results: data}
+        } catch(error){
+            return {status: 1, message: "Error...", error};
         }
     }
 
