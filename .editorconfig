@@ -11,6 +11,9 @@ trim_trailing_whitespace = true
 [*.go]
 indent_size = 4
 
+[*.js]
+indent_size = 4
+
 [*.proto]
 indent_size = 4
 indent_style = tab
