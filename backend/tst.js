@@ -21,7 +21,6 @@ const mockUser = {"password":"ribal",
 
 res = UserCatalog.MakeNewUser(mockUser)
 console.log(res)*/
-console.log(AuthService.AuthorizeUser(34242, requiresAdmin=true));
 
 
 
