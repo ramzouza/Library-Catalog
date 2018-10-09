@@ -2,9 +2,9 @@
 Writing tests are an essential part of any piece of code. Tests can be found in `backend/tests`.
 
 ## Running the test suite
-`cd backend` cd to the backend.
-
-`npm run tests` run the test script.
+1. `cd backend` cd to the backend.
+2. `npm run tests` run the test script.
+> **PS:** You can run live tests for being a TDD bad*ss running `npm run test-live`. This allows you to write tests first and write code until your tests pass.
 
 ## Writing a test
 _each step outlined below is explained below below_
