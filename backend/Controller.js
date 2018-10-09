@@ -184,8 +184,8 @@ app.post('/createbook', (req, res) => {
 
 })
 
-app.listen(port, () => {
+server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
 
-module.exports = app;
+module.exports = server;
