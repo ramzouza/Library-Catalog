@@ -42,7 +42,6 @@ class UserCatalog {
     }
 
     static DeleteUserById(id) {
-        console.log("id", id)
         try {
             const data = connection.query(`DELETE FROM users where id=${id}`);
             return { status: 0, message: "User Deleted.", results: data}

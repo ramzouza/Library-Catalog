@@ -19,18 +19,15 @@ isAdmin:1
 
 
 Post('/createnewuser','User should be created', mockUser,({expect, res})=>{
-    console.log(res.body);
     expect(res.body.status).to.equal(0);
     expect(res.body.message).to.equal('Ok');
     let insertId = res.body.user_id;
 
     Post('/createnewuser','User should already exist', mockUser,({expect, res})=>{
-        console.log(res.body);
         expect(res.body.message).to.equal('User exists already');
         expect(res.body.status).to.equal(1);
 
         Delete('/deleteuser', 'User should be deleted.', {"user_id":insertId}, ({expect, res})=>{
-            console.log(res.body);
             expect(res.body.message).to.equal('User Deleted.');
             expect(res.body.status).to.equal(0);
         })

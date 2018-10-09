@@ -122,7 +122,6 @@ app.delete('/deleteuser', (req, res) => {
     const deleted_user_id = req.body.user_id;
 
     const {status, message, error } = UserCatalog.DeleteUserById(deleted_user_id);
-    console.log("MESSAGE" + message);
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
@@ -169,15 +168,17 @@ app.post('/createbook', (req, res) => {
         res.status(412)
         res.json({ status: 1, message })
     }
-    const { status, message } = ResourceCatalog.MakeNewBook(newBookData)
-    if (status) {
-        // 412: precondition failed
-        res.status(412)
-        res.json({ status, message })
+    else {
+        const { status, message } = ResourceCatalog.MakeNewBook(newBookData)
+        if (status) {
+            // 412: precondition failed
+            res.status(412)
+            res.json({ status, message })
+        }
+        res.status(200)
+        res.json({status,message})
+        logger(`POST - [/createbook] - ${status} - ${message}`)
     }
-    res.status(200)
-    res.json({status,message})
-    logger(`POST - [/createbook] - ${status} - ${message}`)
 
 
 

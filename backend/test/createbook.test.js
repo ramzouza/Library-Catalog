@@ -1,8 +1,8 @@
 const {Post} = require("../CreateTest")
-const dataTest1 = {isAdmin:false}
 const newBookData = {
     title:'test',author:'test', format:'test',pages:'test',publisher:'test',language:'test', ISBN_10:'test', ISBN_13:'test'
 }
+const dataTest1 = {isAdmin:false, newBookData}
 const dataTest2 = {isAdmin:true, newBookData}
 
 

@@ -9,7 +9,6 @@ class ResourceCatalog {
       return { status: 1, message: "A book with the same ISBN 10 already exists" }
     }
     books[newBook.ISBN_10] = newBook
-    console.log('resources -->', resources)
     return { status: 0, message: "Saved book" }
   }
 }
