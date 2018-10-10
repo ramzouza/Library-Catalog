@@ -60,3 +60,23 @@ module.exports.Delete =  function (APIroute, description, data, handler) {
       
     })
   })}
+
+
+  module.exports.Put =  function (APIroute, description, data, handler) {
+    describe(`● [${APIroute}] route test`, ()=> {
+      it(description, done => {
+    
+        chai.request(app)
+        .put(APIroute)
+        .send(data)
+        .then(async res => {
+            await handler({expect, res})
+            done()
+    
+        }).catch( err => {
+            
+            done(err)
+        })
+        
+      })
+    })}
