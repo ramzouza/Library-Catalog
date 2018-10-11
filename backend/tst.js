@@ -1,26 +1,16 @@
 const UserCatalog = require('./UserCatalog')
 const User = require('./User')
 const AuthService = require('./AuthService')
+const ResourceCatalog = require('./ResourceCatalog')
 
-let u = new User(0, 'A', 0, 'B', 'lastname', 'C', 'G', '5', 1 )
 
+console.log('hello');
 
-// UserCatalog.ViewLoggedInUsers(console.log)
-// let res = UserCatalog.SetIsActive(34284, 0)
-// const b = UserCatalog.GetUserByEmail('ced@gmail.com')
-
-// const res = AuthService.AuthorizeUser('ian@gmail.com', 'riball')
-/*
-const mockUser = {"password":"ribal",
-"isActive":0,
-"firstName":"ya",
-"lastName":"nn",
-"physicalAddress":"here",
-"email":"YY@gmail.com",
-"phoneNumber":"5142342342", "isAdmin":1}
-
-res = UserCatalog.MakeNewUser(mockUser)
-console.log(res)*/
+let  x =ResourceCatalog.MakeNewResource({title : "title" , author : "author", format : "format" ,pages:"format"  ,publisher: "publi",language: "eng", ISBN_10:"111", ISBN_13 : "222"}, "Book")
+ResourceCatalog.MakeNewResource({title : "title3" , author : "author3", format : "format3" ,pages:"format3"  ,publisher: "publi",language: "eng", ISBN_10:"111", ISBN_13 : "222"}, "Book")
+ResourceCatalog.MakeNewResource({title : "title2" , author : "author2", format : "format2" ,pages:"format2"  ,publisher: "publi",language: "eng", ISBN_10:"111", ISBN_13 : "222"}, "Book")
+ResourceCatalog.MakeNewResource({title : "title1" , author : "author1", format : "format1" ,pages:"format1"  ,publisher: "publi",language: "eng", ISBN_10:"111", ISBN_13 : "222"}, "Book")
 
 
 
+console.log(ResourceCatalog.getResList());

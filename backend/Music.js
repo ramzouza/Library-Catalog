@@ -1,7 +1,7 @@
 const Resource = require('./Resource.js')
 
 class Music extends Resource {
-    constructor(title,type,artist,label,release,ASIN){
+    constructor({title,type,artist,label,release,ASIN}){
         super(title)
         this.type = type
         this.artist = artist

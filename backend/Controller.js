@@ -160,7 +160,8 @@ app.post('/loggedusers', (req, res) => {
     }
 })
 
-app.post('/createbook', (req, res) => {
+app.post('/resources', (req, res) => {
+    console.log(req.body);
     const { isAdmin, newBookData } = req.body
     if (!isAdmin) {
         const message = "Not allowed to create book"

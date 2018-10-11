@@ -1,7 +1,7 @@
 const Resource = require('./Resource.js')
 
 class Movie extends Resource{
-    constructor(title,director, producers, actors, language, subtitles, dubbed, release, time)
+    constructor({title,director, producers, actors, language, subtitles, dubbed, release, time})
     {
      super(title)
      this.director = director
