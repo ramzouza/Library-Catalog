@@ -139,7 +139,7 @@ app.post('/loggedusers', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAthenticated) {
+    if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized",results:[] })
         logger(`POST -  [/loggedusers] - ${400} - ${sender_id} `)
@@ -189,7 +189,7 @@ app.get('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAthenticated) {
+    if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`GET -  [/resources] - ${400} - ${sender_id} `)
@@ -207,7 +207,7 @@ app.put('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAthenticated) {
+    if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
