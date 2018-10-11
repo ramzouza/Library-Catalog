@@ -41,9 +41,9 @@ class ResourceCatalog {
   }
 
   static DeleteResource(resource_id){
-    if(ResourceList[resourceId]){
-        ResourceList[resourceId] = undefined;
-        return { status: 0, message: "Resource was deleted", results: resourceId}
+    if(ResourceList[resource_id]){
+        ResourceList[resource_id] = undefined;
+        return { status: 0, message: "Resource was deleted", results: resource_id}
     } else {
         return { status: 1, message: "Resource not found/deleted"}
     }
