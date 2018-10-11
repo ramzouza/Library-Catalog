@@ -137,7 +137,7 @@ app.delete('/deleteuser', (req, res) => {
 
 app.post('/loggedusers', (req, res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAthenticated) {
         res.status(400)
@@ -157,9 +157,9 @@ app.post('/loggedusers', (req, res) => {
 // MAKE NEW RESOURCE
 app.post('/resources', (req, res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAthenticated) {
+    if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST -  [/resources] - ${400} - ${sender_id} `)
@@ -169,15 +169,15 @@ app.post('/resources', (req, res) => {
     const { resource_data , type } = req.body;
     
     // make new resource
-    const {status, message, results, error} = ResourceCatalog.makeNewResource(resource_data, type);
-
+    const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
+    
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
         logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
     } else {
         res.status(200)
-        res.json({status, message, error})
+        res.json({status, message, results})
         logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
     }
 
@@ -187,7 +187,7 @@ app.post('/resources', (req, res) => {
 // GET ALL RESOURCES
 app.get('/resources', (req,res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAthenticated) {
         res.status(400)
@@ -202,20 +202,10 @@ app.get('/resources', (req,res) => {
 
 })
 
-<<<<<<< HEAD
-app.post('/resources', (req, res) => {
-    console.log(req.body);
-    const { isAdmin, newBookData } = req.body
-    if (!isAdmin) {
-        const message = "Not allowed to create book"
-        // 412: precondition failed
-        res.status(412)
-        res.json({ status: 1, message })
-=======
 // EDIT resource by resource_ID
 app.put('/resources', (req,res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAthenticated) {
         res.status(400)
@@ -237,7 +227,6 @@ app.put('/resources', (req,res) => {
         res.status(200);
         res.json({status, message, results});
         logger(`PUT - [/resources] - ${200} - ${sender_id} `);
->>>>>>> Finished Controller
     }
 
 })
@@ -245,9 +234,9 @@ app.put('/resources', (req,res) => {
 // Delete resource by resource_ID
 app.delete('/resources', (req,res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAthenticated) {
+    if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
@@ -278,5 +267,5 @@ app.delete('/resources', (req,res) => {
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
-
+ 
 module.exports = server;

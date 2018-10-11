@@ -1,8 +1,8 @@
 const Resource = require('./resource.js')
 
 class Book extends Resource{
-    constructor({title,author, format,pages,publisher,language, ISBN_10, ISBN_13}){
-        super(title)
+    constructor({title,author, format,pages,publisher,language, ISBN_10, ISBN_13}, id=-1, instance=1) {
+        super(title, id, instance);
         this.author = author
         this.format = format
         this.pages = pages
