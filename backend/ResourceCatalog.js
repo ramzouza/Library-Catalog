@@ -40,8 +40,15 @@ class ResourceCatalog {
     
   }
 
+  static DeleteResource(resource_id){
+    if(ResourceList[resourceId]){
+        ResourceList[resourceId] = undefined;
+        return { status: 0, message: "Resource was deleted", results: resourceId}
+    } else {
+        return { status: 1, message: "Resource not found/deleted"}
+    }
+  }
+
 }
-
-
 
 module.exports = ResourceCatalog 
