@@ -1,4 +1,4 @@
-const Resource = require('./resource.js')
+const Resource = require('./Resource.js')
 
 class Book extends Resource{
     constructor({title,author, format,pages,publisher,language, ISBN_10, ISBN_13}, id=-1, instance=1) {
