@@ -7,21 +7,20 @@ const mockResource = {
     
 Post('/resources','Resource should be created', {resource_data: mockResource, type: "Book"}, ({expect, res})=>{
         expect(res.body.status).to.equal(0);
-        let insertId = res.body.id;
+        let insertId = res.body.results.id;
 
+        /* editResource not implemented yet
             // Change mockResource
             mockResource.firstName = "new name";
             Put('/resources', 'Resource should be updated.', {"resource_id": insertId, "resource": mockResource}, ({expect, rest}) =>{
                 expect(res.body.status).to.equal(0);
-
-                Delete('/resources', 'Resource should be deleted.', {"user_id":insertId}, ({expect, res})=>{
-                    console.log(res.body);
-                    expect(res.body.status).to.equal(0);
                 })
+        */
+
+            // Delete mockResource
+            Delete('/resources', 'Resource should be deleted.', {"resource_id":insertId}, ({expect, res})=>{
+                expect(res.body.status).to.equal(0);
             })
-    
-        
-    
     })
 
 

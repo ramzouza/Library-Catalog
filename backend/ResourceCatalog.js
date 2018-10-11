@@ -33,7 +33,7 @@ class ResourceCatalog {
     resource.id = ResourceCatalog.getkey();
     ResourceList[resource.id] = resource
     if(ResourceList[resource.id]){
-        return { status: 0, message: "An existing resource got an extra instance"}
+        return { status: 0, message: "An existing resource got an extra instance", results: resource}
     }
     
     return {status: 0, message: "Saved resource", results: resource }
