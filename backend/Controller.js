@@ -81,6 +81,7 @@ app.post('/createnewuser',  (req, res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
     }
+    
     // declare user data
     const user = {
         password,
@@ -119,6 +120,7 @@ app.delete('/deleteuser', (req, res) => {
         res.json({status:1, message:"Not Authorized"})
         logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
     }
+
     const deleted_user_id = req.body.user_id;
 
     const {status, message, error } = UserCatalog.DeleteUserById(deleted_user_id);
@@ -140,26 +142,67 @@ app.post('/loggedusers', (req, res) => {
     if (!auth.isAthenticated) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
-        logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
+        logger(`POST -  [/loggedusers] - ${400} - ${sender_id} `)
     }
 
-    const { isAdmin } = req.body
-
-
-    if (isAdmin) {
-        const { users } = UserCatalog.ViewLoggedInUsers()
-        const message = `Ok`
-        res.status(200)
-        res.json({ status: 0, results: users, message })
-        logger(`POST - [/loggedusers] - ${200} - ${message}`)
-    } else {
-        const message = `You're not an admin`
-        res.status(400)
-        res.json({ status: 1, results: [], message })
-        logger(`POST - [/loggedusers] - ${400} - ${message}`)
-    }
+    const { users } = UserCatalog.ViewLoggedInUsers()
+    const message = `Ok`
+    res.status(200)
+    res.json({ status: 0, results: users, message })
+    logger(`POST - [/loggedusers] - ${200} - ${message}`)
+    
 })
 
+
+// MAKE NEW RESOURCE
+app.post('/resources', (req, res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAthenticated) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`POST -  [/resources] - ${400} - ${sender_id} `)
+    }
+
+    // get resource data and their type
+    const { resource_data , type } = req.body;
+    
+    // make new resource
+    const {status, message, results, error} = ResourceCatalog.makeNewResource(resource_data, type);
+
+    if(status == 1){
+        res.status(400)
+        res.json({status, message, error})
+        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
+    } else {
+        res.status(200)
+        res.json({status, message, error})
+        logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
+    }
+
+
+})
+
+// GET ALL RESOURCES
+app.get('/resources', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAthenticated) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`GET -  [/resources] - ${400} - ${sender_id} `)
+    }
+
+    // get resources here
+
+    // ...
+
+
+})
+
+<<<<<<< HEAD
 app.post('/resources', (req, res) => {
     console.log(req.body);
     const { isAdmin, newBookData } = req.body
@@ -168,22 +211,69 @@ app.post('/resources', (req, res) => {
         // 412: precondition failed
         res.status(412)
         res.json({ status: 1, message })
-    }
-    else {
-        const { status, message } = ResourceCatalog.MakeNewBook(newBookData)
-        if (status) {
-            // 412: precondition failed
-            res.status(412)
-            res.json({ status, message })
-        }
-        res.status(200)
-        res.json({status,message})
-        logger(`POST - [/createbook] - ${status} - ${message}`)
+=======
+// EDIT resource by resource_ID
+app.put('/resources', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAthenticated) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
     }
 
+    // get resource data and their type
+    const { resource_id, resource_data , type } = req.body
 
+    // Edit the Resource
+    const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
+
+    if(status == 1){
+        res.status(400);
+        res.json({status, message, error});
+        logger(`PUT - [/resources] - ${400} - ${sender_id} `);
+    } else {
+        res.status(200);
+        res.json({status, message, results});
+        logger(`PUT - [/resources] - ${200} - ${sender_id} `);
+>>>>>>> Finished Controller
+    }
 
 })
+
+// Delete resource by resource_ID
+app.delete('/resources', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id | 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAthenticated) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+
+    // get resource data and their type
+    const { resource_id } = req.body
+
+    // Edit the Resource
+    const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);
+
+    if(status == 1){
+        res.status(400);
+        res.json({status, message, error});
+        logger(`DELETE - [/resources] - ${400} - ${sender_id} `);
+    } else {
+        res.status(200);
+        res.json({status, message, results});
+        logger(`DELETE - [/resources] - ${200} - ${sender_id} `);
+    }
+
+})
+
+
+
+
 
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
