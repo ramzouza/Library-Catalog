@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { apiCall } from './ApiCall'
+import { Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 class CreateMusic extends Component {
   constructor(){
@@ -7,31 +8,31 @@ class CreateMusic extends Component {
 
 
     this.state = {
-        Title: "",
-        Type: "",
-        Artist: "",
-        Label: "",
+        title: "",
+        type: "",
+        artist: "",
+        label: "",
         ASIN: "",
-        Release_date:""
+        release_date:""
       } 
   }
 
   handleClick(e){
-    const {Title,
-        Type,
-        Artist,
-        Label,
+    const {title,
+        type,
+        artist,
+        label,
         ASIN,
-        Release_date
+        release_date
         } = this.state
     
       const newMusic = {
-        Title,
-        Type,
-        Artist,
-        Label,
+        title,
+        type,
+        artist,
+        label,
         ASIN,
-        Release_date}
+        release_date}
 
 
         alert(JSON.stringify(newMusic))
@@ -50,26 +51,27 @@ class CreateMusic extends Component {
       
   }
   render() {
+  const admin = cookie.load('admin') === 'yes'
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New Music</span>
 
-        <input onChange={evt => {this.setState({Title: evt.target.value})}} style={input} type="text" placeholder="Title" ></input>
+        <input onChange={evt => {this.setState({title: evt.target.value})}} style={input} type="text" placeholder="Title" ></input>
 
-        <input onChange={evt => {this.setState({Type: evt.target.value})}} style={input} type="text" placeholder="Type" ></input>
+        <input onChange={evt => {this.setState({type: evt.target.value})}} style={input} type="text" placeholder="Type" ></input>
         
-        <input onChange={evt => {this.setState({Artist: evt.target.value})}} style={input} type="text" placeholder="Artist" ></input>
+        <input onChange={evt => {this.setState({artist: evt.target.value})}} style={input} type="text" placeholder="Artist" ></input>
         
-        <input onChange={evt => {this.setState({Label: evt.target.value})}} style={input} type="text" placeholder="Label" ></input>
+        <input onChange={evt => {this.setState({label: evt.target.value})}} style={input} type="text" placeholder="Label" ></input>
         Release Date 
-        <input onChange={evt => {this.setState({Release_date: evt.target.value})}} style={input} type="text" placeholder="DD/MM/YYYY" ></input>
+        <input onChange={evt => {this.setState({release_date: evt.target.value})}} style={input} type="text" placeholder="DD/MM/YYYY" ></input>
 
          <input onChange={evt => {this.setState({ASIN: evt.target.value})}} style={input} type="text" placeholder="ASIN" ></input>
         
         
         <button style={button}
            onClick={this.handleClick.bind(this)} type="button">Create</button>
-
+        {!admin ? <Redirect to="/"/> : null}
       </div>
     );
   }
@@ -88,7 +90,7 @@ const  main = {
     padding: 30,
     boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
     backgroundColor: 'rgba(244,244,244,0.7)',
-    marginTop: '10%',
+    marginTop: '5%',
     // width: 200,
 }
 

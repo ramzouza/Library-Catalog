@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-//import { apiCall } from './ApiCall'
+import { Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 class CreateBook extends Component {
   constructor(){
@@ -12,8 +13,8 @@ class CreateBook extends Component {
       pages: 0,
       publisher: "",
       language: "",
-      isbn10: "",
-      isbn13: ""} 
+      ISBN_10: "",
+      ISBN_13: ""} 
   }
 
   handleClick(e){
@@ -23,8 +24,8 @@ class CreateBook extends Component {
       pages,
       publisher,
       language,
-      isbn10,
-      isbn13}  = this.state
+      ISBN_10,
+      ISBN_13}  = this.state
     
       const newBook = {title,
         author,
@@ -32,8 +33,8 @@ class CreateBook extends Component {
         pages,
         publisher,
         language,
-        isbn10,
-        isbn13}
+        ISBN_10,
+        ISBN_13}
 
 
         console.log(newBook)
@@ -52,6 +53,7 @@ class CreateBook extends Component {
       
   }
   render() {
+    const admin = cookie.load('admin') === 'yes'
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New Book</span>
@@ -68,13 +70,13 @@ class CreateBook extends Component {
 
         <input onChange={evt => {this.setState({language: evt.target.value})}} style={input} type="text" placeholder="Language" ></input>
 
-        <input onChange={evt => {this.setState({isbn10: evt.target.value})}} style={input} type="text" placeholder="ISBN 10" ></input>
+        <input onChange={evt => {this.setState({ISBN_10: evt.target.value})}} style={input} type="text" placeholder="ISBN 10" ></input>
 
-        <input onChange={evt => {this.setState({isbn13: evt.target.value})}} style={input} type="text" placeholder="ISBN 13" ></input>
+        <input onChange={evt => {this.setState({ISBN_13: evt.target.value})}} style={input} type="text" placeholder="ISBN 13" ></input>
                 
         <button style={button}
            onClick={this.handleClick.bind(this)} type="button">Create</button>
-
+        {!admin ? <Redirect to="/"/> : null}
       </div>
     );
   }
@@ -93,7 +95,7 @@ const  main = {
     padding: 30,
     boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
     backgroundColor: 'rgba(244,244,244,0.7)',
-    marginTop: '10%',
+    marginTop: '5%',
     // width: 200,
 }
 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { apiCall } from './ApiCall'
 
+import { Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
+
 class NewUser extends Component {
   constructor(){
     super()
@@ -49,6 +52,7 @@ class NewUser extends Component {
       
   }
   render() {
+  const admin = cookie.load('admin') === 'yes'
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New User</span>
@@ -72,7 +76,7 @@ class NewUser extends Component {
         
         <button style={button}
            onClick={this.handleClick.bind(this)} type="button">Create</button>
-
+        {!admin ? <Redirect to="/"/> : null}
       </div>
     );
   }

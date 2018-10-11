@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-//import { apiCall } from './ApiCall'
+import { Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 class CreateMovie extends Component {
   constructor(){
@@ -54,6 +55,7 @@ class CreateMovie extends Component {
       
   }
   render() {
+    const admin = cookie.load('admin') === 'yes'
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >New Movie</span>
@@ -79,7 +81,7 @@ class CreateMovie extends Component {
                 
         <button style={button}
            onClick={this.handleClick.bind(this)} type="button">Create</button>
-
+        {!admin ? <Redirect to="/"/> : null}
       </div>
     );
   }
@@ -98,7 +100,7 @@ const  main = {
     padding: 30,
     boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
     backgroundColor: 'rgba(244,244,244,0.7)',
-    marginTop: '10%',
+    marginTop: '5%',
     // width: 200,
 }
 

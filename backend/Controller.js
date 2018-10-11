@@ -18,7 +18,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, id");
     next()
 })
 
@@ -137,19 +137,19 @@ app.delete('/deleteuser', (req, res) => {
 
 app.post('/loggedusers', (req, res) => {
     // check if the sender is authenticated
-    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAthenticated) {
         res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
+        res.json({ status: 1, message: "Not Authorized",results:[] })
         logger(`POST -  [/loggedusers] - ${400} - ${sender_id} `)
+    } else {
+        const { users } = UserCatalog.ViewLoggedInUsers()
+        const message = `Ok`
+        res.status(200)
+        res.json({ status: 0, results: users, message })
+        logger(`POST - [/loggedusers] - ${200} - ${message}`)
     }
-
-    const { users } = UserCatalog.ViewLoggedInUsers()
-    const message = `Ok`
-    res.status(200)
-    res.json({ status: 0, results: users, message })
-    logger(`POST - [/loggedusers] - ${200} - ${message}`)
     
 })
 

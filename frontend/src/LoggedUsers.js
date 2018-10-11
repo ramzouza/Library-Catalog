@@ -14,10 +14,12 @@ class LoggedUsers extends Component {
 
   componentDidMount(){
     const isAdmin = cookie.load('admin') === 'yes' ?  true : false
+    const id = cookie.load('id')
 
-    apiCall('/loggedusers', {isAdmin})
+    apiCall('/loggedusers', {isAdmin}, {id})
       .then(res => res.json())
       .then( json => {
+        console.log('res', json)
         this.setState({logs: json.results})
       })
   }
