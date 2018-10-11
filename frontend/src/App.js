@@ -5,6 +5,7 @@ import Login from './Login'
 import Logged from './Logged'
 import NewUser from './NewUser'
 import LoggedUsers from './LoggedUsers'
+import CreateResource from './CreateResource'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
@@ -43,6 +44,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/" component={Logged} />
             <Route initial exact path="/newuser" component={NewUser} />
+            <Route initial exact path="/create" component={CreateResource} />
             <Route exact path="/loggedusers" component={LoggedUsers} />
           </Switch>
         </Router>

@@ -5,7 +5,14 @@ class Search extends Component {
     return (
       <div style={main}>
         <input style={input} type="text" placeholder="Search for a resource ..." ></input>
+        <div style={{display:'flex', width: '60%',justifyContent:'space-between'}}>
+          Book <input type="checkbox" ></input>
+          Magazine <input type="checkbox" ></input>
+          Music <input type="checkbox" ></input>
+          Movie <input type="checkbox" ></input>
+        </div>
         <button style={button} type="button">Search</button>
+
       </div>
     );
   }
@@ -15,7 +22,7 @@ export default Search;
 const  main = {
     minWidth: '30%',
     display:'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems:'center',
     
 }
@@ -32,7 +39,7 @@ const button = {
   fontSize: 20,
   borderRadius: 5,
   fontFamily: 'inherit',
-  padding: '15px 10px',
+  padding: '5px 40px',
   margin: 10,
   // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
 

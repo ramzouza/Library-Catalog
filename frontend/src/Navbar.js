@@ -43,6 +43,12 @@ class Navbar extends Component {
               <div style={{padding: 15}}>Logged Users</div>
             </Link>)
           : null }
+
+          { admin? 
+           (<Link to="/createresource" style={{textDecoration: 'none', color:'white' }}>
+              <div style={{padding: 15}}>Create ressource</div>
+            </Link>)
+          : null }
           
 
         </div>

@@ -45,6 +45,7 @@ To run the backend server :
 * Move into the backend folder
 * Run `npm install` if you haven't already
 * Run `npm start` to start the server. 
+* If you are on windows, try running `npm run start-windows`
 
 For development, we use `nodemon`.
 * Run `npm run dev` inside the backend folder.  
