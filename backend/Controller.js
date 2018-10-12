@@ -272,7 +272,8 @@ app.delete('/resources', (req,res) => {
     }
 
     // get resource data and their type
-    const { resource_id } = req.body
+    const { resource_id } = req.body;
+
 
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);

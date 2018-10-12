@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET,PUT} from './ApiCall';
+import {GET,PUT, DELETE} from './ApiCall';
 
 class Search extends Component {
 
@@ -12,33 +12,44 @@ class Search extends Component {
   }
 
   handleClickEdit(id){
-  
-    const title = document.getElementById(id).value
-    const res = {id,title}
- 
-
-
- PUT('/resources', {"resource_data": res})
-  .then( res => res.json() )
-  .then ( json => {
-    alert(json.message)
-    if(json.status === 0){
-      let resource_list = this.state.resource_list
-      resource_list[id].title=title
-    }
-  })
+    const title = document.getElementById(id).value;
+    const res = {id,title};
+    PUT('/resources', {"resource_data": res})
+      .then( res => res.json() )
+      .then ( json => {
+        alert(json.message)
+        if(json.status === 0){
+          let resource_list = this.state.resource_list
+          resource_list[id].title=title
+        }
+      })
       
   }
+
+  handleClickDelete(id){
+      DELETE('/resources', {"resource_id": id})
+        .then( res => res.json() )
+        .then ( json => {
+          alert(json.message)
+        })
+      
+  }
+
+
+
   componentDidMount(){
     
     GET('/resources')
       .then(res => res.json())
       .then( json => {
-
+        for (let i=0; i < json.results.length ; i++){
+          if (json.results[i] == null){
+            delete json.results[i];
+          }
+        }
         console.log("===== DATABASE ======");
         console.log(json.results);
         console.log("======================");
-        delete json.results[0]
         this.setState({resource_list: json.results})
       })
   }
@@ -62,7 +73,10 @@ class Search extends Component {
         {resource_list.map( ({id, title }) => <div key={id}><input  type="text" disabled value={id}/> 
          <input id={id} type="text"  defaultValue={title} />
          <button style={button} onClick={() => this.handleClickEdit(id)} type="button">Edit </button>
-         </div> )}
+         <button style={button} onClick={() => this.handleClickDelete(id)} type="button">Delete </button>
+         </div> )
+         
+        }
 
       </div>
     );

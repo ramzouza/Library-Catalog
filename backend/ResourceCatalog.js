@@ -57,9 +57,16 @@ class ResourceCatalog {
     return { status: 1, message: "Resource was not found"}
   }
 
+  static logCurrentState(){
+      console.log("===========");
+      console.log(ResourceList);
+      console.log("===========");
+  }
+
   static DeleteResource(resource_id){
     if(ResourceList[resource_id]){
-        ResourceList[resource_id] = undefined;
+        delete ResourceList[resource_id];
+        this.logCurrentState();
         return { status: 0, message: "Resource was deleted", results: resource_id}
     } else {
         return { status: 1, message: "Resource not found/deleted"}
