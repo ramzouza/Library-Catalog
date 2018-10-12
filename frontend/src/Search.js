@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET,PUT} from './ApiCall';
+import {GET,PUT, DELETE} from './ApiCall';
 
 class Search extends Component {
 
@@ -29,9 +29,9 @@ class Search extends Component {
 
   handleDelete(event){ 
 
-    const resource_id = event.target.value
+    const {id} = event.target.value
 
-    DELETE('/resources', {'resource_id': resource_id }).then( res => res.json() )
+    DELETE('/resources', {resource_id: id }).then( res => res.json() )
     .then ( json => {
       alert(json.message)
       if(json.status === 0){
@@ -39,7 +39,7 @@ class Search extends Component {
       }
     })
   }
-  
+
   componentDidMount(){
     
     GET('/resources')
