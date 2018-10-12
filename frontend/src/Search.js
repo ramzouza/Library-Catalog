@@ -12,6 +12,7 @@ class Search extends Component {
   }
 
   handleClickEdit(id){
+<<<<<<< HEAD
     const title = document.getElementById(id).value;
     const res = {id,title};
     PUT('/resources', {"resource_data": res})
@@ -35,6 +36,36 @@ class Search extends Component {
       
   }
 
+=======
+
+    const title = document.getElementById(id).value
+    const res = {id,title}
+
+  PUT('/resources', {"resource_data": res})
+  .then( res => res.json() )
+  .then ( json => {
+    alert(json.message)
+    if(json.status === 0){
+      let resource_list = this.state.resource_list
+      resource_list[id].title=title
+    }
+  })   
+  }
+
+  handleDelete(event){ 
+
+    const resource_id = event.target.value
+
+    DELETE('/resources', {'resource_id': resource_id }).then( res => res.json() )
+    .then ( json => {
+      alert(json.message)
+      if(json.status === 0){
+        this.props.history.push('/')
+      }
+    })
+  }
+  
+>>>>>>> delete button
   componentDidMount(){
     
     GET('/resources')
@@ -71,10 +102,15 @@ class Search extends Component {
         {resource_list.map( ({id, title }) => <div key={id}><input  type="text" disabled value={id}/> 
          <input id={id} type="text"  defaultValue={title} />
          <button style={button} onClick={() => this.handleClickEdit(id)} type="button">Edit </button>
+<<<<<<< HEAD
          <button style={button} onClick={() => this.handleClickDelete(id)} type="button">Delete </button>
          </div> )
          
         }
+=======
+         <button style={button} onClick={this.handleDelete.bind(this)} value={id}>Delete</button>
+         </div> )}
+>>>>>>> delete button
 
       </div>
     );
