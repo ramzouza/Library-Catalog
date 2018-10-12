@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
 
 class CreateMusic extends Component {
@@ -37,17 +38,16 @@ class CreateMusic extends Component {
 
         alert(JSON.stringify(newMusic))
 
-/*
-        apiCall('/createnewuser', newUser)
+        apiCall('/resources', {"resource_data": newMusic,"type":"Music"})
         .then( res => res.json() )
-        .then (json => {
+        .then ( json => {
           alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
           }
 
-        })*/
+        })
       
   }
   render() {

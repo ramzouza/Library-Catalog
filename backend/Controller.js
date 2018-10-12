@@ -196,10 +196,11 @@ app.get('/resources', (req,res) => {
     }
 
     // get resources here
-
-    // ...
-
-
+    const resource_list = ResourceCatalog.GetAllResources();
+    console.log(resource_list);
+    res.status(200);
+    res.json({"results":resource_list});
+    logger(`GET - [/resources] - ${200} - ${sender_id} `);
 })
 
 // EDIT resource by resource_ID

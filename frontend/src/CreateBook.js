@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
 
 class CreateBook extends Component {
@@ -40,16 +41,16 @@ class CreateBook extends Component {
         console.log(newBook)
 
 
-       /* apiCall('/createbook', CreateBook)
+        apiCall('/resources', {"resource_data": newBook,"type":"Book"})
         .then( res => res.json() )
-        .then (json => {
+        .then ( json => {
           alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
           }
 
-        })*/
+        })
       
   }
   render() {

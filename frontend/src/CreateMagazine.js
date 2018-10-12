@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
 
 class CreateMagazine extends Component {
@@ -31,17 +32,16 @@ class CreateMagazine extends Component {
 
         alert(JSON.stringify(newMagazine))
 
-/*
-        apiCall('/createnewuser', newUser)
+        apiCall('/resources', {"resource_data": newMagazine,"type":"Magazine"})
         .then( res => res.json() )
-        .then (json => {
+        .then ( json => {
           alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
           }
 
-        })*/
+        })
       
   }
   render() {

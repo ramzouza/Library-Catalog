@@ -1,7 +1,35 @@
 import React, { Component } from 'react';
+import {GET} from './ApiCall';
 
 class Search extends Component {
+
+  constructor(){
+    super()
+
+    this.state = {
+      resource_list: []
+    }
+  }
+
+
+  componentDidMount(){
+    
+    GET('/resources')
+      .then(res => res.json())
+      .then( json => {
+
+        console.log("===== DATABASE ======");
+        console.log(json.results);
+        console.log("======================");
+        delete json.results[0]
+        this.setState({resource_list: json.results})
+      })
+  }
+
+
   render() {
+    const {resource_list} = this.state;
+    console.log(resource_list);
     return (
       <div style={main}>
         <input style={input} type="text" placeholder="Search for a resource ..." ></input>
@@ -12,6 +40,9 @@ class Search extends Component {
           Movie <input type="checkbox" ></input>
         </div>
         <button style={button} type="button">Search</button>
+
+        <h1>High Quality Database</h1>
+        {resource_list.map( ({id, title}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {id}  ({title})</p> )}
 
       </div>
     );

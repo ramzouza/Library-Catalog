@@ -1,5 +1,9 @@
 const objectToQueryString = require("./UserCatalog").objectToQueryString
 const Book = require('./Book');
+const Movie = require('./Movie');
+const Magazine = require('./Magazine');
+const Music = require('./Music');
+
 
 var key = 0;
 var ResourceList = [];
@@ -21,13 +25,13 @@ class ResourceCatalog {
                 resource = new Book(resourceData);
                 break;
             case "Magazine":
-                resource = new Magazine(resourceData, id=-1, instances=1);
+                resource = new Magazine(resourceData);
                 break;      
             case "Movie":
-                resource = new Movie(resourceData, id=-1, instances=1);
+                resource = new Movie(resourceData);
                 break;        
             case "Music":
-                resource = new Music(resourceData, id=-1, instances=1);
+                resource = new Music(resourceData);
                 break;          
     }
     resource.id = ResourceCatalog.getkey();
@@ -38,6 +42,10 @@ class ResourceCatalog {
     
     return {status: 0, message: "Saved resource", results: resource }
     
+  }
+
+  static GetAllResources(){
+      return ResourceList;
   }
 
   static DeleteResource(resource_id){

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
 
 class CreateMovie extends Component {
@@ -37,21 +38,21 @@ class CreateMovie extends Component {
         subtitles,
         dubbed,
         release_date,
-        run_time}
+        run_time
+      }
 
-        console.log(newMovie)
 
-
-       /* apiCall('/createbook', CreateBook)
+      apiCall('/resources', {"resource_data": newMovie,"type":"Movie"})
         .then( res => res.json() )
-        .then (json => {
+        .then ( json => {
           alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
           }
 
-        })*/
+        })
+       
       
   }
   render() {
