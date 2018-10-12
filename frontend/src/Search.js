@@ -22,7 +22,7 @@ class Search extends Component {
   .then( res => res.json() )
   .then ( json => {
     alert(json.message)
-    if(json.status == 0){
+    if(json.status === 0){
       let resource_list = this.state.resource_list
       resource_list[id].title=title
     }
