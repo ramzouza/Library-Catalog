@@ -243,10 +243,10 @@ app.put('/resources', (req,res) => {
     }
 
     // get resource data and their type
-    const { resource_id, resource_data} = req.body
+    const { id, title } = req.body.resource_data
 
     // Edit the Resource
-    const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data);
+    const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
 
     if(status == 1){
         res.status(400);

@@ -13,7 +13,8 @@ class Search extends Component {
 
   handleClickEdit(id){
   
- const res = {Id : id,title:document.getElementById(id).value}
+    const title = document.getElementById(id).value
+    const res = {id,title}
  
 
 
@@ -21,11 +22,10 @@ class Search extends Component {
   .then( res => res.json() )
   .then ( json => {
     alert(json.message)
-
-    if(json.status === 0){
-      this.props.history.push('/')
+    if(json.status == 0){
+      let resource_list = this.state.resource_list
+      resource_list[id].title=title
     }
-
   })
       
   }
