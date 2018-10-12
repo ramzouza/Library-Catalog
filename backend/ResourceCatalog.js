@@ -48,6 +48,16 @@ class ResourceCatalog {
       return ResourceList;
   }
 
+  static EditResource(resource_id,resource_data){
+    if(ResourceList[resource_id]!=undefined || ResourceList!=null){
+            ResourceList[resource_id].Title = resource_data.Title;
+                
+    return { status: 0, message: "Resource was Updated"}
+    }
+    else
+    return { status: 1, message: "Resource was not found"}
+  }
+
   static DeleteResource(resource_id){
     if(ResourceList[resource_id]){
         ResourceList[resource_id] = undefined;

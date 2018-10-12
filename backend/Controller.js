@@ -18,6 +18,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, id");
     next()
 })
@@ -204,7 +205,7 @@ app.get('/resources', (req,res) => {
 })
 
 // EDIT resource by resource_ID
-app.put('/resources', (req,res) => {
+/*app.put('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
@@ -219,6 +220,33 @@ app.put('/resources', (req,res) => {
 
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
+
+    if(status == 1){
+        res.status(400);
+        res.json({status, message, error});
+        logger(`PUT - [/resources] - ${400} - ${sender_id} `);
+    } else {
+        res.status(200);
+        res.json({status, message, results});
+        logger(`PUT - [/resources] - ${200} - ${sender_id} `);
+    }
+
+})*/
+app.put('/resources', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+
+    // get resource data and their type
+    const { resource_id, resource_data} = req.body
+
+    // Edit the Resource
+    const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data);
 
     if(status == 1){
         res.status(400);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {apiCall,GET,PUT,POST,DELETE} from './ApiCall';
+import {GET,PUT} from './ApiCall';
 
 class Search extends Component {
 
@@ -13,11 +13,11 @@ class Search extends Component {
 
   handleClickEdit(id){
   
- const res = {id : id,title:document.getElementById(id).value}
+ const res = {Id : id,title:document.getElementById(id).value}
  
 
 
-  apiCall('/EditResource', {"resource_data": res,"type":"Book"})
+ PUT('/resources', {"resource_data": res})
   .then( res => res.json() )
   .then ( json => {
     alert(json.message)
