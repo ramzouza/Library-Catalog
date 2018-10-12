@@ -42,7 +42,7 @@ class Search extends Component {
         <button style={button} type="button">Search</button>
 
         <h1>High Quality Database</h1>
-        {resource_list.map( ({id, title}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {id}  ({title})</p> )}
+        {resource_list.map( ({id, title }) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {id}  ({title})</p> )}
 
       </div>
     );
