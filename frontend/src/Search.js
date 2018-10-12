@@ -35,8 +35,6 @@ class Search extends Component {
       
   }
 
-
-
   componentDidMount(){
     
     GET('/resources')
