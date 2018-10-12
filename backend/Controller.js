@@ -80,35 +80,37 @@ app.post('/createnewuser',  (req, res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
+    } else {
+
+        // declare user data
+        const user = {
+            password,
+            isActive,
+            firstName,
+            lastName,
+            physicalAddress,
+            email,
+            phoneNumber, isAdmin
+        } = req.body;
+    
+        // hash the password and delete the password
+        user.password_hash = AuthService.bestHashEver(password);
+        delete user.password;
+    
+        // make the user
+        const {status, message, error, results} = UserCatalog.MakeNewUser(user);
+    
+        if(status == 1){
+            res.status(400)
+            res.json({status, message, error})
+            logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
+        } else {
+            res.status(200)
+            res.json({status, message, user_id: results.insertId, error})
+            logger(`POST - [/createnewuser] - ${200} - ${sender_id} `)
+        }
     }
     
-    // declare user data
-    const user = {
-        password,
-        isActive,
-        firstName,
-        lastName,
-        physicalAddress,
-        email,
-        phoneNumber, isAdmin
-    } = req.body;
-
-    // hash the password and delete the password
-    user.password_hash = AuthService.bestHashEver(password);
-    delete user.password;
-
-    // make the user
-    const {status, message, error, results} = UserCatalog.MakeNewUser(user);
-
-    if(status == 1){
-        res.status(400)
-        res.json({status, message, error})
-        logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
-    } else {
-        res.status(200)
-        res.json({status, message, user_id: results.insertId, error})
-        logger(`POST - [/createnewuser] - ${200} - ${sender_id} `)
-    }
 })
 
 app.delete('/deleteuser', (req, res) => {
@@ -119,20 +121,21 @@ app.delete('/deleteuser', (req, res) => {
         res.status(400)
         res.json({status:1, message:"Not Authorized"})
         logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
-    }
-
-    const deleted_user_id = req.body.user_id;
-
-    const {status, message, error } = UserCatalog.DeleteUserById(deleted_user_id);
-    if(status == 1){
-        res.status(400)
-        res.json({status, message, error})
-        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
     } else {
-        res.status(200)
-        res.json({status, message, error})
-        logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
+        const deleted_user_id = req.body.user_id;
+    
+        const {status, message, error } = UserCatalog.DeleteUserById(deleted_user_id);
+        if(status == 1){
+            res.status(400)
+            res.json({status, message, error})
+            logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
+        } else {
+            res.status(200)
+            res.json({status, message, error})
+            logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
+        }
     }
+
 })
 
 app.post('/loggedusers', (req, res) => {
@@ -163,23 +166,25 @@ app.post('/resources', (req, res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST -  [/resources] - ${400} - ${sender_id} `)
+    } else {
+
+        // get resource data and their type
+        const { resource_data , type } = req.body;
+        
+        // make new resource
+        const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
+        
+        if(status == 1){
+            res.status(400)
+            res.json({status, message, error})
+            logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
+        } else {
+            res.status(200)
+            res.json({status, message, results})
+            logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
+        }
     }
 
-    // get resource data and their type
-    const { resource_data , type } = req.body;
-    
-    // make new resource
-    const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
-    
-    if(status == 1){
-        res.status(400)
-        res.json({status, message, error})
-        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
-    } else {
-        res.status(200)
-        res.json({status, message, results})
-        logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
-    }
 
 
 })
@@ -193,14 +198,15 @@ app.get('/resources', (req,res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`GET -  [/resources] - ${400} - ${sender_id} `)
-    }
+    }else {
 
-    // get resources here
-    const resource_list = ResourceCatalog.GetAllResources();
-    console.log(resource_list);
-    res.status(200);
-    res.json({"results":resource_list});
-    logger(`GET - [/resources] - ${200} - ${sender_id} `);
+        // get resources here
+        const resource_list = ResourceCatalog.GetAllResources();
+        console.log(resource_list);
+        res.status(200);
+        res.json({"results":resource_list});
+        logger(`GET - [/resources] - ${200} - ${sender_id} `);
+    }
 })
 
 // EDIT resource by resource_ID
@@ -212,23 +218,25 @@ app.put('/resources', (req,res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    }
+    } else {
 
     // get resource data and their type
-    const { resource_id, resource_data , type } = req.body
+        const { resource_id, resource_data , type } = req.body
 
-    // Edit the Resource
-    const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
+        // Edit the Resource
+        const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
 
-    if(status == 1){
-        res.status(400);
-        res.json({status, message, error});
-        logger(`PUT - [/resources] - ${400} - ${sender_id} `);
-    } else {
-        res.status(200);
-        res.json({status, message, results});
-        logger(`PUT - [/resources] - ${200} - ${sender_id} `);
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`PUT - [/resources] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`PUT - [/resources] - ${200} - ${sender_id} `);
+        }
     }
+
 
 })
 
@@ -241,22 +249,23 @@ app.delete('/resources', (req,res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    }
+    }else {
 
-    // get resource data and their type
-    const { resource_id } = req.body
+        // get resource data and their type
+        const { resource_id } = req.body
 
-    // Edit the Resource
-    const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);
+        // Edit the Resource
+        const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);
 
-    if(status == 1){
-        res.status(400);
-        res.json({status, message, error});
-        logger(`DELETE - [/resources] - ${400} - ${sender_id} `);
-    } else {
-        res.status(200);
-        res.json({status, message, results});
-        logger(`DELETE - [/resources] - ${200} - ${sender_id} `);
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`DELETE - [/resources] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`DELETE - [/resources] - ${200} - ${sender_id} `);
+        }
     }
 
 })
