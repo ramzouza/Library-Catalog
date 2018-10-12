@@ -14,7 +14,14 @@ class Navbar extends Component {
 
         {!logged?<Redirect to="/login"/> : null}
 
+        {logged?         
+         (<Link to="/" style={{textDecoration: 'none', color:'white' }}>
+            <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',padding: 15}}>Home</div>
+          </Link>)
+          : null }
+          
         <div/>
+
         <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',}}>
         
         { admin?         

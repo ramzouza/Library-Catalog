@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET} from './ApiCall';
+import {apiCall,GET,PUT,POST,DELETE} from './ApiCall';
 
 class Search extends Component {
 
@@ -11,7 +11,24 @@ class Search extends Component {
     }
   }
 
+  handleClickEdit(id){
+  
+ const res = {id : id,title:document.getElementById(id).value}
+ 
 
+
+  apiCall('/EditResource', {"resource_data": res,"type":"Book"})
+  .then( res => res.json() )
+  .then ( json => {
+    alert(json.message)
+
+    if(json.status === 0){
+      this.props.history.push('/')
+    }
+
+  })
+      
+  }
   componentDidMount(){
     
     GET('/resources')
@@ -42,7 +59,10 @@ class Search extends Component {
         <button style={button} type="button">Search</button>
 
         <h1>High Quality Database</h1>
-        {resource_list.map( ({id, title }) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {id}  ({title})</p> )}
+        {resource_list.map( ({id, title }) => <div key={id}><input  type="text" disabled value={id}/> 
+         <input id={id} type="text"  defaultValue={title} />
+         <button style={button} onClick={() => this.handleClickEdit(id)} type="button">Edit </button>
+         </div> )}
 
       </div>
     );
