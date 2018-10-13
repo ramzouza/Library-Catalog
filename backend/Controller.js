@@ -175,11 +175,11 @@ app.post('/resources', (req, res) => {
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
-        logger(`POST - [/deleteuser] - ${400} - ${sender_id} `)
+        logger(`POST - [/resources] - ${400} - ${sender_id} `)
     } else {
         res.status(200)
         res.json({status, message, results})
-        logger(`POST - [/deleteuser] - ${200} - ${sender_id} `)
+        logger(`POST - [/resources] - ${200} - ${sender_id} `)
     }
 
 
@@ -198,7 +198,7 @@ app.get('/resources', (req,res) => {
 
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
-    console.log(resource_list);
+    console.log({resource_list})
     res.status(200);
     res.json({"results":resource_list});
     logger(`GET - [/resources] - ${200} - ${sender_id} `);
@@ -240,24 +240,22 @@ app.put('/resources', (req,res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    }
-
-    // get resource data and their type
-    const { id, title } = req.body.resource_data
-
-    // Edit the Resource
-    const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
-
-    if(status == 1){
-        res.status(400);
-        res.json({status, message, error});
-        logger(`PUT - [/resources] - ${400} - ${sender_id} `);
     } else {
-        res.status(200);
-        res.json({status, message, results});
-        logger(`PUT - [/resources] - ${200} - ${sender_id} `);
-    }
+            // get resource data and their type
+        const { id, title } = req.body.resource_data
+        // Edit the Resource
+        const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
 
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`PUT - [/resources] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`PUT - [/resources] - ${200} - ${sender_id} `);
+        }
+    }
 })
 
 // Delete resource by resource_ID
@@ -269,23 +267,23 @@ app.delete('/resources', (req,res) => {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    }
-
-    // get resource data and their type
-    const { resource_id } = req.body;
-
-
-    // Edit the Resource
-    const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);
-
-    if(status == 1){
-        res.status(400);
-        res.json({status, message, error});
-        logger(`DELETE - [/resources] - ${400} - ${sender_id} `);
     } else {
-        res.status(200);
-        res.json({status, message, results});
-        logger(`DELETE - [/resources] - ${200} - ${sender_id} `);
+        // get resource data and their type
+        const { resource_id } = req.body;
+
+
+        // Edit the Resource
+        const {status, message, results, error} = ResourceCatalog.DeleteResource(resource_id);
+
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`DELETE - [/resources] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`DELETE - [/resources] - ${200} - ${sender_id} `);
+        }
     }
 
 })

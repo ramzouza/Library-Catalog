@@ -11,8 +11,7 @@ var ResourceList = [];
 class ResourceCatalog {
 
     static getkey(){
-        key++
-        return key;
+        return key++;
     }
     static getResList(){
         return ResourceList;
@@ -34,16 +33,29 @@ class ResourceCatalog {
                 resource = new Music(resourceData);
                 break;          
     }
-    resource.id = ResourceCatalog.getkey();
-    ResourceList[resource.id] = resource
-    if(ResourceList[resource.id]){
+    resource.id = ResourceCatalog.getkey()
+    resource.type = type
+    const found = this.find(resource.id)
+    
+    if(found){
         return { status: 0, message: "An existing resource got an extra instance", results: resource}
     }
-    
+    this.add(resource)
     return {status: 0, message: "Saved resource", results: resource }
     
   }
 
+  static add(resource){
+    ResourceList.push(resource)
+  }
+  
+  static find(id) {
+      return ResourceList.find( x => x.id === id)
+  }
+
+  static delete(id){
+      ResourceList = ResourceList.filter( x => x.id != id)
+  }
   static GetAllResources(){
       return ResourceList;
   }
@@ -65,7 +77,7 @@ class ResourceCatalog {
 
   static DeleteResource(resource_id){
     if(ResourceList[resource_id]){
-        delete ResourceList[resource_id];
+        this.delete(resource_id)
         this.logCurrentState();
         return { status: 0, message: "Resource was deleted", results: resource_id}
     } else {
