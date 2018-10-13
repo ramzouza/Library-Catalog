@@ -5,7 +5,7 @@ Web application for a Software Architecture and Design course
 ## Collaborators of TEAM 13
 
 * **Ramez Zaid** (*) - [Ramez Zaid](https://github.com/ramzouza) 
-* **William Lussier**  -[William Lussier](https://github.com/lussier115) 
+* **William-Andrew Lussier**  -[William-Andrew Lussier](https://github.com/lussier115) 
 * **Berfin Saricam** - [Berfin Saricam](https://github.com/GitBsrc) 
 * **Karl-Joey Chami** - [Karl-Joey Chami](https://github.com/karlchami)
 * **Skander Ben Mekki** - [Skander Ben Mekki](https://github.com/skanderbm123)
@@ -37,17 +37,19 @@ Admin credentials:
 * **password**: ribalestbeau
 * **db**: mysql
 
+To run the backend tests, simply run the command `npm test` inside the backend directory.
+
 To run the backend server : 
 
 * Make sure you have the latest version of nodejs
 * Move into the backend folder
 * Run `npm install` if you haven't already
 * Run `npm start` to start the server. 
+* If you are on windows, try running `npm run start-windows`
 
 For development, we use `nodemon`.
 * Run `npm run dev` inside the backend folder.  
 That will allow you to perform code changes and automatically reload the server. 
 
 >> PS: The scripts allow for a port parameter. You can run the server on any port adding **-p**. Example: `npm start -p 3001` will start the server on port 3001
-
 

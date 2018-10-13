@@ -5,6 +5,11 @@ import Login from './Login'
 import Logged from './Logged'
 import NewUser from './NewUser'
 import LoggedUsers from './LoggedUsers'
+import CreateResource from './CreateResource'
+import CreateBook from './CreateBook'
+import CreateMagazine from './CreateMagazine'
+import CreateMovie from './CreateMovie'
+import CreateMusic from './CreateMusic'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
@@ -35,14 +40,20 @@ class App extends Component {
     if(id)
       apiCall('/disconnect', {id})
   }
+  
   render() {
     return (
       <div style={main}>
         <Router>
           <Switch>
             <Route exact path="/login" component={Login}/>
-            <Route exact path="/" component={Logged} />
-            <Route initial exact path="/newuser" component={NewUser} />
+            <Route initial exact path="/" component={Logged} />
+            <Route exact path="/create/user" component={NewUser} />
+            <Route exact path="/create" component={CreateResource} />
+            <Route exact path="/create/book" component={CreateBook} />
+            <Route exact path="/create/magazine" component={CreateMagazine} />
+            <Route exact path="/create/movie" component={CreateMovie} />
+            <Route exact path="/create/music" component={CreateMusic} />
             <Route exact path="/loggedusers" component={LoggedUsers} />
           </Switch>
         </Router>

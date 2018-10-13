@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
   constructor(){
@@ -34,6 +35,8 @@ class Login extends Component {
   }
 
   render() {
+    const logged = cookie.load('logged') === 'yes'
+
     return (
       <div style={main} >
         <span style={{fontWeight: 'bold'}} >Login</span>
@@ -49,7 +52,7 @@ class Login extends Component {
           <button style={button} type="button" onClick={ this.loginEvent.bind(this) }>
             Login
           </button>
-
+          {logged ? <Redirect to="/"/> : null}
       </div>
     );
   }

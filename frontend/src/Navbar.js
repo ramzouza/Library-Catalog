@@ -14,18 +14,35 @@ class Navbar extends Component {
 
         {!logged?<Redirect to="/login"/> : null}
 
+        {logged?         
+         (<Link to="/" style={{textDecoration: 'none', color:'white' }}>
+            <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',padding: 15}}>Home</div>
+          </Link>)
+          : null }
+          
         <div/>
+
         <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',}}>
         
         { admin?         
-         (<Link to="/newuser" style={{textDecoration: 'none', color:'white' }}>
+         (<Link to="/create/user" style={{textDecoration: 'none', color:'white' }}>
             <div style={{padding: 15}}>Create User</div>
           </Link>)
           : null }
-
-
-          <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
           
+          { admin? 
+           (<Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>
+              <div style={{padding: 15}}>Logged Users</div>
+            </Link>)
+          : null }
+
+          { admin? 
+           (<Link to="/create" style={{textDecoration: 'none', color:'white' }}>
+              <div style={{padding: 15}}>Create ressource</div>
+            </Link>)
+          : null }
+          
+          <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
           <div onClick={ _ => {
                 const id = cookie.load('id')  
                 cookie.remove('logged') 
@@ -33,18 +50,12 @@ class Navbar extends Component {
                 cookie.remove('email')
                 cookie.remove('id')
                 
+                alert('Goodbye!')
                 apiCall('/disconnect',{id})
               }} 
                 style={{padding: 15}}>Log out</div>
           </Link>
           
-          { admin? 
-           (<Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>
-              <div style={{padding: 15}}>Logged Users</div>
-            </Link>)
-          : null }
-          
-
         </div>
       </div>
     );
