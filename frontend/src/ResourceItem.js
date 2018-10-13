@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {PUT, DELETE} from './ApiCall';
+import cookie from 'react-cookies'
 
 const bookPic = "http://pngimg.com/uploads/book/book_PNG51061.png"
 const magPic = "http://icons.iconarchive.com/icons/icons8/windows-8/256/Printing-Magazine-icon.png"
@@ -70,6 +71,7 @@ class ResourceItem extends Component {
     render() {
         const { id, title, type } = this.props
         const { editing } = this.state
+        const admin = cookie.load('admin') === 'yes'
         return (
             <div style={main}>
                 <div>
@@ -77,10 +79,12 @@ class ResourceItem extends Component {
                     {editing ? <input placeholder={title} onChange={e => this.setState({title: e.target.value})}/>
                             :  <a>Title: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{title}</a></a>}
                 </div>
-                <div>
-                    <img alt="" style={icons} src={editPic} onClick={() => this.handleClickEdit(id)} />
-                    <img alt="" style={icons} src={delPic} onClick={() => this.handleClickDelete(id)} />
-                </div>
+                { admin ? (<div>
+                                <img alt="" style={icons} src={editPic} onClick={() => this.handleClickEdit(id)} />
+                                <img alt="" style={icons} src={delPic} onClick={() => this.handleClickDelete(id)} />
+                            </div>) : null
+
+                }
 
             </div>
         );
