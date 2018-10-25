@@ -1,5 +1,6 @@
 const MySql = require('sync-mysql')
 const User = require('./User')
+const UserMapper = require('./UserMapper')
 
 const connection = new MySql({
     host: '18.221.83.136',
@@ -15,12 +16,7 @@ class UserCatalog {
         const { results, error }  = this.GetUserByEmail(user.email);
         if (results.length != 0) // Array is not empty
             return { status: 1, message: 'User exists already', error }
-        try {
-            const data = connection.query(`INSERT INTO users VALUES (${this.objectToQueryString(user)})`)
-            return { status: 0, message: 'Ok', results: data }
-        } catch (error) {
-            return { status: 1, message: 'Error'+error, error }
-        }
+        return UserMapper.PersistUser(user)
     }
 
     static GetUserByEmail(email) { // Sync
