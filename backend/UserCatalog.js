@@ -1,13 +1,5 @@
-const MySql = require('sync-mysql')
 const User = require('./User')
 const UserMapper = require('./UserMapper')
-
-const connection = new MySql({
-    host: '18.221.83.136',
-    user: 'root',
-    password: 'ribalestbeau',
-    database: 'mysql',
-})
 
 class UserCatalog {
     static MakeNewUser(user_data) { // Sync
@@ -20,51 +12,24 @@ class UserCatalog {
     }
 
     static GetUserByEmail(email) { // Sync
-        try {
-            const data = connection.query(`SELECT * FROM users where email='${email}'`)
-            return { status: 0, results: data }
-        } catch (error) {
-            return { status: 1, error }
-        }
+        return UserMapper.RetrieveUserByEmail(email)
     }
 
     static GetUserById(id) { // Sync
-        try {
-            const data = connection.query(`SELECT * FROM users where id='${id}'`)
-            return { status: 0, message: "User found.", results: data }
-        } catch (error) {
-            return { status: 1, message : "Error...", error }
-        }
+        return UserMapper.RetrieveUserById(id)
     }
 
     static DeleteUserById(id) {
-        try {
-            const data = connection.query(`DELETE FROM users where id=${id}`);
-            return { status: 0, message: "User Deleted.", results: data}
-        } catch(error){
-            return {status: 1, message: "Error...", error};
-        }
+        return UserMapper.DeleteUser(id)
     }
 
     static ViewLoggedInUsers() { // Sync
-        try {
-            const data = connection.query(`SELECT * FROM users where isActive=1`)
-            const usersArray = data.map(user => { return { user: user.email, isAdmin: user.isAdmin ? 'Admin' : 'Client' } })
-
-            return { status: 0, results: data,users: usersArray }
-        } catch (error) {
-            return { status: 1, error }
-        }
+        return UserMapper.ActiveUsers()
     }
 
 
     static SetIsActive(id, isActive) { // Sync
-        try{
-            const data = connection.query(`UPDATE users SET isActive=${isActive} WHERE id='${id}'`)
-            return { status: 0, results: data }
-        } catch (error) {
-            return { status: 1, error}
-        }
+        return UserMapper.SetActive(id,isActive)
     }
 
     static objectToQueryString(object) { // Helper. This method turns an object into a string formated for an SQL query
