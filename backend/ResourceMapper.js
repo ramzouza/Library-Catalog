@@ -51,7 +51,7 @@ class ResourceMapper {
     // Method to update relevant resource given the new information
     static update(resource_data) {
         try {
-            const data = connection.query(`UPDATE resources VALUES (${this.objectToQueryString(resource_data)}) WHERE id='${resource_data.id}'`);
+            const data = connection.query(`UPDATE resources SET instances = '${resource_data.instances}', title = '${resource_data.title}' WHERE id='${resource_data.id}'`);
             return {status : 0, message : 'Resource updated.', results : data}
         }
         catch(error) {
