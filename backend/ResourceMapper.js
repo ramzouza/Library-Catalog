@@ -11,7 +11,7 @@ const connection = new MySql({
 // ResourceMapper class that will make calls to the database whenever a resource needs to be added, updated or deleted
 class ResourceMapper {
 
-    //Method to insert resource into resources table
+    // Method to insert resource into resources table
     static insert(resource_data) {
         const res = new Resource(resource_data);
         const found = this.find(res.id);
@@ -59,7 +59,8 @@ class ResourceMapper {
         }
     }
 
-    static objectToQueryString(object) { // Helper. This method turns an object into a string formated for an SQL query
+    // Helper. This method turns an object into a string formated for an SQL query
+    static objectToQueryString(object) { 
         return Object.values(object).map(x => "'" + x + "'").join(',');
     }
 }

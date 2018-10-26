@@ -9,8 +9,9 @@ Post('/resources','Resource should be created', {resource_data: mockResource, ty
         expect(res.body.status).to.equal(0);
         let insertId = res.body.results.id;
 
+        // Test to be uncommented once issue is fixed...
         /* editResource not implemented yet
-            // Change mockResource
+            // Change mockResource to test resource updates
             mockResource.firstName = "new name";
             Put('/resources', 'Resource should be updated.', {"resource_id": insertId, "resource": mockResource}, ({expect, rest}) =>{
                 expect(res.body.status).to.equal(0);
