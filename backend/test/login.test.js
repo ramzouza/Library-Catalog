@@ -1,4 +1,4 @@
-const {Post} = require('../CreateTest')
+const {Post} = require('./CreateTest')
 
 Post('/login','message should say Welcome',{email: 'ced@gmail.com', password: 'ced'},({expect, res})=>{
     expect(res.body.message).to.equal('Welcome')

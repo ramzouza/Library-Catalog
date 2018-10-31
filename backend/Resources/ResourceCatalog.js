@@ -1,4 +1,4 @@
-const objectToQueryString = require("./UserCatalog").objectToQueryString
+const objectToQueryString = require("../Users/UserCatalog").objectToQueryString
 const Book = require('./Book');
 const Movie = require('./Movie');
 const Magazine = require('./Magazine');

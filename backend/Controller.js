@@ -9,9 +9,9 @@ const logger = (message) => {
     withlog ? log('Controller - ' + message) : null
 }
 // ============ Architecture Classes ==========
-const AuthService = require('./AuthService')
-const UserCatalog = require('./UserCatalog')
-const ResourceCatalog = require('./ResourceCatalog')
+const AuthService = require('./Users/AuthService')
+const UserCatalog = require('./Users/UserCatalog')
+const ResourceCatalog = require('./Resources/ResourceCatalog')
 
 // ============ Allow Requests from a Browser ==========
 app.use(bodyParser.json()); // for parsing application/json

@@ -1,4 +1,4 @@
-const {Post, Delete, Get, Put} = require('../CreateTest')
+const {Post, Delete, Get, Put} = require('./CreateTest')
 
 
 const mockResource = {
