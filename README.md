@@ -1,4 +1,4 @@
-# Library-Catalog-Web-App-2
+# Library-Catalog-Web-App
 Web application for a Software Architecture and Design course
 [Check out the wiki](https://github.com/ramzouza/Library-Catalog/wiki)
 
