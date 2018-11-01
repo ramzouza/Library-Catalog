@@ -198,14 +198,13 @@ app.get('/resources', (req,res) => {
 
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
-    console.log({resource_list})
     res.status(200);
-    res.json({"results":resource_list});
+    res.json({"results":resource_list.results});
     logger(`GET - [/resources] - ${200} - ${sender_id} `);
 })
 
 // EDIT resource by resource_ID
-/*app.put('/resources', (req,res) => {
+app.put('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
@@ -217,7 +216,6 @@ app.get('/resources', (req,res) => {
 
     // get resource data and their type
     const { resource_id, resource_data , type } = req.body
-
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
 
@@ -231,31 +229,6 @@ app.get('/resources', (req,res) => {
         logger(`PUT - [/resources] - ${200} - ${sender_id} `);
     }
 
-})*/
-app.put('/resources', (req,res) => {
-    // check if the sender is authenticated
-    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    } else {
-            // get resource data and their type
-        const { id, title } = req.body.resource_data
-        // Edit the Resource
-        const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
-
-        if(status == 1){
-            res.status(400);
-            res.json({status, message, error});
-            logger(`PUT - [/resources] - ${400} - ${sender_id} `);
-        } else {
-            res.status(200);
-            res.json({status, message, results});
-            logger(`PUT - [/resources] - ${200} - ${sender_id} `);
-        }
-    }
 })
 
 // Delete resource by resource_ID
