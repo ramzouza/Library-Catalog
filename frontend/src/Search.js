@@ -8,8 +8,26 @@ class Search extends Component {
     this.state = {
       resource_list: []
     }
+    this.advancedSearch = {
+      title: "",
+      author: "",
+      ISBN: "",
+      Movie: 0,
+      Book: 0,
+      Magazine: 0,
+      Music: 0,
+    
+    }
   }
-  
+  handleClickAdvancedSearch(){
+    var title = document.getElementById("advanced_title").value;
+    var author = document.getElementById("advanced_author").value;
+    var isbn = document.getElementById("advanced_isbn").value;
+    var advanced_checkbox_book= document.getElementById("advanced_checkbox_book").value;
+    var advanced_checkbox_movie= document.getElementById("advanced_checkbox_movie").value;
+    var advanced_checkbox_magazine= document.getElementById("advanced_checkbox_magazine").value;
+    var advanced_checkbox_music= document.getElementById("advanced_checkbox_music").value;
+}
   render() {
     const {resource_list} = this.state;
     console.log(resource_list);
@@ -37,17 +55,18 @@ class Search extends Component {
                   <h4 class="modal-title">Advanced Search</h4>
                 </div>
                 <div class="modal-body">
-                 <span>Title  : </span><input></input><br></br>
-                 <span>Author : </span><input></input><br></br>
-                 <span>ISBN : </span><input></input><br></br>
+                 <span>Title  : </span><input id= "advanced_title"></input><br></br>
+                 <span>Author : </span><input id= "advanced_author" ></input><br></br>
+                 <span>ISBN : </span><input id= "advanced_isbn"></input><br></br>
                  <span>Type : </span>
-                 <input type="checkbox" name="book" value="book" /> Book &nbsp;
-                 <input type="checkbox" name="magazine" value="magazine" /> Magazine &nbsp;
-                 <input type="checkbox" name="movie" value="movie" /> Movie &nbsp;
-                 <input type="checkbox" name="music" value="music" /> Music &nbsp;
+                 <input id= "advanced_checkbox_book" type="checkbox" name="book" value="book" /> Book &nbsp;
+                 <input id= "advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" /> Magazine &nbsp;
+                 <input id= "advanced_checkbox_movie" type="checkbox" name="movie" value="movie" /> Movie &nbsp;
+                 <input id= "advanced_checkbox_music" type="checkbox" name="music" value="music" /> Music &nbsp;
                  
                 </div>
                 <div class="modal-footer">
+                <button type="button" onClick={() => this.handleClickAdvancedSearch()} class="btn btn-default">Search</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div>
