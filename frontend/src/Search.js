@@ -14,16 +14,15 @@ class Search extends Component {
     const {resource_list} = this.state;
     console.log(resource_list);
     return (
+      <div>
       <div style={main}>
         <input style={input} type="text" placeholder="Search for a resource ..." ></input>
-        <div style={{display:'flex', width: '60%',justifyContent:'space-between'}}>
-          Book <input type="checkbox" ></input>
-          Magazine <input type="checkbox" ></input>
-          Music <input type="checkbox" ></input>
-          Movie <input type="checkbox" ></input>
+        <button ><img alt="advanced search" src= "../../images/advancedSearch.png" /> </button>
         </div>
-        <button style={button} type="button">Search</button>
+        <div>
+      <button style={button} type="button">Search</button>
       </div>
+     </div>
     );
   }
 }
@@ -32,8 +31,7 @@ export default Search;
 const  main = {
     minWidth: '30%',
     display:'flex',
-    flexDirection: 'column',
-    alignItems:'center',
+    flexDirection: 'row',
     
 }
 
