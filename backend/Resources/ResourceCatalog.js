@@ -1,8 +1,9 @@
 const objectToQueryString = require("../Users/UserCatalog").objectToQueryString
-const Book = require('./Book');
-const Movie = require('./Movie');
-const Magazine = require('./Magazine');
-const Music = require('./Music');
+const Book = require('./Book.js');
+const Movie = require('./Movie.js');
+const Magazine = require('./Magazine.js');
+const Music = require('./Music.js');
+const ResourceMappter = require('./ResourceMapper');
 
 
 var key = 0;
@@ -16,7 +17,7 @@ class ResourceCatalog {
     static getResList(){
         return ResourceList;
     }
- 
+ /*
     static MakeNewResource(resourceData, type){
         let resource = null;
         switch(type){
@@ -44,37 +45,41 @@ class ResourceCatalog {
     return {status: 0, message: "Saved resource", results: resource }
     
   }
-
+*/
   static add(resource){
-    ResourceList.push(resource)
+    ResourceMappter.insert(resource)
   }
   
+  
   static find(id) {
-      return ResourceList.find( x => x.id === id)
+      ResourceMappter.select(id)
+   //   return ResourceList.find( x => x.id === id)
   }
 
   static delete(id){
-      ResourceList = ResourceList.filter( x => x.id != id)
+      ResourceMapper.select(id)
+    //  ResourceList = ResourceList.filter( x => x.id != id)
   }
+
   static GetAllResources(){
       return ResourceList;
   }
 
-  static EditResource(id,title){
+  /*static EditResource(id,title){
     if(ResourceList[id]!=undefined || ResourceList!=null){
             ResourceList[id].title = title;
     return { status: 0, message: "Resource was Updated"}
     }
     else
     return { status: 1, message: "Resource was not found"}
-  }
+  } */
 
   static logCurrentState(){
       console.log("===========");
       console.log(ResourceList);
       console.log("===========");
   }
-
+/*
   static DeleteResource(resource_id){
     if(ResourceList[resource_id]){
         this.delete(resource_id)
@@ -84,7 +89,7 @@ class ResourceCatalog {
         return { status: 1, message: "Resource not found/deleted"}
     }
   }
-
+*/
 }
 
 module.exports = ResourceCatalog 
