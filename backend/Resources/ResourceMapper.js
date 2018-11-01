@@ -31,6 +31,7 @@ class ResourceMapper {
 
                     const child_data = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)[0];
                     child_data['title'] = resource_data[0].title;
+
                     switch(resource_type){
                         case "book":
                             resource = new Book(child_data,resource_id);
