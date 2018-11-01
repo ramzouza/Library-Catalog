@@ -1,3 +1,8 @@
+const IdentifyMap = require("../IdentityMap.js");
+const Book = require('./Book');
+const Movie = require('./Movie');
+const Magazine = require('./Magazine');
+const Music = require('./Music');
 const MySql = require('sync-mysql')
 const Resource = require('./Resource')
 
@@ -11,6 +16,45 @@ const connection = new MySql({
 // ResourceMapper class that will make calls to the database whenever a resource needs to be added, updated or deleted
 class ResourceMapper {
 
+
+    static select(id){
+        try {
+            resource = IdentifyMap[id];
+            return resource;
+        } catch (e) {
+            try{
+                let resource = {};
+                const resource_data = connection.query(`SELECT * FROM resource where id= '${id}'`);
+                if (resource_data.length > 0){
+                    const resource_id = resource_data[0].id;
+                    const resource_type = resource_data[0].type;
+
+                    const child_data = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)[0];
+                    child_data['title'] = resource_data[0].title;
+                    switch(resource_type){
+                        case "book":
+                            resource = new Book(child_data,resource_id);
+                            break;
+                        case "magazine":
+                            resource = new Magazine(child_data,resource_id);
+                            break;      
+                        case "movie":
+                            resource = new Movie(child_data,resource_id);
+                            break;        
+                        case "music":
+                            resource = new Music(child_data,resource_id);
+                            break;
+                    }
+                    IdentifyMap[resource_id] = resource;
+                }
+                return {status: 0, message: 'Ok', results: resource};
+            } catch (error){
+                return{ status: 1, message: 'Error' +error, error}
+            }
+
+        }
+ 
+    }
     // Method to insert resource into resources table
     static insert(resource_data) {
         const res = new Resource(resource_data);
@@ -64,3 +108,5 @@ class ResourceMapper {
         return Object.values(object).map(x => "'" + x + "'").join(',');
     }
 }
+
+module.exports = ResourceMapper;
