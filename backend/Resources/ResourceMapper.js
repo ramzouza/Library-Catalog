@@ -28,9 +28,13 @@ class ResourceMapper {
                 if (resource_data.length > 0){
                     const resource_id = resource_data[0].id;
                     const resource_type = resource_data[0].type;
+                    console.log(resource_type);
+                    console.log(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
+                    const query = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
+                    const child_data = query[0];
+                    child_data.title = resource_data[0].title;
 
-                    const child_data = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)[0];
-                    child_data['title'] = resource_data[0].title;
+                    console.log(child_data)
                     
                     switch(resource_type){
                         case "book":
@@ -41,6 +45,7 @@ class ResourceMapper {
                             break;      
                         case "movie":
                             resource = new Movie(child_data,resource_id);
+                            console.log(resource);
                             break;        
                         case "music":
                             resource = new Music(child_data,resource_id);
