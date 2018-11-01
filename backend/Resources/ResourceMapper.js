@@ -56,10 +56,39 @@ class ResourceMapper {
         }
  
     }
-    // Method to insert resource into resources table
-    static insert(resource_data) {
+    // Method to insert resource into resources table NOT COMPLETED
+    static insert(resource_obj, type) {
+        const resource_data = {"type":type, "title": resource_obj.title, "id":0};
+        delete resource_obj.id;
+        delete resource_obj.title;
+        
+        try{
+            const data = connection.query(`INSERT INTO resource VALUES( ${this.objectToQueryString(resource_data)} )`);
+            resource_obj.resource_id = data.insertId;
+            resource_obj.id = 0;
+            const child_data = connection.query(`INSERT INTO ${type} VALUES (${this.objectToQueryString(resource_obj)})`);
+            console.log(child_data.insertId)
+            const resource_line_item = {"id":0, "resource_id": child_data.insertId, "user_id": 34242, "date_due": "Never"};
+            console.log(resource_line_item);
+            const data2 = connection.query(`INSERT INTO resource_line_item VALUES(${this.objectToQueryString(resource_line_item)})`);
+            console.log(child_data);
+            console.log(data);
+            console.log(data2);
+            return {status: 0, message: 'Ok', results: data2}
+        }
+        catch(error){
+            console.log(error);
+            return{ status: 1, message: 'Error' +error, error}
+        }
+
+
+
+
+
+
         const res = new Resource(resource_data);
         const found = this.find(res.id);
+ 
 
         if(found){
             try{

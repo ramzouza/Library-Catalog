@@ -17,37 +17,14 @@ class ResourceCatalog {
     static getResList(){
         return ResourceList;
     }
- /*
+ 
     static MakeNewResource(resourceData, type){
-        let resource = null;
-        switch(type){
-            case "Book":
-                resource = new Book(resourceData);
-                break;
-            case "Magazine":
-                resource = new Magazine(resourceData);
-                break;      
-            case "Movie":
-                resource = new Movie(resourceData);
-                break;        
-            case "Music":
-                resource = new Music(resourceData);
-                break;          
-    }
-    resource.id = ResourceCatalog.getkey()
-    resource.type = type
-    const found = this.find(resource.id)
-    
-    if(found){
-        return { status: 0, message: "An existing resource got an extra instance", results: resource}
-    }
-    this.add(resource)
-    return {status: 0, message: "Saved resource", results: resource }
-    
+        this.add(resourceData, type)
+        return {status: 0, message: "Saved resource", results: resourceData }  
   }
-*/
-  static add(resource){
-    ResourceMappter.insert(resource)
+
+  static add(resource, type){
+    ResourceMappter.insert(resource, type)
   }
   
   
