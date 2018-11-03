@@ -6,7 +6,9 @@ const Music = require('./Music.js');
 const ResourceMapper = require('./ResourceMapper');
 
 class ResourceCatalog {
-
+    // A searchFilter contains a field type, and any of the attributes associated
+    // with all possible resources.
+    // title
 
     static MakeNewResource(resourceData, type){
         return ResourceMapper.insert(resourceData, type);
@@ -16,6 +18,8 @@ class ResourceCatalog {
       return ResourceMappter.select(id);
     }
 
+    static Find(searchFilters)
+
     static GetAllResources(){
       return ResourceMapper.selectAll();
     }
@@ -23,12 +27,12 @@ class ResourceCatalog {
     static EditResource(resource_id, resourceData, type){
         resourceData.id = resource_id;
         return ResourceMapper.update(resourceData, type);
-    } 
-    
+    }
+
     static DeleteResource(id){
         return ResourceMapper.delete(id);
     }
 
 }
 
-module.exports = ResourceCatalog 
+module.exports = ResourceCatalog

@@ -82,7 +82,7 @@ app.post('/createnewuser',  (req, res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
     }
-    
+
     // declare user data
     const user = {
         password,
@@ -151,7 +151,7 @@ app.post('/loggedusers', (req, res) => {
         res.json({ status: 0, results: users, message })
         logger(`POST - [/loggedusers] - ${200} - ${message}`)
     }
-    
+
 })
 
 
@@ -168,10 +168,10 @@ app.post('/resources', (req, res) => {
 
     // get resource data and their type
     const { resource_data , type } = req.body;
-    
+
     // make new resource
     const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
-    
+
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
@@ -261,6 +261,16 @@ app.delete('/resources', (req,res) => {
 
 })
 
+// TODO by karl and berf
+// Search for resources:
+// the body of the request contains a json with a key called 'type' which determines
+// what type of resource the client is searching for and it also contains all possible
+// object attributes as keys in the json to help conduct the search.
+app.get('/resource', (req,res)=>{
+    //check if sender is authenticated
+
+})
+
 
 
 
@@ -268,5 +278,4 @@ app.delete('/resources', (req,res) => {
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
- 
 module.exports = server;
