@@ -18,7 +18,10 @@ class ResourceCatalog {
       return ResourceMappter.select(id);
     }
 
-    static Find(searchFilters)
+    // TODO for karl and berfin
+    static Find(searchFilters){
+
+    }
 
     static GetAllResources(){
       return ResourceMapper.selectAll();
