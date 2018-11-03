@@ -18,7 +18,9 @@ class ResourceCatalog {
       return ResourceMappter.select(id);
     }
 
-    static Find(searchFilters)
+    static Find(searchFilters) {
+        
+    }
 
     static GetAllResources(){
       return ResourceMapper.selectAll();
