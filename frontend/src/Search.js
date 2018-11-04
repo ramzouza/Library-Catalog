@@ -21,8 +21,11 @@ class Search extends Component {
   }
   handleClickAdvancedSearch(){
     var title = document.getElementById("advanced_title").value;
-    var author = document.getElementById("advanced_author").value;
     var isbn = document.getElementById("advanced_isbn").value;
+    var author = document.getElementById("advanced_author").value;
+    var director = document.getElementById("advanced_director").value;
+    var publisher = document.getElementById("advanced_publisher").value;
+    var artist = document.getElementById("advanced_artist").value;
     var advanced_checkbox_book= document.getElementById("advanced_checkbox_book").value;
     var advanced_checkbox_movie= document.getElementById("advanced_checkbox_movie").value;
     var advanced_checkbox_magazine= document.getElementById("advanced_checkbox_magazine").value;
@@ -56,8 +59,11 @@ class Search extends Component {
                 </div>
                 <div class="modal-body">
                  <span>Title  : </span><input id= "advanced_title"></input><br></br>
-                 <span>Author : </span><input id= "advanced_author" ></input><br></br>
                  <span>ISBN : </span><input id= "advanced_isbn"></input><br></br>
+                 <span>Author : </span><input id= "advanced_author" ></input><br></br>
+                 <span>Director  : </span><input id= "advanced_director"></input><br></br>
+                 <span>Publisher  : </span><input id= "advanced_publisher"></input><br></br>
+                 <span>Artist  : </span><input id= "advanced_artist"></input><br></br>
                  <span>Type : </span>
                  <input id= "advanced_checkbox_book" type="checkbox" name="book" value="book" /> Book &nbsp;
                  <input id= "advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" /> Magazine &nbsp;
