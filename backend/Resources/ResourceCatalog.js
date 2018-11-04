@@ -30,6 +30,12 @@ class ResourceCatalog {
     static getAllAuthors() {
         return ResourceMapper.getAllAuthors();
     }
+
+    static getAllDirectors() {
+        return ResourceMapper.getAllDirectors();
+    }
+  
+
   
 
     static EditResource(resource_id, resourceData, type){

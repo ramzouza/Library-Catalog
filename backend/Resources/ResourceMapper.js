@@ -63,7 +63,7 @@ class ResourceMapper {
  
     }
 
-    static selectAll(){
+   static selectAll(){
             try{
                 let resources = [];
                 let resource = {};
@@ -77,7 +77,6 @@ class ResourceMapper {
                 return{ status: 1, message: 'Error: ' + error, error}
             }
     }
-    
 
 
 
@@ -150,7 +149,17 @@ class ResourceMapper {
         }
 }
 
-  
+    //Get all authors for advanced search
+    static getAllDirectors(){
+     try{
+
+        const data = connection.query(`SELECT DISTINCT director from movie`);
+       
+        return {status: 0, message: 'Ok', results: data};
+     } catch (error){
+        return{ status: 1, message: 'Error: ' + error, error}
+    }
+    }
 
     // Helper. This method turns an object into a string formated for an SQL query
     static objectToQueryString(object) { 
