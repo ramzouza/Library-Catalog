@@ -4,6 +4,7 @@ const Movie = require('./Movie.js');
 const Magazine = require('./Magazine.js');
 const Music = require('./Music.js');
 const ResourceMapper = require('./ResourceMapper');
+const UnitOfWork = require('./UnitOfWork');
 
 class ResourceCatalog {
     // A searchFilter contains a field type, and any of the attributes associated
@@ -11,6 +12,7 @@ class ResourceCatalog {
     // title
 
     static MakeNewResource(resourceData, type){
+        //return UnitOfWork.InsertResource(resourceData, type)
         return ResourceMapper.insert(resourceData, type);
     }
 
@@ -30,10 +32,12 @@ class ResourceCatalog {
     static EditResource(resource_id, resourceData, type){
         resourceData.id = resource_id;
         return ResourceMapper.update(resourceData, type);
+       //return UnitOfWork.EditResource(resourceData, type);
     }
 
     static DeleteResource(id){
-        return ResourceMapper.delete(id);
+        return ResourceMapper.delete(id); 
+        //return  UnitOfWork.DeleteResource(id);
     }
 
 }

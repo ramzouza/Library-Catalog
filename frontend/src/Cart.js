@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './Navbar'
 import { apiCall } from './ApiCall'
 import cookie from 'react-cookies'
+import CartItem from './CartItem'
 
 class Cart extends Component {
   constructor(){
@@ -11,15 +12,31 @@ class Cart extends Component {
       logs: []
     }
   }
+
+  componentDidMount(){
+    const isAdmin = cookie.load('admin') === 'yes' ?  true : false
+    const id = cookie.load('id')
+
+    console.log(id)
+    apiCall('/cart', {isAdmin}, {id})
+      .then(res => res.json())
+      .then( json => {
+        console.log('res', json)
+        this.setState({logs: json.results})
+      })
+  }
+
   render() {
     const {logs} = this.state
     return (
       <div style={main}>
         <Navbar/>
         <div style={body}>
-          <p>View Cart</p>
+          <h2>View Cart</h2>
+          <div>
+            {logs.map(item =><CartItem key={item.resource.id} id={item.resource.id} type={item.resource.resource_type} resource_data={item.resource} />)}
+          </div>
         </div>
-        
       </div>
     );
   }
@@ -39,14 +56,12 @@ const  main = {
 }
 
 const body = {
-  height: '100%',
-  width: '100%',
-  display:'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  paddingTop: '10%',
-  fontSize: 25,
+    'padding-top': '10%',
+    minWidth: '30%',
+    display:'flex',
+    flexDirection: 'column',
+    alignItems:'center',
+    justifyContent: 'center'
 }
 
 const logStyle ={
@@ -57,5 +72,4 @@ const logStyle ={
   alignItems: 'center',
   fontSize: 20,
   textShadow: '0px 0px 2px black',
-
 }

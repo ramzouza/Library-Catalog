@@ -12,6 +12,7 @@ const logger = (message) => {
 const AuthService = require('./Users/AuthService')
 const UserCatalog = require('./Users/UserCatalog')
 const ResourceCatalog = require('./Resources/ResourceCatalog')
+const UnitOfWork = require('./Resources/UnitOfWork')
 
 // ============ Allow Requests from a Browser ==========
 app.use(bodyParser.json()); // for parsing application/json
@@ -272,7 +273,24 @@ app.get('/resource', (req,res)=>{
 })
 
 
+//View whats is in the Unit of Work.
+app.post('/cart', (req, res) =>{
+  // check if the sender is authenticated
+  const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+  const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+  if (!auth.isAuthorized) {
+      res.status(400)
+      res.json({ status: 1, message: "Not Authorized",results:[] })
+      logger(`POST -  [/cart] - ${400} - ${sender_id} `)
+  } else {
+      const cart = UnitOfWork.ViewUnitOfWork();
+      const message = `Ok`
+      res.status(200)
+      res.json({ status: 0, results: cart, message })
+      logger(`POST - [/cart] - ${200} - ${message}`)
+  }
 
+})
 
 
 server = app.listen(port, () => {
