@@ -161,6 +161,30 @@ class ResourceMapper {
     }
     }
 
+    //Get all publishers for advanced search
+    static getAllPublishers(){
+        try{
+   
+           const data = connection.query(`select distinct publisher from magazine`);
+          
+           return {status: 0, message: 'Ok', results: data};
+        } catch (error){
+           return{ status: 1, message: 'Error: ' + error, error}
+       }
+       }
+
+       //Get all artists for advanced search
+    static getAllArtists(){
+        try{
+   
+           const data = connection.query(`select distinct publisher from magazine`);
+          
+           return {status: 0, message: 'Ok', results: data};
+        } catch (error){
+           return{ status: 1, message: 'Error: ' + error, error}
+       }
+       }
+
     // Helper. This method turns an object into a string formated for an SQL query
     static objectToQueryString(object) { 
         return Object.values(object).map(x => "'" + x + "'").join(',');

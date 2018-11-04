@@ -34,6 +34,14 @@ class ResourceCatalog {
     static getAllDirectors() {
         return ResourceMapper.getAllDirectors();
     }
+
+    static getAllPublishers() {
+        return ResourceMapper.getAllPublishers();
+    }
+
+     static getAllArtists() {
+        return ResourceMapper.getAllArtists();
+    }
   
 
   
