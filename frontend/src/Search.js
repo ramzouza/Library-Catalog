@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET} from './ApiCall';
+import {GET, POST} from './ApiCall';
 class Search extends Component {
 
   constructor(){
@@ -28,6 +28,12 @@ class Search extends Component {
       ISBNSearch: ""
     }
   }
+  handleClick(){
+    POST('/resource', {"resource_data": "I love yanis",isFilter:false})
+        .then( res => res.json() )
+        .then ( json => {
+          alert(JSON.stringify(json.results))
+          
 
   handlePickedAuthor(event) {
     this.setState({pickedAuthor: event.target.value})

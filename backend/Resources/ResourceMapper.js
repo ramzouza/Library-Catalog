@@ -63,7 +63,41 @@ class ResourceMapper {
  
     }
 
-   static selectAll(){
+    static select(search,isadvancedSearch){
+        if(isadvancedSearch){
+
+        }else{
+            
+            let SearchToArray = search.split(" ");
+            let SearchyanisTest = [];
+            let SearchInfoId = [];
+            for(let x=0;x<SearchToArray.length;x++){
+                const bookInfo = connection.query("SELECT * FROM book LEFT JOIN resource on book.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR author LIKE '%"+SearchToArray[x]+"%' OR isbn_10 LIKE '%"+SearchToArray[x]+"%' OR isbn_13 LIKE '%"+SearchToArray[x]+"%'");
+                for (let i=0; i<bookInfo.length;i++){
+                    if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
+                        SearchInfoId.push(bookInfo[i]['resource_id']);
+                        SearchyanisTest.push(bookInfo[i]);
+                    }
+                }
+                
+                const magazineInfo = connection.query("SELECT * FROM magazine LEFT JOIN resource on magazine.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR publisher LIKE '%"+SearchToArray[x]+"%' OR isbn_10 LIKE '%"+SearchToArray[x]+"%' OR isbn_13 LIKE '%"+SearchToArray[x]+"%'");
+                for (let i=0; i<magazineInfo.length;i++){
+                    SearchyanisTest.push(magazineInfo[i]);
+                }
+                const movieInfo = connection.query("SELECT * FROM movie LEFT JOIN resource on movie.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR director LIKE '%"+SearchToArray[x]+"%'");
+                for (let i=0; i<movieInfo.length;i++){
+                    SearchyanisTest.push(movieInfo[i]);
+                }
+                const musicInfo = connection.query("SELECT * FROM music LEFT JOIN resource on music.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%'");
+                for (let i=0; i<musicInfo.length;i++){
+                    SearchyanisTest.push(musicInfo[i]);
+                }
+            };
+            return SearchyanisTest;
+        }
+    }
+
+    static selectAll(){
             try{
                 let resources = [];
                 let resource = {};

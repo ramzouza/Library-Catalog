@@ -196,7 +196,6 @@ app.get('/resources', (req,res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`GET -  [/resources] - ${400} - ${sender_id} `)
     }
-
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
     res.status(200);
@@ -334,9 +333,22 @@ app.delete('/resources', (req,res) => {
 // the body of the request contains a json with a key called 'type' which determines
 // what type of resource the client is searching for and it also contains all possible
 // object attributes as keys in the json to help conduct the search.
-app.get('/resource', (req,res)=>{
-    //check if sender is authenticated
+app.post('/resource' , (req,res) =>{
 
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+    // get resources here
+    const {resource_data,isFilter} = req.body;
+    const yanis2 = ResourceCatalog.Find(resource_data, isFilter);
+    
+    res.json({"results":yanis2});
+    logger(`GET - [/resources] - ${200} - ${sender_id} `);
+     
 })
 
 

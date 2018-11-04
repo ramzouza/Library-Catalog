@@ -20,9 +20,9 @@ class ResourceCatalog {
       return ResourceMapper.select(id);
     }
 
-    // TODO for karl and berfin
-    static Find(searchFilters){
-
+    static Find(search,isadvancedSearch){
+            console.log("Yanis2333  "+search+" "+isadvancedSearch);
+        return ResourceMapper.select(search,isadvancedSearch);
     }
 
     static GetAllResources(){
