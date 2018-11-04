@@ -77,6 +77,7 @@ class ResourceMapper {
                 return{ status: 1, message: 'Error: ' + error, error}
             }
     }
+    
 
 
 
@@ -137,6 +138,19 @@ class ResourceMapper {
             return {status : 1, message : 'Error' +error, error}
         }
     }
+    //Get all authors for advanced search
+    static getAllAuthors(){
+        try{
+          
+            const data = connection.query(`SELECT DISTINCT author from book`);
+            
+            return {status: 0, message: 'Ok', results: data};
+        } catch (error){
+            return{ status: 1, message: 'Error: ' + error, error}
+        }
+}
+
+  
 
     // Helper. This method turns an object into a string formated for an SQL query
     static objectToQueryString(object) { 

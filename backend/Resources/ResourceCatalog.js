@@ -15,7 +15,7 @@ class ResourceCatalog {
     }
 
     static Find(id) {
-      return ResourceMappter.select(id);
+      return ResourceMapper.select(id);
     }
 
     // TODO for karl and berfin
@@ -26,6 +26,11 @@ class ResourceCatalog {
     static GetAllResources(){
       return ResourceMapper.selectAll();
     }
+
+    static getAllAuthors() {
+        return ResourceMapper.getAllAuthors();
+    }
+  
 
     static EditResource(resource_id, resourceData, type){
         resourceData.id = resource_id;
