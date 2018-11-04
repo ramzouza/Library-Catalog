@@ -31,11 +31,10 @@ class Resources extends Component {
 
   render() {
     const {resource_list} = this.state;
-    console.log(resource_list);
     return (
       <div style={main}>
         <h1>High Quality Database</h1>
-        {resource_list.map( ({id, title, type}) => <ResourceItem key={id} id={id} title={title} type={type} />)}
+        {resource_list.map( ({type, resource_data}) => <ResourceItem key={resource_data.id} id={resource_data.id} type={type} resource_data={resource_data} />)}
       </div>
     );
   }

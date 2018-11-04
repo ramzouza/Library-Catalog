@@ -82,7 +82,7 @@ app.post('/createnewuser',  (req, res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
     }
-    
+
     // declare user data
     const user = {
         password,
@@ -151,7 +151,7 @@ app.post('/loggedusers', (req, res) => {
         res.json({ status: 0, results: users, message })
         logger(`POST - [/loggedusers] - ${200} - ${message}`)
     }
-    
+
 })
 
 
@@ -168,10 +168,10 @@ app.post('/resources', (req, res) => {
 
     // get resource data and their type
     const { resource_data , type } = req.body;
-    
+
     // make new resource
     const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
-    
+
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
@@ -198,14 +198,13 @@ app.get('/resources', (req,res) => {
 
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
-    console.log({resource_list})
     res.status(200);
-    res.json({"results":resource_list});
+    res.json({"results":resource_list.results});
     logger(`GET - [/resources] - ${200} - ${sender_id} `);
 })
 
 // EDIT resource by resource_ID
-/*app.put('/resources', (req,res) => {
+app.put('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
@@ -217,7 +216,6 @@ app.get('/resources', (req,res) => {
 
     // get resource data and their type
     const { resource_id, resource_data , type } = req.body
-
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
 
@@ -231,31 +229,6 @@ app.get('/resources', (req,res) => {
         logger(`PUT - [/resources] - ${200} - ${sender_id} `);
     }
 
-})*/
-app.put('/resources', (req,res) => {
-    // check if the sender is authenticated
-    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    } else {
-            // get resource data and their type
-        const { id, title } = req.body.resource_data
-        // Edit the Resource
-        const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
-
-        if(status == 1){
-            res.status(400);
-            res.json({status, message, error});
-            logger(`PUT - [/resources] - ${400} - ${sender_id} `);
-        } else {
-            res.status(200);
-            res.json({status, message, results});
-            logger(`PUT - [/resources] - ${200} - ${sender_id} `);
-        }
-    }
 })
 
 // Delete resource by resource_ID
@@ -288,6 +261,16 @@ app.delete('/resources', (req,res) => {
 
 })
 
+// TODO by karl and berf
+// Search for resources:
+// the body of the request contains a json with a key called 'type' which determines
+// what type of resource the client is searching for and it also contains all possible
+// object attributes as keys in the json to help conduct the search.
+app.get('/resource', (req,res)=>{
+    //check if sender is authenticated
+
+})
+
 
 
 
@@ -295,5 +278,4 @@ app.delete('/resources', (req,res) => {
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
- 
 module.exports = server;
