@@ -21,21 +21,6 @@ class CartItem extends Component {
         }
     }
 
-    typeToPicture(type) {
-        switch (type) {
-            case "book":
-                return bookPic
-            case "magazine":
-                return magPic
-            case "movie":
-                return movPic
-            case "music":
-                return musicPic
-            default: 
-                return defPic
-        } 
-    }
-
     typeToSchma(type){
         let jsx = <h1></h1>;
         switch (type) {
@@ -55,27 +40,27 @@ class CartItem extends Component {
         } 
     }
 
+    handleClickRemove(index){
+        DELETE('/cartItem', {"index": index})
+        .then( res => res.json() )
+        .then ( json => {
+          alert(json.message)
+          window.location.reload()
+        })
+            
+    }
+
     render() {
-        const { id, type, resource_data } = this.props
+        const {type, resource_data, operation, index } = this.props
         const { editing } = this.state
         const admin = cookie.load('admin') === 'yes';
 
         return (
             <div style={main}>
-                <div>
-                    
-                    <img alt="" style={picStyle} src={this.typeToPicture(type)}/>
-                    {editing ? <input placeholder={resource_data.title} onChange={e => this.setState({title: e.target.value})}/>
-                            :  <a>
-                                Title: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{resource_data.title}</a><br></br>
-                                Data: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{JSON.stringify(resource_data)}</a>
-                                
-                                
-                            </a>
-                                
-                            
-                    }
-                </div>
+                    <span style={{ marginLeft: 10,fontFamily: 'Arial'}}> <strong>Operation:</strong> {operation}</span> <br />
+                    <span style={{ marginLeft: 10,fontFamily: 'Arial'}}>  Title: {resource_data.title}</span> <br />
+                    <span style={{ marginLeft: 10,fontFamily: 'Arial'}}>  Information: {JSON.stringify(resource_data)}</span><br />
+                    <button style={button} type="button" onClick={() => this.handleClickRemove(index)}> Remove </ button>
             </div>
         );
     }
@@ -85,25 +70,16 @@ class CartItem extends Component {
 export default CartItem;
 
 const main = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    height: 50,
     width: '100%',
     borderBottom: '1px solid black',
     backgroundColor: 'white',
-    padding: "0px 5px"
+    padding: "5px"
 }
 
-const picStyle = {
-    height: 20,
-    width: 20,
-    padding: '0px 10px'
-}
-
-const icons = {
-    height: 20,
-    width: 20,
-}
+const button = {
+    borderRadius: 5,
+    fontFamily: 'inherit',
+    padding: '5px 40px',
+    margin: 10,
+    boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
+  }

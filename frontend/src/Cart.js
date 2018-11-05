@@ -17,7 +17,6 @@ class Cart extends Component {
     const isAdmin = cookie.load('admin') === 'yes' ?  true : false
     const id = cookie.load('id')
 
-    console.log(id)
     apiCall('/cart', {isAdmin}, {id})
       .then(res => res.json())
       .then( json => {
@@ -32,10 +31,12 @@ class Cart extends Component {
       <div style={main}>
         <Navbar/>
         <div style={body}>
-          <h2>View Cart</h2>
-          <div>
-            {logs.map(item =><CartItem key={item.resource.id} id={item.resource.id} type={item.resource.resource_type} resource_data={item.resource} />)}
-          </div>
+          <h2>Cart</h2>
+          <hint>The following data will be modified:</hint>
+            <div>
+              {logs.map(item =><CartItem type={item.resource.resource_type} resource_data={item.resource} operation={item.operation} index={item.index} />)}  
+            </div>
+          <button style={savebtn} type="button" onClick={() => this.handleClickSave()}> Save </ button>
         </div>
       </div>
     );
@@ -51,7 +52,6 @@ const  main = {
       alignItems: 'center',
       fontFamily: 'Impact',
       borderRadius: 5,
-      // height: 900,
       width: '100%',
 }
 
@@ -64,12 +64,10 @@ const body = {
     justifyContent: 'center'
 }
 
-const logStyle ={
-  color: 'white',
-  width: '50%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  fontSize: 20,
-  textShadow: '0px 0px 2px black',
+const savebtn = {
+  borderRadius: 5,
+  fontFamily: 'inherit',
+  padding: '5px 40px',
+  margin: 10,
+  boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
 }

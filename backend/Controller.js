@@ -351,11 +351,39 @@ app.post('/cart', (req, res) =>{
       logger(`POST -  [/cart] - ${400} - ${sender_id} `)
   } else {
       const cart = UnitOfWork.ViewUnitOfWork();
+      console.log(cart)
       const message = `Ok`
       res.status(200)
       res.json({ status: 0, results: cart, message })
       logger(`POST - [/cart] - ${200} - ${message}`)
   }
+
+})
+
+app.delete('/cartItem', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    } else {
+        // get resource data and their type
+        const { index } = req.body;
+
+        // Edit the Resource
+        const {status, message, results, error} = UnitOfWork.RemoveItem(index);
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`REMOVE - [/cartItem] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`REMOVE - [/cartItem] - ${200} - ${sender_id} `);
+        }
+    }
 
 })
 
