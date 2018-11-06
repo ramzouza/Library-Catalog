@@ -19,12 +19,42 @@ class Search extends Component {
       author_dropdown: [],
       director_dropdown: [],
       publisher_dropdown: [],
-      artist_dropdown: []
-
-    
+      artist_dropdown: [],
+      pickedAuthor: "",
+      pickedDirector: "",
+      pickedPublisher: "",
+      pickedArtist: "",
+      titleSearch: "",
+      ISBNSearch: ""
     }
   }
-  
+
+  handlePickedAuthor(event) {
+    this.setState({pickedAuthor: event.target.value})
+  }
+  handlePickedDirector(event) {
+    this.setState({pickedDirector: event.target.value})
+  }
+  handlePickedPublisher(event) {
+    this.setState({pickedPublisher: event.target.value})
+  }
+  handlePickedArtist(event) {
+    this.setState({pickedArtist: event.target.value})
+  }
+
+  handleClickSearch(){
+    const{pickedAuthor, pickedDirector, pickedPublisher, pickedArtist, titleSearch, ISBNSearch } = this.state
+    let checked = []
+    if(this.refs.book.checked) checked.push("book")
+    if(this.refs.magazine.checked) checked.push("magazine")
+    if(this.refs.music.checked) checked.push("music")
+    if(this.refs.movie.checked) checked.push("movie")
+
+    const queryObject = {pickedAuthor, pickedDirector, pickedPublisher, pickedArtist, titleSearch, ISBNSearch, checked}
+    console.log({queryObject})
+
+    // Todo : POST('/search...', queryObject)
+  }
   handleClickAdvancedSearch(){
     let author_dropdown =[];
     let director_dropdown =[];
@@ -68,7 +98,6 @@ class Search extends Component {
          json.results.results.forEach(function(item){ 
           artist_dropdown.push(item.artist);
         });
-        alert(JSON.stringify(artist_dropdown));
         this.setState({artist_dropdown})
         
         })
@@ -103,17 +132,17 @@ class Search extends Component {
                 </div>
                 <div class="modal-body">
                 <span>Type : </span>
-                 <input id= "advanced_checkbox_book" type="checkbox" name="book" value="book" /> Book &nbsp;
-                 <input id= "advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" /> Magazine &nbsp;
-                 <input id= "advanced_checkbox_movie" type="checkbox" name="movie" value="movie" /> Movie &nbsp;
-                 <input id= "advanced_checkbox_music" type="checkbox" name="music" value="music" /> Music &nbsp;<br></br>
-                 <span>Title  : </span><input id= "advanced_title"></input><br></br>
-                 <span>ISBN : </span><input id= "advanced_isbn"></input><br></br>
+                 <input id= "advanced_checkbox_book" type="checkbox" name="book" value="book" ref ="book"/> Book &nbsp;
+                 <input id= "advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" ref="magazine" /> Magazine &nbsp;
+                 <input id= "advanced_checkbox_movie" type="checkbox" name="movie" value="movie" ref="movie" /> Movie &nbsp;
+                 <input id= "advanced_checkbox_music" type="checkbox" name="music" value="music" ref="music"/> Music &nbsp;<br></br>
+                 <span>Title  : </span><input onChange={ e => this.setState({titleSearch: e.target.value})} id= "advanced_title"></input><br></br>
+                 <span>ISBN : </span><input onChange={ e => this.setState({ISBNSearch: e.target.value})} id= "advanced_isbn"></input><br></br>
              
                   <div class="dropdown">
                     
                     <span>Author</span>
-                    <select ref="userInput" defaultValue="" required>
+                    <select onChange={ e => this.handlePickedAuthor(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {author_dropdown ? 
                   author_dropdown.map(function(username) {
@@ -129,7 +158,7 @@ class Search extends Component {
                   <div class="dropdown">
                     
                     <span>Director</span>
-                    <select ref="userInput" defaultValue="" required>
+                    <select onChange={ e => this.handlePickedDirector(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {director_dropdown ? 
                   director_dropdown.map(function(username) {
@@ -146,7 +175,7 @@ class Search extends Component {
                    <div class="dropdown">
                     
                     <span>Publisher</span>
-                    <select ref="userInput" defaultValue="" required>
+                    <select onChange={ e => this.handlePickedPublisher(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {publisher_dropdown ? 
                   publisher_dropdown.map(function(username) {
@@ -162,7 +191,7 @@ class Search extends Component {
                   <div class="dropdown">
                     
                     <span>Artist</span>
-                    <select ref="userInput" defaultValue="" required>
+                    <select onChange={ e => this.handlePickedArtist(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {artist_dropdown ? 
                   artist_dropdown.map(function(username) {
@@ -177,7 +206,7 @@ class Search extends Component {
                   </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-default">Search</button>
+                <button type="button" onClick={ _ => this.handleClickSearch()} class="btn btn-default">Search</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div>
