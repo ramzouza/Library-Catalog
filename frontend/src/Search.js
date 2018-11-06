@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {GET} from './ApiCall';
 class Search extends Component {
 
   constructor(){
@@ -16,29 +16,73 @@ class Search extends Component {
       Book: 0,
       Magazine: 0,
       Music: 0,
+      author_dropdown: [],
+      director_dropdown: [],
+      publisher_dropdown: [],
+      artist_dropdown: []
+
     
     }
   }
+  
   handleClickAdvancedSearch(){
-    var title = document.getElementById("advanced_title").value;
-    var isbn = document.getElementById("advanced_isbn").value;
-    var author = document.getElementById("advanced_author").value;
-    var director = document.getElementById("advanced_director").value;
-    var publisher = document.getElementById("advanced_publisher").value;
-    var artist = document.getElementById("advanced_artist").value;
-    var advanced_checkbox_book= document.getElementById("advanced_checkbox_book").value;
-    var advanced_checkbox_movie= document.getElementById("advanced_checkbox_movie").value;
-    var advanced_checkbox_magazine= document.getElementById("advanced_checkbox_magazine").value;
-    var advanced_checkbox_music= document.getElementById("advanced_checkbox_music").value;
+    let author_dropdown =[];
+    let director_dropdown =[];
+    let publisher_dropdown =[];
+    let artist_dropdown =[];
+    
+    GET('/author')
+        .then( res => res.json() )
+        .then ( json => {
+         json.results.results.forEach(function(item){ 
+          author_dropdown.push(item.author);
+        });
+        this.setState({author_dropdown})
+        
+        })
+        GET('/director')
+        .then( res => res.json() )
+        .then ( json => {
+         json.results.results.forEach(function(item){ 
+          director_dropdown.push(item.director);
+        });
+        this.setState({director_dropdown})
+        
+        })
+
+        GET('/publisher')
+        .then( res => res.json() )
+        .then ( json => {
+         json.results.results.forEach(function(item){ 
+          publisher_dropdown.push(item.publisher);
+        });
+        this.setState({publisher_dropdown})
+        
+        })
+
+        
+        GET('/artist')
+        .then( res => res.json() )
+        .then ( json => {
+          console.log({json})
+         json.results.results.forEach(function(item){ 
+          artist_dropdown.push(item.artist);
+        });
+        alert(JSON.stringify(artist_dropdown));
+        this.setState({artist_dropdown})
+        
+        })
+
 }
   render() {
-    const {resource_list} = this.state;
+    const {resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+
     console.log(resource_list);
     return (
       <div>
         <div style={main}>
-          <input style={input} type="text" placeholder="Search for a resource ..." ></input>
-          <button  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src= "../images/advancedSearch.png" /> </button>
+          <input style={input} type="text" placeholder="Search for a resource ..." ></input>
+          <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src= "../images/advancedSearch.png" /> </button>
         </div>
 
         <div>
@@ -67,69 +111,73 @@ class Search extends Component {
                  <span>ISBN : </span><input id= "advanced_isbn"></input><br></br>
              
                   <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Author
-                    <span class="caret"></span><input id= "advanced_author"></input><br></br></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Berfin Saricam</a></li>
-                    </ul>
+                    
+                    <span>Author</span>
+                    <select ref="userInput" defaultValue="" required>
+                  <option value="" disabled>User</option>
+                {author_dropdown ? 
+                  author_dropdown.map(function(username) {
+                    console.log(username)
+                  return <option key={username}
+                          value={username}>{username}</option>;
+                }) 
+                : null
+              }
+                   </select>
+                  
                   </div>
                   <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Director
-                    <span class="caret"></span><input id= "advanced_director"></input><br></br></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Skander BM</a></li>
-                    </ul>
+                    
+                    <span>Director</span>
+                    <select ref="userInput" defaultValue="" required>
+                  <option value="" disabled>User</option>
+                {director_dropdown ? 
+                  director_dropdown.map(function(username) {
+                    console.log(username)
+                  return <option key={username}
+                          value={username}>{username}</option>;
+                }) 
+                : null
+              }
+                   </select>
+                  
+                  </div>
+
+                   <div class="dropdown">
+                    
+                    <span>Publisher</span>
+                    <select ref="userInput" defaultValue="" required>
+                  <option value="" disabled>User</option>
+                {publisher_dropdown ? 
+                  publisher_dropdown.map(function(username) {
+                    console.log(username)
+                  return <option key={username}
+                          value={username}>{username}</option>;
+                }) 
+                : null
+              }
+                   </select>
+                  
                   </div>
                   <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Publisher
-                    <span class="caret"></span><input id= "advanced_publisher"></input><br></br></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Yanis Siba</a></li>
-                    </ul>
+                    
+                    <span>Artist</span>
+                    <select ref="userInput" defaultValue="" required>
+                  <option value="" disabled>User</option>
+                {artist_dropdown ? 
+                  artist_dropdown.map(function(username) {
+                    console.log(username)
+                  return <option key={username}
+                          value={username}>{username}</option>;
+                }) 
+                : null
+              }
+                   </select>
+                  
                   </div>
-                  <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Artist
-                    <span class="caret"></span><input id= "advanced_arist"></input><br></br></button>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Karlch.fit</a></li>
-                    </ul>
-                  </div>
-                  <div class="container">
-  <h2>Basic Table</h2>
-  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-  <table class="table">
-    <thead>
-      <tr>
-        <th onclick="sortTable(0)">Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-                
-               
-                 
                 </div>
                 <div class="modal-footer">
-                <button type="button" onClick={() => this.handleClickAdvancedSearch()} class="btn btn-default">Search</button>
+                <button type="button" class="btn btn-default">Search</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -169,5 +217,4 @@ const button = {
   padding: '5px 40px',
   margin: 10,
   // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
-
 }
