@@ -16,6 +16,7 @@ class Resources extends Component {
     GET('/resources')
       .then(res => res.json())
       .then( json => {
+        if(json.results !== undefined){
         for (let i=0; i < json.results.length ; i++){
           if (json.results[i] == null){
             delete json.results[i];
@@ -24,7 +25,7 @@ class Resources extends Component {
         console.log("===== HQ DATABASE ======");
         console.log(json.results);
         console.log("======================");
-        this.setState({resource_list: json.results})
+        this.setState({resource_list: json.results})}
       })
   }
 
