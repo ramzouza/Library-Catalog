@@ -177,7 +177,7 @@ class ResourceMapper {
     static getAllArtists(){
         try{
    
-           const data = connection.query(`select distinct publisher from magazine`);
+           const data = connection.query(`select distinct artist from music`);
           
            return {status: 0, message: 'Ok', results: data};
         } catch (error){
