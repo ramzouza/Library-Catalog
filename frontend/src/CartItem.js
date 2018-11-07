@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import {PUT, DELETE} from './ApiCall';
+import {DELETE} from './ApiCall';
 import cookie from 'react-cookies'
-
-const bookPic = "http://pngimg.com/uploads/book/book_PNG51061.png"
-const magPic = "http://icons.iconarchive.com/icons/icons8/windows-8/256/Printing-Magazine-icon.png"
-const movPic = "https://melbournechapter.net/images/film-clipart-png-5.png"
-const musicPic = "http://pngimg.com/uploads/headphones/headphones_PNG7645.png"
-const defPic = "https://banner2.kisspng.com/20171218/ddc/question-mark-png-5a381257a89243.6425987715136241516905.jpg"
-const delPic = "https://melbournechapter.net/images/vector-delete-4.png"
-const editPic = "http://www.worldatlaspro.com/images/icon-edit.png"
 
 class CartItem extends Component {
 
@@ -51,8 +43,7 @@ class CartItem extends Component {
     }
 
     render() {
-        const {type, resource_data, operation, index } = this.props
-        const { editing } = this.state
+        const {resource_data, operation, index } = this.props
         const admin = cookie.load('admin') === 'yes';
 
         return (
