@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {GET} from './ApiCall';
+
 class Search extends Component {
 
   constructor(){
@@ -111,7 +112,7 @@ class Search extends Component {
       <div>
         <div style={main}>
           <input style={input} type="text" placeholder="Search for a resource ..." ></input>
-          <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src= "../images/advancedSearch.png" /> </button>
+          <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src='./../../images/advancedSearch.png' /> </button>
         </div>
 
         <div>

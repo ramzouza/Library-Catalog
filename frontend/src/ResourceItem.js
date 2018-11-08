@@ -101,7 +101,7 @@ class ResourceItem extends Component {
                     
                     <img alt="" style={picStyle} src={this.typeToPicture(type)}/>
                     {editing ? <input placeholder={resource_data.title} onChange={e => this.setState({title: e.target.value})}/>
-                            :  <a>
+                            :  <a> 
                                 Title: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{resource_data.title}</a><br></br>
                                 Data: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{JSON.stringify(resource_data)}</a>
                                 
@@ -138,9 +138,7 @@ const main = {
 }
 
 const picStyle = {
-    height: 20,
-    width: 20,
-    padding: '0px 10px'
+    width: '1%'
 }
 
 const icons = {
