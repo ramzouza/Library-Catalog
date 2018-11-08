@@ -21,7 +21,6 @@ class ResourceCatalog {
     }
 
     static Find(search,isadvancedSearch){
-            console.log("Yanis2333  "+search+" "+isadvancedSearch);
         return ResourceMapper.select(search,isadvancedSearch);
     }
 

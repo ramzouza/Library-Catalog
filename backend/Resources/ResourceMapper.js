@@ -65,35 +65,476 @@ class ResourceMapper {
 
     static select(search,isadvancedSearch){
         if(isadvancedSearch){
+            let verifyIfNoelement= { checked:[]};
+            let AllInfo = [];
+            let SearchInfoId = [];
+            if(!(JSON.stringify(verifyIfNoelement) == JSON.stringify(search))){
+                
 
+                if(search['checked'].length !=0){  // if the client check at least one type
+                    let parameter =false;
+                    let query="";
+                    for(let x=0;x<search['checked'].length;x++){
+                        switch(search['checked'][x]){ // iterate over type checked
+                            case "book": 
+                                parameter = false;
+                                 query =" Select * from book  LEFT JOIN resource on book.resource_id = resource.id ";
+                                if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                    
+                                    let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                    query+="where ";
+                                    parameter = true;
+                                    for(let i=0;i<titleToArray.length;i++){
+                                        if(i==0)
+                                        query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                        else{
+                                        query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                    }
+                                    }
+                                    
+                                }
+                                if(!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != ''){
+                                    if(parameter)
+                                    query+=" OR author = '"+search['pickedAuthor']+"'";
+                                    else{
+                                        query+="where ";
+                                        parameter = true;
+                                        query+="author = '"+search['pickedAuthor']+"'";
+                                    }}
+                                if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
+                                    if(parameter)
+                                    query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    else{
+                                        query+="where ";
+                                        query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    }
+                                }
+                                    const bookInfo = connection.query(query);
+                                    for (let i=0; i<bookInfo.length;i++){
+                                        const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                        
+                                        if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
+                                            SearchInfoId.push(bookInfo[i]['resource_id']);
+                                            bookInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                            bookInfo[i]['available']=LoanOrNot[0]['available'];
+                                            bookInfo[i]['restype']="book";
+                                            AllInfo.push(bookInfo[i]);
+                                        }
+                                    }
+                                    
+                                break;
+                            case "magazine": 
+                             parameter = false;
+                             query =" Select * from magazine  LEFT JOIN resource on magazine.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != ''){
+                                if(parameter)
+                                query+=" OR publisher = '"+search['pickedPublisher']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="publisher = '"+search['pickedPublisher']+"'";
+                                }}
+                                if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
+                                    if(parameter)
+                                    query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    else{
+                                        query+="where ";
+                                        query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    }
+                                }
+                                const magazineInfo = connection.query(query);
+                                for (let i=0; i<magazineInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                    
+                                    if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(magazineInfo[i]['resource_id']);
+                                        magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        magazineInfo[i]['available']=LoanOrNot[0]['available'];
+                                        magazineInfo[i]['restype']="magazine";
+                                        AllInfo.push(magazineInfo[i]);
+                                    }
+                                }
+                                 break;
+                            case "music":
+                             parameter = false;
+                             query =" Select * from music  LEFT JOIN resource on music.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedArtist'] == undefined) && search['pickedArtist'] != ''){
+                                if(parameter)
+                                query+=" OR artist = '"+search['pickedArtist']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="artist = '"+search['pickedArtist']+"'";
+                                }}
+                                const musicInfo = connection.query(query);
+                                for (let i=0; i<musicInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                   
+                                    if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(musicInfo[i]['resource_id']);
+                                        musicInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        musicInfo[i]['available']=LoanOrNot[0]['available'];
+                                        musicInfo[i]['restype']="music";
+                                        AllInfo.push(musicInfo[i]);
+                                    }
+                                }
+                                 break;
+                            case "movie":
+                             parameter = false;
+                             query =" Select * from movie  LEFT JOIN resource on movie.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedDirector'] == undefined) && search['pickedDirector'] != ''){
+                                if(parameter)
+                                query+=" OR director = '"+search['pickedDirector']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="director = '"+search['pickedDirector']+"'";
+                                }}
+                                const movieInfo = connection.query(query);
+                                for (let i=0; i<movieInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                    
+                                    if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(movieInfo[i]['resource_id']);
+                                        movieInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        movieInfo[i]['available']=LoanOrNot[0]['available'];
+                                        movieInfo[i]['restype']="movie";
+                                        AllInfo.push(movieInfo[i]);
+                                    }
+                                }
+                                 break;
+                        }
+                    }
+                    console.log(AllInfo);
+                    return AllInfo;
+                }else{
+                    // if the client does not check a type
+                    let parameter =false;
+                    let query="";
+                                 query =" Select * from book  LEFT JOIN resource on book.resource_id = resource.id ";
+                                if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                    
+                                    let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                    query+="where ";
+                                    parameter = true;
+                                    for(let i=0;i<titleToArray.length;i++){
+                                        if(i==0)
+                                        query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                        else{
+                                        query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                    }
+                                    }
+                                    
+                                }
+                                if(!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != ''){
+                                    if(parameter)
+                                    query+=" OR author = '"+search['pickedAuthor']+"'";
+                                    else{
+                                        query+="where ";
+                                        parameter = true;
+                                        query+="author = '"+search['pickedAuthor']+"'";
+                                    }}
+                                if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
+                                    if(parameter)
+                                    query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    else{
+                                        query+="where ";
+                                        query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    }
+                                }
+                                    const bookInfo = connection.query(query);
+                                    for (let i=0; i<bookInfo.length;i++){
+                                        const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                        
+                                        if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
+                                            SearchInfoId.push(bookInfo[i]['resource_id']);
+                                            bookInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                            bookInfo[i]['available']=LoanOrNot[0]['available'];
+                                            bookInfo[i]['restype']="book";
+                                            AllInfo.push(bookInfo[i]);
+                                        }
+                                    }
+                                    
+                                
+                             parameter = false;
+                             query =" Select * from magazine  LEFT JOIN resource on magazine.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != ''){
+                                if(parameter)
+                                query+=" OR publisher = '"+search['pickedPublisher']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="publisher = '"+search['pickedPublisher']+"'";
+                                }}
+                                if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
+                                    if(parameter)
+                                    query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    else{
+                                        query+="where ";
+                                        query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
+                                
+                                    }
+                                }
+                                const magazineInfo = connection.query(query);
+                                for (let i=0; i<magazineInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                    
+                                    if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(magazineInfo[i]['resource_id']);
+                                        magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        magazineInfo[i]['available']=LoanOrNot[0]['available'];
+                                        magazineInfo[i]['restype']="magazine";
+                                        AllInfo.push(magazineInfo[i]);
+                                    }
+                                }
+                             parameter = false;
+                             query =" Select * from music  LEFT JOIN resource on music.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedArtist'] == undefined) && search['pickedArtist'] != ''){
+                                if(parameter)
+                                query+=" OR artist = '"+search['pickedArtist']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="artist = '"+search['pickedArtist']+"'";
+                                }}
+                                const musicInfo = connection.query(query);
+                                for (let i=0; i<musicInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                   
+                                    if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(musicInfo[i]['resource_id']);
+                                        musicInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        musicInfo[i]['available']=LoanOrNot[0]['available'];
+                                        musicInfo[i]['restype']="music";
+                                        AllInfo.push(musicInfo[i]);
+                                    }
+                                }
+                             parameter = false;
+                             query =" Select * from movie  LEFT JOIN resource on movie.resource_id = resource.id ";
+                            if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
+                                let titleToArray = search['titleSearch'].split(" "); // title to array by part
+                                query+="where ";
+                                parameter = true;
+                                for(let i=0;i<titleToArray.length;i++){
+                                    if(i==0)
+                                    query+="title LIKE '%"+titleToArray[i]+"%' ";
+                                    else{
+                                    query+=" OR title LIKE '%"+titleToArray[i]+"%'";
+                                }
+                                }
+                                
+                            }
+                            if(!(search['pickedDirector'] == undefined) && search['pickedDirector'] != ''){
+                                if(parameter)
+                                query+=" OR director = '"+search['pickedDirector']+"'";
+                                else{
+                                    query+="where ";
+                                    parameter = true;
+                                    query+="director = '"+search['pickedDirector']+"'";
+                                }}
+                                const movieInfo = connection.query(query);
+                                for (let i=0; i<movieInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                    
+                                    if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(movieInfo[i]['resource_id']);
+                                        movieInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        movieInfo[i]['available']=LoanOrNot[0]['available'];
+                                        movieInfo[i]['restype']="movie";
+                                        AllInfo.push(movieInfo[i]);
+                                    }
+                                }
+                                console.log(AllInfo);
+                    return AllInfo;
+                }
+            }else{
+                           
+                            let query =" Select * from book LEFT JOIN resource on book.resource_id = resource.id ";
+                            const bookInfo = connection.query(query);
+                                for (let i=0; i<bookInfo.length;i++){
+                                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                    
+                                    if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
+                                        SearchInfoId.push(bookInfo[i]['resource_id']);
+                                        bookInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                        bookInfo[i]['available']=LoanOrNot[0]['available'];
+                                        bookInfo[i]['restype']="book";
+                                        AllInfo.push(bookInfo[i]);
+                                    }
+                                }
+
+                                query =" Select * from magazine LEFT JOIN resource on magazine.resource_id = resource.id ";
+                                const magazineInfo = connection.query(query);
+                                    for (let i=0; i<magazineInfo.length;i++){
+                                        const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                        
+                                        if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
+                                            SearchInfoId.push(magazineInfo[i]['resource_id']);
+                                            magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                            magazineInfo[i]['available']=LoanOrNot[0]['available'];
+                                            magazineInfo[i]['restype']="magazine";
+                                            AllInfo.push(magazineInfo[i]);
+                                        }
+                                    }
+
+                                    query =" Select * from movie LEFT JOIN resource on movie.resource_id = resource.id ";
+                                    const movieInfo = connection.query(query);
+                                        for (let i=0; i<movieInfo.length;i++){
+                                            const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                            
+                                            if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
+                                                SearchInfoId.push(movieInfo[i]['resource_id']);
+                                                movieInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                                movieInfo[i]['available']=LoanOrNot[0]['available'];
+                                                movieInfo[i]['restype']="movie";
+                                                AllInfo.push(movieInfo[i]);
+                                            }
+                                        }
+                                    
+                                        query =" Select * from music LEFT JOIN resource on music.resource_id = resource.id ";
+                                        const musicInfo = connection.query(query);
+                                            for (let i=0; i<musicInfo.length;i++){
+                                                const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                                
+                                                if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
+                                                    SearchInfoId.push(musicInfo[i]['resource_id']);
+                                                    musicInfo[i]['loan']=LoanOrNot[0]['loan'];
+                                                    musicInfo[i]['available']=LoanOrNot[0]['available'];
+                                                    musicInfo[i]['restype']="music";
+                                                    AllInfo.push(musicInfo[i]);
+                                                }
+                                            }
+                                            console.log(AllInfo);
+                                            return AllInfo;
+            }
         }else{
             
             let SearchToArray = search.split(" ");
-            let SearchyanisTest = [];
+            console.log(SearchToArray);
+            let AllInfo = [];
             let SearchInfoId = [];
             for(let x=0;x<SearchToArray.length;x++){
+                if(SearchToArray[0] !=''){
                 const bookInfo = connection.query("SELECT * FROM book LEFT JOIN resource on book.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR author LIKE '%"+SearchToArray[x]+"%' OR isbn_10 LIKE '%"+SearchToArray[x]+"%' OR isbn_13 LIKE '%"+SearchToArray[x]+"%'");
                 for (let i=0; i<bookInfo.length;i++){
+                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                    console.log(LoanOrNot[0]['loan']);
                     if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
                         SearchInfoId.push(bookInfo[i]['resource_id']);
-                        SearchyanisTest.push(bookInfo[i]);
+                        bookInfo[i]['loan']=LoanOrNot[0]['loan'];
+                        bookInfo[i]['available']=LoanOrNot[0]['available'];
+                        bookInfo[i]['restype']="book";
+                        AllInfo.push(bookInfo[i]);
                     }
                 }
                 
                 const magazineInfo = connection.query("SELECT * FROM magazine LEFT JOIN resource on magazine.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR publisher LIKE '%"+SearchToArray[x]+"%' OR isbn_10 LIKE '%"+SearchToArray[x]+"%' OR isbn_13 LIKE '%"+SearchToArray[x]+"%'");
                 for (let i=0; i<magazineInfo.length;i++){
-                    SearchyanisTest.push(magazineInfo[i]);
+                    if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
+                        const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                        SearchInfoId.push(magazineInfo[i]['resource_id']);
+                        magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
+                        magazineInfo[i]['available']=LoanOrNot[0]['available'];
+                        magazineInfo[i]['restype']="magazine";
+                        AllInfo.push(magazineInfo[i]);
+                    }
                 }
                 const movieInfo = connection.query("SELECT * FROM movie LEFT JOIN resource on movie.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR director LIKE '%"+SearchToArray[x]+"%'");
                 for (let i=0; i<movieInfo.length;i++){
-                    SearchyanisTest.push(movieInfo[i]);
+                    if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
+                        const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                    SearchInfoId.push(movieInfo[i]['resource_id']);
+                    movieInfo[i]['loan']=LoanOrNot[0]['loan'];
+                    movieInfo[i]['available']=LoanOrNot[0]['available'];
+                    movieInfo[i]['restype']="movie";
+                    AllInfo.push(movieInfo[i]);
+                    }
                 }
                 const musicInfo = connection.query("SELECT * FROM music LEFT JOIN resource on music.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%'");
                 for (let i=0; i<musicInfo.length;i++){
-                    SearchyanisTest.push(musicInfo[i]);
-                }
+                    if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
+                    const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                    SearchInfoId.push(musicInfo[i]['resource_id']);
+                    musicInfo[i]['loan']=LoanOrNot[0]['loan'];
+                    musicInfo[i]['available']=LoanOrNot[0]['available'];
+                    musicInfo[i]['restype']="music";
+                    AllInfo.push(musicInfo[i]);
+                    }
+                }}
             };
-            return SearchyanisTest;
+            return AllInfo;
         }
     }
 

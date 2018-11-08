@@ -29,12 +29,13 @@ class Search extends Component {
     }
   }
   handleClick(){
-    POST('/resource', {"resource_data": "I love yanis",isFilter:false})
+    let SearchRandom = document.getElementById("SearchRandom").value;
+    POST('/resource', {"resource_data": SearchRandom,isFilter:false})
         .then( res => res.json() )
         .then ( json => {
           alert(JSON.stringify(json.results))
           
-
+        })}
   handlePickedAuthor(event) {
     this.setState({pickedAuthor: event.target.value})
   }
@@ -57,9 +58,14 @@ class Search extends Component {
     if(this.refs.movie.checked) checked.push("movie")
 
     const queryObject = {pickedAuthor, pickedDirector, pickedPublisher, pickedArtist, titleSearch, ISBNSearch, checked}
-    console.log({queryObject})
+    
 
-    // Todo : POST('/search...', queryObject)
+    POST('/resource', {"resource_data": queryObject,isFilter:true})
+        .then( res => res.json() )
+        .then ( json => {
+          alert(JSON.stringify(json.results))
+          
+        })
   }
   handleClickAdvancedSearch(){
     let author_dropdown =[];
@@ -116,12 +122,12 @@ class Search extends Component {
     return (
       <div>
         <div style={main}>
-          <input style={input} type="text" placeholder="Search for a resource ..." ></input>
+          <input style={input} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
           <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src= "../images/advancedSearch.png" /> </button>
         </div>
 
         <div>
-          <button style={button} type="button">Search</button>
+          <button style={button} onClick={() => this.handleClick()} type="button">Search</button>
         </div>
 
         <div>
