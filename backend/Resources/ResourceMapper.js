@@ -254,6 +254,7 @@ class ResourceMapper {
                     // if the client does not check a type
                     let parameter =false;
                     let query="";
+                            if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != '') ||(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != '')){
                                  query =" Select * from book  LEFT JOIN resource on book.resource_id = resource.id ";
                                 if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
                                     
@@ -299,9 +300,10 @@ class ResourceMapper {
                                             AllInfo.push(bookInfo[i]);
                                         }
                                     }
-                                    
+                                }
                                 
                              parameter = false;
+                             if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != '') || (!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != '')){
                              query =" Select * from magazine  LEFT JOIN resource on magazine.resource_id = resource.id ";
                             if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
                                 let titleToArray = search['titleSearch'].split(" "); // title to array by part
@@ -346,7 +348,9 @@ class ResourceMapper {
                                         AllInfo.push(magazineInfo[i]);
                                     }
                                 }
+                            }
                              parameter = false;
+                             if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedArtist'] == undefined) && search['pickedArtist'] != '')){
                              query =" Select * from music  LEFT JOIN resource on music.resource_id = resource.id ";
                             if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
                                 let titleToArray = search['titleSearch'].split(" "); // title to array by part
@@ -381,7 +385,9 @@ class ResourceMapper {
                                         AllInfo.push(musicInfo[i]);
                                     }
                                 }
+                            }
                              parameter = false;
+                             if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedDirector'] == undefined) && search['pickedDirector'] != '')){
                              query =" Select * from movie  LEFT JOIN resource on movie.resource_id = resource.id ";
                             if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
                                 let titleToArray = search['titleSearch'].split(" "); // title to array by part
@@ -415,8 +421,8 @@ class ResourceMapper {
                                         movieInfo[i]['restype']="movie";
                                         AllInfo.push(movieInfo[i]);
                                     }
-                                }
-                                console.log(AllInfo);
+                                }}
+                                
                     return AllInfo;
                 }
             }else{
