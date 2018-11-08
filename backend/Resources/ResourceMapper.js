@@ -63,19 +63,100 @@ class ResourceMapper {
  
     }
 
-   static selectAll(){
-            try{
-                let resources = [];
-                let resource = {};
-                const data = connection.query(`SELECT * FROM resource`);
-                for (let i=0; i<data.length;i++){
-                    resource = this.select(data[i].id).results
-                    resources[i] = {"type": resource.resource_type, "resource_data": resource  };
-                }
-                return {status: 0, message: 'Ok', results: resources};
-            } catch (error){
-                return{ status: 1, message: 'Error: ' + error, error}
+
+    static selectAll(){
+        try{
+
+            let resources = [];
+            let resource = {};
+
+            const book_data = connection.query(`select 
+            r.title,
+            r.id,
+            b.author,
+            b.format,
+            b.pages,
+            b.publisher,
+            b.language,
+            b.isbn_10,
+            b.isbn_13,
+            b.resource_id,
+            b.id 
+            from resource as r
+            left join book as b on r.id=b.resource_id
+            where type='book'
+            `);
+            const music_data = connection.query(`select 
+            r.title,
+            r.id,
+            mu.type,
+            mu.artist,
+            mu.release,
+            mu.ASIN,
+            mu.label,
+            mu.resource_id,
+            mu.id 
+            from resource as r
+            left join music as mu on r.id=mu.resource_id
+            where r.type='music'
+            `);
+            const movie_data = connection.query(`
+            select 
+            r.title,
+            r.id,
+            mo.director,
+            mo.producers,
+            mo.actors,
+            mo.language,
+            mo.subtitles,
+            mo.dubbed,
+            mo.release_date,
+            mo.run_time,
+            mo.resource_id,
+            mo.id 
+            from resource as r
+            left join movie as mo on r.id=mo.resource_id
+            where r.type='movie'
+            `);
+            const magazine_data = connection.query(`
+            select 
+            r.title,
+            r.id,
+            ma.publisher,
+            ma.language,
+            ma.isbn_10,
+            ma.isbn_13,
+            ma.resource_id,
+            ma.id 
+            from resource as r
+            left join magazine as ma on r.id=ma.resource_id
+            where r.type='magazine'
+            `);
+            for (let i=0; i<book_data.length;i++){
+                resource = book_data[i]
+                resource.resource_data = 'book';
+                resources.push( {"type": 'book', "resource_data": resource  } );
             }
+            for (let i=0; i<magazine_data.length;i++){
+                resource = magazine_data[i]
+                resource.resource_data = 'magazine';
+                resources.push( {"type": 'magazine', "resource_data": resource  } );
+            }
+            for (let i=0; i<music_data.length;i++){
+                resource = music_data[i]
+                resource.resource_data = 'music';
+                resources.push( {"type": 'music', "resource_data": resource  } );
+            }
+            for (let i=0; i<movie_data.length;i++){
+                resource = movie_data[i]
+                resource.resource_data = 'movie';
+                resources.push( {"type": 'movie', "resource_data": resource  } );
+            }
+
+            return {status: 0, message: 'Ok', results: resources};
+        } catch (error){
+            return{ status: 1, message: 'Error: ' + error, error}
+        }
     }
 
 

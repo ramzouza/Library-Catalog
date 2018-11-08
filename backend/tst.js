@@ -8,4 +8,4 @@ let resource_obj = {"id": 44 ,"title": "Jon is the bestest","author":"Ramez", "f
 let type = "book";
 
 let x= ResourceMapper.selectAll();
-console.log(x);
+console.log(x.results);
