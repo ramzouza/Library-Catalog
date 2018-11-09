@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "Conrtoller.js",
+  "main": "Controller.js",
   "scripts": {
     "dev": "nodemon Controller --withlog",
     "start": "node Controller --withlog",

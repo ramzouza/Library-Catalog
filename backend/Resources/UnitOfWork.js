@@ -3,6 +3,7 @@ const ResourceMapper = require('./ResourceMapper');
 
 var unitofwork = [];
 var index = 0;
+var callbackMsg = "";
 
 class UnitOfWork {
     static InsertResource(resourceData, type){
@@ -24,29 +25,50 @@ class UnitOfWork {
     }
 
     static save(){
-        for (i = 0; i < unitofwork; i++){
+        for (i = 0; i < unitofwork.length() ; i++){
+            var unitOfStatus = []; // of same length as the unitofwork array
 
             if(unitofwork[i].operation == 'insert'){
                 res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
+                
                 if(res.status == 1){
-                    return res
+                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                }
+                else if(res.status == 0) {
+                    unitOfStatus[i] = {status: 0, message : 'looks good'};
                 }
             }
+
             if(unitofwork[i].operation == 'update'){
                 ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
+
                 if(res.status == 1){
-                    return res
+                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                }
+                else if(res.status == 0) {
+                    unitOfStatus[i] = {status : 0, message : 'looks good fam'};
                 }
             }
+
             if(unitofwork[i].operation == 'delete'){
                 ResourceMapper.delete(unitofwork[i].id);
+
                 if(res.status == 1){
-                    return res
+                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                }
+                else if(res.status == 0) {
+                    unitOfStatus[i] = {status : 0, message : 'looks good brotha'};
                 }
             }
         }
+        
+        if(unitOfStatus.length() != 0 || status == 0)
+            return {status : 0, message : 'Resources have been updated.'};
+        else
+            return {status : 0, message : 'Problem occured while updating resources : '+error, error};
 
-        return {status : 0, message : 'Resources have been updated.'};
+        //Once saved, remove all items in the unit of work array
+        unitofwork = [];
     }
 
     static RemoveItem(index){

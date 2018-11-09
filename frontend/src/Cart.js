@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from './Navbar'
-import { apiCall } from './ApiCall'
+import { apiCall, GET } from './ApiCall'
 import cookie from 'react-cookies'
 import CartItem from './CartItem'
 
@@ -22,7 +22,20 @@ class Cart extends Component {
       .then( json => {
         console.log('res', json)
         this.setState({logs: json.results})
-      })
+    })
+  }
+
+  // Call Controller when user clicks on save button
+  handleClickSave() {
+    const isAdmin = cookie.load('admin') === 'yes' ?  true : false
+    const id = cookie.load('id')
+
+    GET('/saveCart', {isAdmin}, {id})
+      .then(res => res.json())
+      .then( json => {
+        console.log('res', json)
+        this.setState({logs: json.results})
+    })
   }
 
   render() {
