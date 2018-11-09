@@ -215,7 +215,100 @@ render() {
                     }
         }
         modal.style.display = "block";
-       
+        text.innerHTML = ModalText(row)
+        var i=row.index+1;
+        var j=row.index+1;
+        var k=row.index+1;
+        var l=row.index+1;
+        var ResourceArray;
+      
+        
+      next.onclick = function() {
+       switch(Resourcetype){
+           case 'book':
+            ResourceArray=BookArray;
+            previous.disabled = false;
+            if(i<BookArray.length) {
+            text.innerHTML=`<p>Title: ${ResourceArray[i].title}</p><br>
+            <p>Loan: ${ResourceArray[i].loan}</p><br>
+            <p>Available: ${ResourceArray[i].available}</p><br>
+             <p>Author: ${ResourceArray[i].author}</p><br>
+             <p>Format: ${ResourceArray[i].format}</p><br>
+             <p>Pages: ${ResourceArray[i].pages}</p><br>
+             <p>Publisher: ${ResourceArray[i].publisher}</p><br>
+             <p>Language: ${ResourceArray[i].language}</p><br>
+             <p>ISBN 10: ${ResourceArray[i].ISBN_10}</p><br>
+             <p>ISBN 13: ${ResourceArray[i].ISBN_13}</p><br>`;
+              i++;}
+              else{
+                next.disabled = true;
+              }
+            
+            break;
+            
+            case 'magazine':
+            ResourceArray=MagazineArray;
+            previous.disabled = false;
+            if(j<MagazineArray.length) {
+              text.innerHTML=`<p>Title: ${ResourceArray[j].title}</p><br>
+              <p>Loan: ${ResourceArray[j].loan}</p><br>
+            <p>Available: ${ResourceArray[j].available}</p><br>
+              <p>Publisher: ${ResourceArray[j].publisher}</p><br>
+              <p>Language: ${ResourceArray[j].language}</p><br>
+              <p>ISBN 10: ${ResourceArray[j].ISBN_10}</p><br>
+              <p>ISBN 13: ${ResourceArray[j].ISBN_13}</p><br>`;
+                j++;
+              
+            } else {
+              next.disabled = true;
+            }
+            break;
+            
+            case 'movie':
+            ResourceArray=MovieArray;
+            previous.disabled = false;
+            if(k<MovieArray.length) {
+              text.innerHTML=`<p>Title: ${ResourceArray[k].title}</p><br>
+              <p>Loan: ${ResourceArray[k].loan}</p><br>
+            <p>Available: ${ResourceArray[k].available}</p><br>
+              <p>Director: ${ResourceArray[k].director}</p><br>
+              <p>Producers: ${ResourceArray[k].producers}</p><br>
+              <p>Actors: ${ResourceArray[k].actors}</p><br>
+              <p>Language: ${ResourceArray[k].language}</p><br>
+              <p>Subtitles: ${ResourceArray[k].subtitles}</p><br>
+              <p>Dubbed: ${ResourceArray[k].dubbed}</p><br>
+              <p>Release: ${ResourceArray[k].release}</p><br>
+              <p>Runtime: ${ResourceArray[k].runtime}</p><br>`;
+                k++;
+              
+            } else {
+              next.disabled = true;
+            }
+            break;
+            
+            case 'music':
+            ResourceArray=MusicArray;
+            previous.disabled = false;
+            if(l<MusicArray.length) {
+              text.innerHTML=`<p>Title: ${ResourceArray[l].title}</p><br>
+              <p>Loan: ${ResourceArray[l].loan}</p><br>
+            <p>Available: ${ResourceArray[l].available}</p><br>
+              <p>Type: ${ResourceArray[l].type}</p><br>
+              <p>Artist: ${ResourceArray[l].artist}</p><br>
+              <p>Release: ${ResourceArray[l].release}</p><br>
+              <p>ASIN: ${ResourceArray[l].ASIN}</p><br>
+              <p>Label: ${ResourceArray[l].label}</p><br>`;
+                l++;
+              
+            } else {
+              next.disabled = true;
+            }
+            break;
+            } 
+            
+      }
+
+   
            
       
       // When the user clicks on <span> (x), close the modal
