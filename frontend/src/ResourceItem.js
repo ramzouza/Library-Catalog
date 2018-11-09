@@ -36,24 +36,7 @@ class ResourceItem extends Component {
         } 
     }
 
-    typeToSchma(type){
-        let jsx = <h1></h1>;
-        switch (type) {
-            case "book":
-                jsx = <div>
 
-                </div>
-                return jsx;
-            case "magazine":
-                return jsx;
-            case "movie":
-                return jsx;
-            case "music":
-                return jsx;
-            default: 
-                return jsx;
-        } 
-    }
 
 
 
@@ -61,9 +44,11 @@ class ResourceItem extends Component {
     if(this.state.editing) {
         const {title} = this.state;
         this.props.resource_data.title = title;
+        console.log(this.props)
         const resource_type = this.props.resource_data.resource_type;
         delete this.props.resource_data.resource_type;
         const obj ={"resource_id":this.props.id, "resource_data": this.props.resource_data, "type": resource_type};
+        console.log(obj)
         PUT('/resources', obj)
           .then( res => res.json() )
           .then ( json => {

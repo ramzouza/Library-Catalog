@@ -561,8 +561,7 @@ class ResourceMapper {
             b.language,
             b.isbn_10,
             b.isbn_13,
-            b.resource_id,
-            b.id 
+            b.resource_id
             from resource as r
             left join book as b on r.id=b.resource_id
             where type='book'
@@ -575,8 +574,7 @@ class ResourceMapper {
             mu.release,
             mu.ASIN,
             mu.label,
-            mu.resource_id,
-            mu.id 
+            mu.resource_id
             from resource as r
             left join music as mu on r.id=mu.resource_id
             where r.type='music'
@@ -593,8 +591,7 @@ class ResourceMapper {
             mo.dubbed,
             mo.release_date,
             mo.run_time,
-            mo.resource_id,
-            mo.id 
+            mo.resource_id
             from resource as r
             left join movie as mo on r.id=mo.resource_id
             where r.type='movie'
@@ -607,30 +604,29 @@ class ResourceMapper {
             ma.language,
             ma.isbn_10,
             ma.isbn_13,
-            ma.resource_id,
-            ma.id 
+            ma.resource_id
             from resource as r
             left join magazine as ma on r.id=ma.resource_id
             where r.type='magazine'
             `);
             for (let i=0; i<book_data.length;i++){
                 resource = book_data[i]
-                resource.resource_data = 'book';
+                resource.resource_type = 'book';
                 resources.push( {"type": 'book', "resource_data": resource  } );
             }
             for (let i=0; i<magazine_data.length;i++){
                 resource = magazine_data[i]
-                resource.resource_data = 'magazine';
+                resource.resource_type = 'magazine';
                 resources.push( {"type": 'magazine', "resource_data": resource  } );
             }
             for (let i=0; i<music_data.length;i++){
                 resource = music_data[i]
-                resource.resource_data = 'music';
+                resource.resource_type = 'music';
                 resources.push( {"type": 'music', "resource_data": resource  } );
             }
             for (let i=0; i<movie_data.length;i++){
                 resource = movie_data[i]
-                resource.resource_data = 'movie';
+                resource.resource_type = 'movie';
                 resources.push( {"type": 'movie', "resource_data": resource  } );
             }
 
@@ -687,6 +683,8 @@ class ResourceMapper {
     // Method to update relevant resource given the new information
     static update(resource_obj, type) {
         try {
+            console.log(resource_obj)
+            console.log(type);
             type = type.toLowerCase();
             connection.query(`UPDATE resource SET title = '${resource_obj.title}' WHERE id='${resource_obj.id}'`);
             const id = resource_obj.id;
