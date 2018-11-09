@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { func } from 'prop-types';
+var TotalArray = [];
 class Search extends Component {
 
   constructor(){
@@ -30,6 +31,9 @@ class Search extends Component {
       ISBNSearch: ""
     }
   }
+
+
+  
   handleClick(){
     let SearchRandom = document.getElementById("SearchRandom").value;
     POST('/resource', {"resource_data": SearchRandom,isFilter:false})
@@ -66,7 +70,7 @@ class Search extends Component {
         .then( res => res.json() )
         .then ( json => {
           alert(JSON.stringify(json.results))
-          var TotalArray = json.results;
+          TotalArray = json.results;
           
         })
   }
@@ -146,6 +150,90 @@ render() {
         MusicArray.push(TotalArray[i]);
       }
     }
+
+    const options = {
+      onRowDoubleClick: function(row) {
+        
+      var modal = document.getElementById('myModal');
+      var btn = document.getElementById("myBtn");
+      var text = document.getElementById("modaltext");
+      var span = document.getElementsByClassName("close")[0];
+      var next= document.getElementById("next");
+      next.disabled = false;
+      var previous= document.getElementById("previous");
+      var Resourcetype;
+      
+      function ModalText(row){
+          Resourcetype = `${row.restype}`;
+          switch(Resourcetype){
+            case 'book':
+            return `<p>Title: ${row.title}</p><br>
+            <p>Loan: ${row.loan}</p><br>
+            <p>Available: ${row.available}</p><br>
+            <p>Author: ${row.author}</p><br>
+            <p>Format: ${row.format}</p><br>
+            <p>Pages: ${row.pages}</p><br>
+            <p>Publisher: ${row.publisher}</p><br>
+            <p>Language: ${row.language}</p><br>
+            <p>ISBN 10: ${row.ISBN_10}</p><br>
+            <p>ISBN 13: ${row.ISBN_13}</p><br>`;
+            break;
+            case 'magazine':
+            return `<p>Title: ${row.title}</p><br>
+            <p>Loan: ${row.loan}</p><br>
+            <p>Available: ${row.available}</p><br>
+            <p>Publisher: ${row.publisher}</p><br>
+            <p>Language: ${row.language}</p><br>
+            <p>ISBN 10: ${row.ISBN_10}</p><br>
+            <p>ISBN 13: ${row.ISBN_13}</p><br>`;
+            break;
+            case 'movie':
+            return `<p>Title: ${row.title}</p><br>
+            <p>Loan: ${row.loan}</p><br>
+            <p>Available: ${row.available}</p><br>
+            <p>Director: ${row.director}</p><br>
+            <p>Producers: ${row.producers}</p><br>
+            <p>Actors: ${row.actors}</p><br>
+            <p>Subtitles: ${row.subtitles}</p><br>
+            <p>Language: ${row.language}</p><br>
+            <p>Dubbed: ${row.dubbed}</p><br>
+            <p>Released: ${row.released}</p><br>
+            <p>Runtime: ${row.runtime}</p><br>`;
+            break;
+            case 'music':
+            return `<p>Title: ${row.title}</p><br>
+            <p>Loan: ${row.loan}</p><br>
+            <p>Available: ${row.available}</p><br>
+            <p>Type: ${row.type}</p><br>
+            <p>Artist: ${row.artist}</p><br>
+            <p>Release: ${row.release}</p><br>
+            <p>ASIN: ${row.ASIN}</p><br>
+            <p>Label: ${row.label}</p><br>`;
+            break;
+
+
+                    }
+        }
+        modal.style.display = "block";
+       
+           
+      
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+          modal.style.display = "none";
+      }
+      
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+      }
+    
+    
+    }
+    };
+
 
     console.log(resource_list);
     return (
@@ -318,6 +406,15 @@ render() {
           <TableHeaderColumn dataField='label' dataAlign='center' width='150' dataSort={ true }>Label</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
           </BootstrapTable>
+          <div id="myModal" class="modal" style={{width: "300px",height: "700px",position: 'fixed','left': '40%',right: '25%',top: '60%',float: 'left',position: 'absolute','max-height': "100%"}}>
+          <div class="modal-content" style={{width: "300px",height: "700px"}}>
+          <span class="close">&times;</span>
+          <p id='modaltext' style={{'marginLeft': '20px', "marginTop":"10px"}}></p>
+          <button id="previous" >Previous</button>
+          <button id="next" >Next</button>
+          </div>
+          
+     </div>
      </div>
      
     );
