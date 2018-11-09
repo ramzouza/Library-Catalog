@@ -590,10 +590,11 @@ render() {
           <TableHeaderColumn dataField='label' dataAlign='center' width='150' dataSort={ true }>Label</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
           </BootstrapTable>
-          <div id="myModal" class="modal" style={{width: "300px",height: "700px",position: 'fixed','left': '40%',right: '25%',top: '60%',float: 'left',position: 'absolute','max-height': "100%"}}>
-          <div class="modal-content" style={{width: "300px",height: "700px"}}>
+          
+          <div id="myModal" class="modal" >
+          <div class="modal-content">
           <span class="close">&times;</span>
-          <p id='modaltext' style={{'marginLeft': '20px', "marginTop":"10px"}}></p>
+          <p id='modaltext'></p>
           <button id="previous" >Previous</button>
           <button id="next" >Next</button>
           </div>
