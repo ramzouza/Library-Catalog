@@ -431,7 +431,7 @@ app.post('/saveCart', (req, res) =>{
         res.json({ status: 1, message: "Not Authorized", results:[] })
         logger(`POST -  [/saveCart] - ${400} - ${sender_id} `)
     } else {
-        const cart = UnitOfWork.save(); // calliong the UoW's save method
+        const cart = UnitOfWork.save(); // calling the UoW's save method
         console.log(JSON.stringify(cart))
         const message = `Ok`
         res.status(200)

@@ -22,7 +22,7 @@ class ResourceCatalog {
     }
 
     static Find(search,isadvancedSearch){
-        return ResourceMapper.select(search,isadvancedSearch);
+        return ResourceMapper.advSelect(search,isadvancedSearch);
     }
 
     static GetAllResources(){
