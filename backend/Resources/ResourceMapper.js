@@ -612,22 +612,30 @@ class ResourceMapper {
             for (let i=0; i<book_data.length;i++){
                 resource = book_data[i]
                 resource.resource_type = 'book';
+                IdentifyMap[resource.id] = resource;
                 resources.push( {"type": 'book', "resource_data": resource  } );
+                
             }
             for (let i=0; i<magazine_data.length;i++){
                 resource = magazine_data[i]
                 resource.resource_type = 'magazine';
+                IdentifyMap[resource.id] = resource;
                 resources.push( {"type": 'magazine', "resource_data": resource  } );
+                
             }
             for (let i=0; i<music_data.length;i++){
                 resource = music_data[i]
-                resource.resource_type = 'music';
+                resource.resource_type = 'music'; 
+                IdentifyMap[resource.id] = resource;
                 resources.push( {"type": 'music', "resource_data": resource  } );
+               
             }
             for (let i=0; i<movie_data.length;i++){
                 resource = movie_data[i]
                 resource.resource_type = 'movie';
+                IdentifyMap[resource.id] = resource;
                 resources.push( {"type": 'movie', "resource_data": resource  } );
+                
             }
 
             return {status: 0, message: 'Ok', results: resources};
