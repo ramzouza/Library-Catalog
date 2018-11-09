@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { func } from 'prop-types';
-var TotalArray = [];
+// var TotalArray = [];
 class Search extends Component {
 
   constructor(){
     super()
-
     this.state = {
-      resource_list: []
+      resource_list: [],
+      TotalArray: []
     }
     this.advancedSearch = {
       title: "",
@@ -40,7 +40,8 @@ class Search extends Component {
         .then( res => res.json() )
         .then ( json => {
           alert(JSON.stringify(json.results))
-          
+          let TotalArray = json.results;
+          this.setState({TotalArray})
         })}
   handlePickedAuthor(event) {
     this.setState({pickedAuthor: event.target.value})
@@ -70,8 +71,10 @@ class Search extends Component {
         .then( res => res.json() )
         .then ( json => {
           alert(JSON.stringify(json.results))
-          TotalArray = json.results;
-          
+          let TotalArray = json.results;
+          this.setState({TotalArray})
+
+          // SEARCH ADVANCED 
         })
   }
   handleClickAdvancedSearch(){
@@ -125,7 +128,7 @@ class Search extends Component {
   
 
 render() {
-    const {resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+    const {TotalArray, resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
 
     var BookArray=[];
     var MagazineArray=[];
