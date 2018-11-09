@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from './Navbar'
-import { apiCall, GET } from './ApiCall'
+import { apiCall, GET, POST } from './ApiCall'
 import cookie from 'react-cookies'
 import CartItem from './CartItem'
 
@@ -48,7 +48,7 @@ class Cart extends Component {
           <h2>Cart</h2>
           <hint>The following data will be modified:</hint>
             <div>
-              {logs.map(item =><CartItem resource_data={item.resource_data} operation={item.operation} index={item.index} />)}  
+              {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
             </div>
           <button style={savebtn} type="button" onClick={() => this.handleClickSave()}> Save </ button>
         </div>
