@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { func } from 'prop-types';
 class Search extends Component {
 
   constructor(){
@@ -64,6 +66,7 @@ class Search extends Component {
         .then( res => res.json() )
         .then ( json => {
           alert(JSON.stringify(json.results))
+          var TotalArray = json.results;
           
         })
   }
@@ -115,8 +118,34 @@ class Search extends Component {
         })
 
 }
-  render() {
+  
+
+render() {
     const {resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+
+    var BookArray=[];
+    var MagazineArray=[];
+    var MovieArray=[];
+    var MusicArray=[];
+
+    for(var i=0; i<TotalArray.length; i++ ){
+      if(TotalArray[i].restype === "book"){
+        TotalArray[i]['index'] = BookArray.length;
+        BookArray.push(TotalArray[i]);
+      }
+      if(TotalArray[i].restype === "magazine"){
+        TotalArray[i]['index'] = MagazineArray.length;
+        MagazineArray.push(TotalArray[i]);
+      }
+      if(TotalArray[i].restype === "movie"){
+        TotalArray[i]['index'] = MovieArray.length;
+        MovieArray.push(TotalArray[i]);
+      }
+      if(TotalArray[i].restype === "music"){
+        TotalArray[i]['index'] = MusicArray.length;
+        MusicArray.push(TotalArray[i]);
+      }
+    }
 
     console.log(resource_list);
     return (
@@ -228,6 +257,67 @@ class Search extends Component {
           
         </div>
         </div>
+        <h1>Book Results</h1>
+          <BootstrapTable id="booktable" hidden data={BookArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
+          <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
+          <TableHeaderColumn dataField='title' dataAlign='center' width='150' isKey={ true } dataSort={ true } >Title</TableHeaderColumn>
+          <TableHeaderColumn dataField='loan' dataAlign='center' width='150' dataSort={ true }>Loan</TableHeaderColumn>
+          <TableHeaderColumn dataField='available' dataAlign='center' width='150' dataSort={ true }>Available</TableHeaderColumn>
+          <TableHeaderColumn dataField='author' dataAlign='center' width='150' dataSort={ true }>Author</TableHeaderColumn>
+          <TableHeaderColumn dataField='format' dataAlign='center' width='150' dataSort={ true }>Format</TableHeaderColumn>
+          <TableHeaderColumn dataField='pages' dataAlign='center' width='150' dataSort={ true }>Pages</TableHeaderColumn>
+          <TableHeaderColumn dataField='publisher' dataAlign='center' width='150' dataSort={ true }>Publisher</TableHeaderColumn>
+          <TableHeaderColumn dataField='language' dataAlign='center' width='150' dataSort={ true }>Language</TableHeaderColumn>
+          <TableHeaderColumn dataField='ISBN_10' dataAlign='center' width='150' dataSort={ true }>ISBN_10</TableHeaderColumn>
+          <TableHeaderColumn dataField='ISBN_13' dataAlign='center' width='150' dataSort={ true }>ISBN_13</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
+          
+          </BootstrapTable>
+          <h1>Magazine Results</h1>
+          <BootstrapTable id="magazinetable" class="hidden" data={MagazineArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
+          <TableHeaderColumn dataField='id' dataAlign='center' isKey={ true } width='150' dataSort={ true } >ID</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
+          <TableHeaderColumn dataField='title' dataAlign='center' width='150' dataSort={ true }>Title</TableHeaderColumn>
+          <TableHeaderColumn dataField='loan' dataAlign='center' width='150' dataSort={ true }>Loan</TableHeaderColumn>
+          <TableHeaderColumn dataField='available' dataAlign='center' width='150' dataSort={ true }>Available</TableHeaderColumn>
+          <TableHeaderColumn dataField='publisher' dataAlign='center' width='150' dataSort={ true }>Publisher</TableHeaderColumn>
+          <TableHeaderColumn dataField='language' dataAlign='center' width='150' dataSort={ true }>Language</TableHeaderColumn>
+          <TableHeaderColumn dataField='ISBN_10' dataAlign='center' width='150' dataSort={ true }>ISBN_10</TableHeaderColumn>
+          <TableHeaderColumn dataField='ISBN_13' dataAlign='center' width='150' dataSort={ true }>ISBN_13</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
+          </BootstrapTable>
+          <h1>Movies Results</h1>
+          <BootstrapTable id="movietable" style="visibility:hidden" data={MovieArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
+          <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
+          <TableHeaderColumn dataField='title' isKey={ true } dataAlign='center' width='150' dataSort={ true } >Title</TableHeaderColumn>
+          <TableHeaderColumn dataField='loan' dataAlign='center' width='150' dataSort={ true }>Loan</TableHeaderColumn>
+          <TableHeaderColumn dataField='available' dataAlign='center' width='150' dataSort={ true }>Available</TableHeaderColumn>
+          <TableHeaderColumn dataField='director' dataAlign='center' width='150' dataSort={ true }>Director</TableHeaderColumn>
+          <TableHeaderColumn dataField='producers' dataAlign='center' width='150' dataSort={ true }>Producers</TableHeaderColumn>
+          <TableHeaderColumn dataField='actors' dataAlign='center' width='150' dataSort={ true }>Actors</TableHeaderColumn>
+          <TableHeaderColumn dataField='subtitles' dataAlign='center' vwidth='150' dataSort={ true }>Subtitles</TableHeaderColumn>
+          <TableHeaderColumn dataField='language' dataAlign='center' width='150' dataSort={ true }>Language</TableHeaderColumn>
+          <TableHeaderColumn dataField='dubbed' dataAlign='center' width='150' dataSort={ true }>Dubbed</TableHeaderColumn>
+          <TableHeaderColumn dataField='release' dataAlign='center' width='150' dataSort={ true }>Release</TableHeaderColumn>
+          <TableHeaderColumn dataField='runtime' dataAlign='center' width='150' dataSort={ true }>Run Time</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
+          </BootstrapTable>
+          <h1>Music Results</h1>
+          <BootstrapTable id="musictable" style="visibility:hidden" data={MusicArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
+          <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
+          <TableHeaderColumn dataField='title' isKey={ true } dataAlign='center' width='150' dataSort={ true } >Title</TableHeaderColumn>
+          <TableHeaderColumn dataField='loan' dataAlign='center' width='150' dataSort={ true }>Loan</TableHeaderColumn>
+          <TableHeaderColumn dataField='available' dataAlign='center' width='150' dataSort={ true }>Available</TableHeaderColumn>
+          <TableHeaderColumn dataField='type' dataAlign='center' width='150' dataSort={ true }>Type</TableHeaderColumn>
+          <TableHeaderColumn dataField='artist' dataAlign='center' width='150' dataSort={ true }>Artist</TableHeaderColumn>
+          <TableHeaderColumn dataField='release' dataAlign='center' width='150' dataSort={ true }>Release</TableHeaderColumn>
+          <TableHeaderColumn dataField='ASIN' dataAlign='center' width='150' dataSort={ true }>ASIN</TableHeaderColumn>
+          <TableHeaderColumn dataField='label' dataAlign='center' width='150' dataSort={ true }>Label</TableHeaderColumn>
+          <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
+          </BootstrapTable>
      </div>
      
     );
