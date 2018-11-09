@@ -25,50 +25,61 @@ class UnitOfWork {
     }
 
     static save(){
-        for (i = 0; i < unitofwork.length() ; i++){
-            var unitOfStatus = []; // of same length as the unitofwork array
-
+        var unitOfStatus = []; // of same length as the unitofwork array
+            var statusOfWork = false; // false means no error
+            var errMsg;
+        for (var i = 0; i < unitofwork.length ; i++){
+            unitOfStatus = [];
+            statusOfWork = false;
+            errMsg='';
             if(unitofwork[i].operation == 'insert'){
-                res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
+                var res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
                 
                 if(res.status == 1){
-                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                    statusOfWork = true;
+                    errMsg = res.error;
                 }
                 else if(res.status == 0) {
+                    statusOfWork = false;
                     unitOfStatus[i] = {status: 0, message : 'looks good'};
                 }
             }
 
             if(unitofwork[i].operation == 'update'){
-                ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
-
+                
+                var res = ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
+                
                 if(res.status == 1){
-                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                    statusOfWork = true;
+                    errMsg = res.error;
                 }
                 else if(res.status == 0) {
+                    statusOfWork = false;
                     unitOfStatus[i] = {status : 0, message : 'looks good fam'};
                 }
             }
 
             if(unitofwork[i].operation == 'delete'){
-                ResourceMapper.delete(unitofwork[i].id);
+                var res = ResourceMapper.delete(unitofwork[i].id);
 
                 if(res.status == 1){
-                    return { status : 1, message: 'Something went wrong while updating this resource... ' + error, error}
+                    statusOfWork = true;
+                    errMsg = res.error;
                 }
                 else if(res.status == 0) {
+                    statusOfWork = false;
                     unitOfStatus[i] = {status : 0, message : 'looks good brotha'};
                 }
             }
         }
         
-        if(unitOfStatus.length() != 0 || status == 0)
+        if(statusOfWork == false){
+            unitofwork = []; // clear array once completed successfully
             return {status : 0, message : 'Resources have been updated.'};
+        }
         else
-            return {status : 0, message : 'Problem occured while updating resources : '+error, error};
+            return {status : 1, message : 'Problem occured while updating resources : ' + errMsg, error:errMsg};
 
-        //Once saved, remove all items in the unit of work array
-        unitofwork = [];
     }
 
     static RemoveItem(index){

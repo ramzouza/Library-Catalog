@@ -420,6 +420,27 @@ app.get('/saveCart', (req, res) =>{
   
 })
 
+// Route to handle the Unit Of Work's save
+app.post('/saveCart', (req, res) =>{
+    // check if the sender is authenticated
+    console.log("...saving...");
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized", results:[] })
+        logger(`POST -  [/saveCart] - ${400} - ${sender_id} `)
+    } else {
+        const cart = UnitOfWork.save(); // calliong the UoW's save method
+        console.log(JSON.stringify(cart))
+        const message = `Ok`
+        res.status(200)
+        res.json({ status: 0, results: cart, message })
+        logger(`POST - [/saveCart] - ${200} - ${message}`)
+    }
+  
+})
+
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
