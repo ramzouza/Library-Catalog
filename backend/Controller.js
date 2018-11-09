@@ -9,9 +9,10 @@ const logger = (message) => {
     withlog ? log('Controller - ' + message) : null
 }
 // ============ Architecture Classes ==========
-const AuthService = require('./AuthService')
-const UserCatalog = require('./UserCatalog')
-const ResourceCatalog = require('./ResourceCatalog')
+const AuthService = require('./Users/AuthService')
+const UserCatalog = require('./Users/UserCatalog')
+const ResourceCatalog = require('./Resources/ResourceCatalog')
+const UnitOfWork = require('./Resources/UnitOfWork')
 
 // ============ Allow Requests from a Browser ==========
 app.use(bodyParser.json()); // for parsing application/json
@@ -82,7 +83,7 @@ app.post('/createnewuser',  (req, res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`POST - [/createnewuser] - ${400} - ${sender_id} `)
     }
-    
+
     // declare user data
     const user = {
         password,
@@ -151,7 +152,7 @@ app.post('/loggedusers', (req, res) => {
         res.json({ status: 0, results: users, message })
         logger(`POST - [/loggedusers] - ${200} - ${message}`)
     }
-    
+
 })
 
 
@@ -168,10 +169,10 @@ app.post('/resources', (req, res) => {
 
     // get resource data and their type
     const { resource_data , type } = req.body;
-    
+
     // make new resource
     const {status, message, results, error} = ResourceCatalog.MakeNewResource(resource_data, type);
-    
+
     if(status == 1){
         res.status(400)
         res.json({status, message, error})
@@ -195,17 +196,82 @@ app.get('/resources', (req,res) => {
         res.json({ status: 1, message: "Not Authorized" })
         logger(`GET -  [/resources] - ${400} - ${sender_id} `)
     }
-
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
-    console.log({resource_list})
     res.status(200);
-    res.json({"results":resource_list});
+    res.json({"results":resource_list.results});
     logger(`GET - [/resources] - ${200} - ${sender_id} `);
 })
 
+app.get('/author', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`GET -  [/authors] - ${400} - ${sender_id} `)
+    }
+
+    // get authors here
+    const resource_list = ResourceCatalog.getAllAuthors();
+    res.status(200);
+    res.json({"results":resource_list});
+    logger(`GET - [/authors] - ${200} - ${sender_id} `);
+})
+
+app.get('/director', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    }
+
+    // get director here
+    const resource_list = ResourceCatalog.getAllDirectors();
+    res.status(200);
+    res.json({"results":resource_list});
+    logger(`GET - [/director] - ${200} - ${sender_id} `);
+})
+
+app.get('/publisher', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    }
+
+    // get publisher here
+    const resource_list = ResourceCatalog.getAllPublishers();
+    res.status(200);
+    res.json({"results":resource_list});
+    logger(`GET - [/director] - ${200} - ${sender_id} `);
+})
+
+app.get('/artist', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    }
+
+    // get artist here
+    const resource_list = ResourceCatalog.getAllArtists();
+    res.status(200);
+    res.json({"results":resource_list});
+    logger(`GET - [/director] - ${200} - ${sender_id} `);
+})
 // EDIT resource by resource_ID
-/*app.put('/resources', (req,res) => {
+app.put('/resources', (req,res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
@@ -217,7 +283,7 @@ app.get('/resources', (req,res) => {
 
     // get resource data and their type
     const { resource_id, resource_data , type } = req.body
-
+    console.log(type)
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
 
@@ -231,31 +297,6 @@ app.get('/resources', (req,res) => {
         logger(`PUT - [/resources] - ${200} - ${sender_id} `);
     }
 
-})*/
-app.put('/resources', (req,res) => {
-    // check if the sender is authenticated
-    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    } else {
-            // get resource data and their type
-        const { id, title } = req.body.resource_data
-        // Edit the Resource
-        const {status, message, results, error} = ResourceCatalog.EditResource(id, title);
-
-        if(status == 1){
-            res.status(400);
-            res.json({status, message, error});
-            logger(`PUT - [/resources] - ${400} - ${sender_id} `);
-        } else {
-            res.status(200);
-            res.json({status, message, results});
-            logger(`PUT - [/resources] - ${200} - ${sender_id} `);
-        }
-    }
 })
 
 // Delete resource by resource_ID
@@ -288,12 +329,119 @@ app.delete('/resources', (req,res) => {
 
 })
 
+// TODO by karl and berf
+// Search for resources:
+// the body of the request contains a json with a key called 'type' which determines
+// what type of resource the client is searching for and it also contains all possible
+// object attributes as keys in the json to help conduct the search.
+app.post('/resource' , (req,res) =>{
+
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+    // get resources here
+    const {resource_data,isFilter} = req.body;
+    const yanis2 = ResourceCatalog.Find(resource_data, isFilter);
+    
+    res.json({"results":yanis2});
+    logger(`GET - [/resources] - ${200} - ${sender_id} `);
+     
+})
 
 
+//View whats is in the Unit of Work.
+app.post('/cart', (req, res) =>{
+  // check if the sender is authenticated
+  const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+  const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+  if (!auth.isAuthorized) {
+      res.status(400)
+      res.json({ status: 1, message: "Not Authorized",results:[] })
+      logger(`POST -  [/cart] - ${400} - ${sender_id} `)
+  } else {
+      const cart = UnitOfWork.ViewUnitOfWork();
+      console.log(cart)
+      const message = `Ok`
+      res.status(200)
+      res.json({ status: 0, results: cart, message })
+      logger(`POST - [/cart] - ${200} - ${message}`)
+  }
 
+})
+
+app.delete('/cartItem', (req,res) => {
+    // check if the sender is authenticated
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    } else {
+        // get resource data and their type
+        const { index } = req.body;
+
+        // Edit the Resource
+        const {status, message, results, error} = UnitOfWork.RemoveItem(index);
+        if(status == 1){
+            res.status(400);
+            res.json({status, message, error});
+            logger(`REMOVE - [/cartItem] - ${400} - ${sender_id} `);
+        } else {
+            res.status(200);
+            res.json({status, message, results});
+            logger(`REMOVE - [/cartItem] - ${200} - ${sender_id} `);
+        }
+    }
+
+})
+
+// Route to handle the Unit Of Work's save
+app.get('/saveCart', (req, res) =>{
+    // check if the sender is authenticated
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized", results:[] })
+        logger(`GET -  [/saveCart] - ${400} - ${sender_id} `)
+    } else {
+        const cart = UnitOfWork.save(); // calliong the UoW's save method
+        console.log(cart)
+        const message = `Ok`
+        res.status(200)
+        res.json({ status: 0, results: cart, message })
+        logger(`GET - [/saveCart] - ${200} - ${message}`)
+    }
+  
+})
+
+// Route to handle the Unit Of Work's save
+app.post('/saveCart', (req, res) =>{
+    // check if the sender is authenticated
+    console.log("...saving...");
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized", results:[] })
+        logger(`POST -  [/saveCart] - ${400} - ${sender_id} `)
+    } else {
+        const cart = UnitOfWork.save(); // calling the UoW's save method
+        console.log(JSON.stringify(cart))
+        const message = `Ok`
+        res.status(200)
+        res.json({ status: 0, results: cart, message })
+        logger(`POST - [/saveCart] - ${200} - ${message}`)
+    }
+  
+})
 
 server = app.listen(port, () => {
     logger('backend started on port ' + port)
 })
- 
 module.exports = server;

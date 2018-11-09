@@ -1,4 +1,4 @@
-const {Post, Delete, Get} = require('../CreateTest')
+const {Post, Delete, Get} = require('./CreateTest')
 
 
 /*

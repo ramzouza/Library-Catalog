@@ -41,6 +41,12 @@ class Navbar extends Component {
               <div style={{padding: 15}}>Create ressource</div>
             </Link>)
           : null }
+
+           { admin? 
+           (<Link to="/cart" style={{textDecoration: 'none', color:'white' }}>
+              <div style={{padding: 15}}>View Cart</div>
+            </Link>)
+          : null }
           
           <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
           <div onClick={ _ => {

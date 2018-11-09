@@ -23,13 +23,13 @@ class ResourceItem extends Component {
 
     typeToPicture(type) {
         switch (type) {
-            case "Book":
+            case "book":
                 return bookPic
-            case "Magazine":
+            case "magazine":
                 return magPic
-            case "Movie":
+            case "movie":
                 return movPic
-            case "Music":
+            case "music":
                 return musicPic
             default: 
                 return defPic
@@ -38,11 +38,18 @@ class ResourceItem extends Component {
 
 
 
+
+
   handleClickEdit(id){
     if(this.state.editing) {
         const {title} = this.state;
-        const res = {id,title};
-        PUT('/resources', {"resource_data": res})
+        this.props.resource_data.title = title;
+        console.log(this.props)
+        const resource_type = this.props.resource_data.resource_type;
+        delete this.props.resource_data.resource_type;
+        const obj ={"resource_id":this.props.id, "resource_data": this.props.resource_data, "type": resource_type};
+        console.log(obj)
+        PUT('/resources', obj)
           .then( res => res.json() )
           .then ( json => {
             alert(json.message)
@@ -69,15 +76,25 @@ class ResourceItem extends Component {
   }
 
     render() {
-        const { id, title, type } = this.props
+        const { id, type, resource_data } = this.props
         const { editing } = this.state
-        const admin = cookie.load('admin') === 'yes'
+        const admin = cookie.load('admin') === 'yes';
+
         return (
             <div style={main}>
                 <div>
+                    
                     <img alt="" style={picStyle} src={this.typeToPicture(type)}/>
-                    {editing ? <input placeholder={title} onChange={e => this.setState({title: e.target.value})}/>
-                            :  <a>Title: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{title}</a></a>}
+                    {editing ? <input placeholder={resource_data.title} onChange={e => this.setState({title: e.target.value})}/>
+                            :  <a> 
+                                Title: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{resource_data.title}</a><br></br>
+                                Data: <a style={{ marginLeft: 10,fontFamily: 'Arial'}}>{JSON.stringify(resource_data)}</a>
+                                
+                                
+                            </a>
+                                
+                            
+                    }
                 </div>
                 { admin ? (<div>
                                 <img alt="" style={icons} src={editPic} onClick={() => this.handleClickEdit(id)} />
@@ -98,7 +115,7 @@ const main = {
     justifyContent: 'space-between',
     alignItems: 'center',
     fontFamily: 'Impact',
-    height: 30,
+    height: 50,
     width: '100%',
     borderBottom: '1px solid black',
     backgroundColor: 'white',
@@ -106,9 +123,7 @@ const main = {
 }
 
 const picStyle = {
-    height: 20,
-    width: 20,
-    padding: '0px 10px'
+    width: '1%'
 }
 
 const icons = {

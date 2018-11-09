@@ -16,6 +16,7 @@ class Resources extends Component {
     GET('/resources')
       .then(res => res.json())
       .then( json => {
+        if(json.results != undefined){
         for (let i=0; i < json.results.length ; i++){
           if (json.results[i] == null){
             delete json.results[i];
@@ -25,17 +26,17 @@ class Resources extends Component {
         console.log(json.results);
         console.log("======================");
         this.setState({resource_list: json.results})
+      }
       })
   }
 
 
   render() {
     const {resource_list} = this.state;
-    console.log(resource_list);
     return (
       <div style={main}>
         <h1>High Quality Database</h1>
-        {resource_list.map( ({id, title, type}) => <ResourceItem key={id} id={id} title={title} type={type} />)}
+        {resource_list.map( ({type, resource_data}) => <ResourceItem key={resource_data.id} id={resource_data.id} type={type} resource_data={resource_data} />)}
       </div>
     );
   }
