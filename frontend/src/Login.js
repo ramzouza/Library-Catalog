@@ -64,7 +64,7 @@ const  main = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontFamily: 'Impact',
+    fontFamily: 'Archivo Narrow',
     borderRadius: 5,
     height: 300,
     fontSize: 30,

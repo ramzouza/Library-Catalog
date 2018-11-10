@@ -32,7 +32,7 @@ class LoggedUsers extends Component {
         <div style={body}>
           <p>Logged Users</p>
           <div style={logStyle}>
-            {logs.map( ({user, isAdmin}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}> {user}  ({isAdmin})</p> )}
+            {logs.map( ({user, isAdmin}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}><span><img src={require('./LoggedUsers.png')}/></span> {user}  ({isAdmin})</p> )}
           </div>
         </div>
         

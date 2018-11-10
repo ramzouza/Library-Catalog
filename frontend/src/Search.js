@@ -424,7 +424,7 @@ render() {
       <div>
         <div style={main}>
           <input style={input} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
-          <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="advanced search" src= "../images/advancedSearch.png" /> </button>
+          <button  onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" ><img alt="Advanced search" src={ '../../images/advancedSearch.png'} /> </button>
         </div>
 
         <div>
@@ -529,7 +529,7 @@ render() {
           
         </div>
         </div>
-        <h1>Book Results</h1>
+        <h1 style={title}>Book Results</h1>
           <BootstrapTable id="booktable" hidden data={BookArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
           <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
@@ -546,7 +546,7 @@ render() {
           <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
           
           </BootstrapTable>
-          <h1>Magazine Results</h1>
+          <h1 style={title}>Magazine Results</h1>
           <BootstrapTable id="magazinetable" class="hidden" data={MagazineArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
           <TableHeaderColumn dataField='id' dataAlign='center' isKey={ true } width='150' dataSort={ true } >ID</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
@@ -559,7 +559,7 @@ render() {
           <TableHeaderColumn dataField='ISBN_13' dataAlign='center' width='150' dataSort={ true }>ISBN_13</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
           </BootstrapTable>
-          <h1>Movies Results</h1>
+          <h1 style={title}>Movies Results</h1>
           <BootstrapTable id="movietable" style="visibility:hidden" data={MovieArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
           <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
@@ -576,7 +576,7 @@ render() {
           <TableHeaderColumn dataField='runtime' dataAlign='center' width='150' dataSort={ true }>Run Time</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='index' dataAlign='center' width='150' dataSort={ true }>Index</TableHeaderColumn>
           </BootstrapTable>
-          <h1>Music Results</h1>
+          <h1 style={title}>Music Results</h1>
           <BootstrapTable id="musictable" style="visibility:hidden" data={MusicArray} options={ { noDataText: 'This is custom text for empty data' } }options={options}>
           <TableHeaderColumn dataField='id' dataAlign='center' width='150' dataSort={ true }>Id</TableHeaderColumn>
           <TableHeaderColumn hidden dataField='restype' dataAlign='center' width='150' dataSort={ true }>Resource type</TableHeaderColumn>
@@ -619,15 +619,21 @@ const input = {
     fontSize: 30,
     padding: '15px 15px',
     textAlign: 'left',
-    fontFamily: 'Impact',
+    fontFamily: 'Bookman',
     borderRadius: 2,
     width: '100%'
 }
 const button = {
   fontSize: 20,
   borderRadius: 5,
-  fontFamily: 'inherit',
+  fontFamily: 'Archivo Narrow',
   padding: '5px 40px',
   margin: 10,
   // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
+}
+
+const title = {
+ 
+fontFamily: 'Cabin',
+
 }
