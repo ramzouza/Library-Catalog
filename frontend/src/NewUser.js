@@ -55,7 +55,7 @@ class NewUser extends Component {
   const admin = cookie.load('admin') === 'yes'
     return (
       <div class="newuser-main" >
-        <span style={{fontWeight: 'bold'}} >New User</span>
+        <h1 id="text">Create User</h1>
         
         <input onChange={evt => {this.setState({firstName: evt.target.value})}} type="text" placeholder="First Name" ></input>
 
@@ -69,13 +69,12 @@ class NewUser extends Component {
 
         <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} type="text" placeholder="Phone Number" ></input>
         
-        <div style={{display: 'flex', alignItems:'center'}}>
-            Admin 
-            <input onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"></input>
-        </div>
         
-        <button class="newuser-btn"
-           onClick={this.handleClick.bind(this)} type="button">Create</button>
+            <label><input id="checkbox" onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"/>Admin</label>
+
+        
+        <button 
+           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );
