@@ -520,9 +520,17 @@
 
 .btn{
     font-size: 2rem;
+    /*margin: 0.5em 0 0.5em 0;*/
+}
+
+.btn-search{
     margin: 0.5em 0 0.5em 0;
 }
 
 .search-result{
     margin-bottom: 1em;
+}
+
+.modal{
+    font-size: 1.5em;
 }

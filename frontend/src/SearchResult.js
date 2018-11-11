@@ -14,6 +14,10 @@ class SearchResult extends Component {
         }
     }
 
+    handleDetails(){
+
+    }
+
     render() {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
@@ -70,8 +74,34 @@ class SearchResult extends Component {
             <div class="card-body">
                 <h1>{resource.title}</h1>
                 {Jsx}
-                <button type="button" onClick={() => this.handleDetails()} class="btn btn-primary" data-toggle="modal" data-target="#myModal">Details</button>
-            </div>          
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">Details</button>
+            </div>
+
+
+            <div class="modal  fade" tabindex="-1" role="dialog" id="edit">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">{resource.title}</h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {Jsx}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                        <button type="button" class="btn btn-primary">Loan</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
         );
     }

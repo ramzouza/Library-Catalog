@@ -138,8 +138,8 @@ render() {
         </div>
 
         <div>
-          <button  class="btn btn-default" onClick={() => this.handleClick()} type="button">Search</button>
-          <button   class="btn btn-default" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+          <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button>
+          <button  class="btn btn-default btn-search" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
         </div>
 
         <div>
@@ -151,8 +151,8 @@ render() {
             
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Advanced Search</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                 <span>Type : </span>
