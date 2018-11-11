@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 /* App */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 .app-main {
     display: flex;
     width: 100%;
     justify-content: center;
-    font-family: Impact;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .App {
@@ -48,7 +50,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-family: Helvetica;
     width: 100%;
     height: 64px;
     font-size: 25px;
@@ -100,7 +101,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     border-radius: 5px;
     width: 100%;
 }
@@ -136,7 +136,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     border-radius: 5px;
     min-height: 400px;
     font-size: 30px;
@@ -177,7 +176,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     height: 50px;
     width: 100%;
     border-bottom: 1px solid black;
@@ -304,7 +302,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     border-radius: 5px;
     width: 100%;
 }
@@ -332,7 +329,6 @@
 }
 
 .loggedusers-style p{
-    font-family: Times;
     color: black;
     text-shadow: none;
 }
@@ -344,7 +340,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     border-radius: 5px;
     height: 900px;
     width: 100%;
@@ -352,8 +347,8 @@
 
 .logged-body {
     height: 100%;
-    width: 100%;
-    display: flex;
+    width: 80%;
+    margin: 0 auto;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -366,7 +361,6 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    font-family: Impact;
     width: 350px;
     border-radius: 5px;
     min-height: 400px;
@@ -400,7 +394,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: Impact;
     border-radius: 5px;
     min-height: 400px;
     font-size: 30px;
@@ -424,4 +417,17 @@
     font-size: 20px;
     border-radius: 5px;
     font-family: inherit;
+}
+
+.card-body{
+    font-size: 1.5em;
+}
+
+.btn{
+    font-size: 2rem;
+    margin: 0.5em 0 0.5em 0;
+}
+
+.search-result{
+    margin-bottom: 1em;
 }

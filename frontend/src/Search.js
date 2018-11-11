@@ -226,8 +226,8 @@ render() {
                   </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" onClick={ _ => this.handleClickSearch()} class="btn btn-default" data-dismiss="modal">Search</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" onClick={ _ => this.handleClickSearch()} class="btn btn-primary" data-dismiss="modal">Search</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
               

@@ -13,6 +13,7 @@ const connection = new MySql({
     database: 'mysql',
 })
 
+
 // ResourceMapper class that will make calls to the database whenever a resource needs to be added, updated or deleted
 class ResourceMapper {
 
@@ -63,8 +64,8 @@ class ResourceMapper {
  
     }
 
+    
     static advSelect(search,isadvancedSearch){
-        console.log("TEST");
         if(isadvancedSearch){
             let verifyIfNoelement= { checked:[]};
             let AllInfo = [];
@@ -113,18 +114,29 @@ class ResourceMapper {
                                     }
                                 }
                                     const bookInfo = connection.query(query);
+                                    
                                     for (let i=0; i<bookInfo.length;i++){
                                         const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
                                         
+                                        
                                         if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
+                                            
                                             SearchInfoId.push(bookInfo[i]['resource_id']);
                                             bookInfo[i]['loan']=LoanOrNot[0]['loan'];
                                             bookInfo[i]['available']=LoanOrNot[0]['available'];
                                             bookInfo[i]['restype']="book";
+                                            const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                            bookInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                            bookInfo[i]['lineItem'].push(eachInfo);
+                                        }
                                             AllInfo.push(bookInfo[i]);
                                         }
+                                        
                                     }
-                                    
                                 break;
                             case "magazine": 
                              parameter = false;
@@ -169,6 +181,16 @@ class ResourceMapper {
                                         magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         magazineInfo[i]['available']=LoanOrNot[0]['available'];
                                         magazineInfo[i]['restype']="magazine";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                        magazineInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                magazineInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(magazineInfo[i]);
                                     }
                                 }
@@ -206,6 +228,16 @@ class ResourceMapper {
                                         musicInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         musicInfo[i]['available']=LoanOrNot[0]['available'];
                                         musicInfo[i]['restype']="music";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                        musicInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                musicInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(musicInfo[i]);
                                     }
                                 }
@@ -243,13 +275,22 @@ class ResourceMapper {
                                         movieInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         movieInfo[i]['available']=LoanOrNot[0]['available'];
                                         movieInfo[i]['restype']="movie";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                        movieInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                movieInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(movieInfo[i]);
                                     }
                                 }
                                  break;
                         }
                     }
-                    console.log(AllInfo);
                     return AllInfo;
                 }else{
                     // if the client does not check a type
@@ -298,6 +339,16 @@ class ResourceMapper {
                                             bookInfo[i]['loan']=LoanOrNot[0]['loan'];
                                             bookInfo[i]['available']=LoanOrNot[0]['available'];
                                             bookInfo[i]['restype']="book";
+
+                                            const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                            bookInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                            bookInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                             AllInfo.push(bookInfo[i]);
                                         }
                                     }
@@ -346,6 +397,16 @@ class ResourceMapper {
                                         magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         magazineInfo[i]['available']=LoanOrNot[0]['available'];
                                         magazineInfo[i]['restype']="magazine";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                        magazineInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                magazineInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(magazineInfo[i]);
                                     }
                                 }
@@ -383,6 +444,16 @@ class ResourceMapper {
                                         musicInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         musicInfo[i]['available']=LoanOrNot[0]['available'];
                                         musicInfo[i]['restype']="music";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                        musicInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                musicInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(musicInfo[i]);
                                     }
                                 }
@@ -420,6 +491,16 @@ class ResourceMapper {
                                         movieInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         movieInfo[i]['available']=LoanOrNot[0]['available'];
                                         movieInfo[i]['restype']="movie";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                        movieInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                movieInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(movieInfo[i]);
                                     }
                                 }}
@@ -438,6 +519,16 @@ class ResourceMapper {
                                         bookInfo[i]['loan']=LoanOrNot[0]['loan'];
                                         bookInfo[i]['available']=LoanOrNot[0]['available'];
                                         bookInfo[i]['restype']="book";
+
+                                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                                            bookInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                            bookInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                         AllInfo.push(bookInfo[i]);
                                     }
                                 }
@@ -452,6 +543,16 @@ class ResourceMapper {
                                             magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
                                             magazineInfo[i]['available']=LoanOrNot[0]['available'];
                                             magazineInfo[i]['restype']="magazine";
+
+                                            const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                                            magazineInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                magazineInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                             AllInfo.push(magazineInfo[i]);
                                         }
                                     }
@@ -466,6 +567,16 @@ class ResourceMapper {
                                                 movieInfo[i]['loan']=LoanOrNot[0]['loan'];
                                                 movieInfo[i]['available']=LoanOrNot[0]['available'];
                                                 movieInfo[i]['restype']="movie";
+
+                                                const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                                                movieInfo[i]['lineItem']=[];
+                                            let eachInfo ={};
+                                            for(let info=0;info< LineItem.length;info++){
+                                                eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                movieInfo[i]['lineItem'].push(eachInfo);
+                                        }
+
                                                 AllInfo.push(movieInfo[i]);
                                             }
                                         }
@@ -480,6 +591,16 @@ class ResourceMapper {
                                                     musicInfo[i]['loan']=LoanOrNot[0]['loan'];
                                                     musicInfo[i]['available']=LoanOrNot[0]['available'];
                                                     musicInfo[i]['restype']="music";
+
+                                                    const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                                                    musicInfo[i]['lineItem']=[];
+                                                    let eachInfo ={};
+                                                    for(let info=0;info< LineItem.length;info++){
+                                                        eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                                                        musicInfo[i]['lineItem'].push(eachInfo);
+                                                }
+
                                                     AllInfo.push(musicInfo[i]);
                                                 }
                                             }
@@ -503,6 +624,16 @@ class ResourceMapper {
                         bookInfo[i]['loan']=LoanOrNot[0]['loan'];
                         bookInfo[i]['available']=LoanOrNot[0]['available'];
                         bookInfo[i]['restype']="book";
+
+                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
+                        bookInfo[i]['lineItem']=[];
+                        let eachInfo ={};
+                        for(let info=0;info< LineItem.length;info++){
+                            eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                        bookInfo[i]['lineItem'].push(eachInfo);
+                    }
+
                         AllInfo.push(bookInfo[i]);
                     }
                 }
@@ -515,6 +646,16 @@ class ResourceMapper {
                         magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
                         magazineInfo[i]['available']=LoanOrNot[0]['available'];
                         magazineInfo[i]['restype']="magazine";
+
+                        const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
+                        magazineInfo[i]['lineItem']=[];
+                        let eachInfo ={};
+                        for(let info=0;info< LineItem.length;info++){
+                            eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                            magazineInfo[i]['lineItem'].push(eachInfo);
+                    }
+
                         AllInfo.push(magazineInfo[i]);
                     }
                 }
@@ -526,6 +667,16 @@ class ResourceMapper {
                     movieInfo[i]['loan']=LoanOrNot[0]['loan'];
                     movieInfo[i]['available']=LoanOrNot[0]['available'];
                     movieInfo[i]['restype']="movie";
+
+                    const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
+                    movieInfo[i]['lineItem']=[];
+                    let eachInfo ={};
+                    for(let info=0;info< LineItem.length;info++){
+                        eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                        movieInfo[i]['lineItem'].push(eachInfo);
+                }
+
                     AllInfo.push(movieInfo[i]);
                     }
                 }
@@ -537,6 +688,16 @@ class ResourceMapper {
                     musicInfo[i]['loan']=LoanOrNot[0]['loan'];
                     musicInfo[i]['available']=LoanOrNot[0]['available'];
                     musicInfo[i]['restype']="music";
+
+                    const LineItem = connection.query(" SELECT * FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
+                    musicInfo[i]['lineItem']=[];
+                    let eachInfo ={};
+                    for(let info=0;info< LineItem.length;info++){
+                        eachInfo = {id:LineItem[info]['id'],resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+
+                        musicInfo[i]['lineItem'].push(eachInfo);
+                }
+
                     AllInfo.push(musicInfo[i]);
                     }
                 }}

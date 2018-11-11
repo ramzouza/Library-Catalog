@@ -44,7 +44,7 @@ class ResourceCatalog {
     static getAllArtists() {
         return ResourceMapper.getAllArtists();
     }
-  
+
     static EditResource(resource_id, resourceData, type){
         resourceData.id = resource_id;
        // return ResourceMapper.update(resourceData, type);
