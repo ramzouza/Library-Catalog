@@ -17,6 +17,14 @@ class ResourceCatalog {
         
     }
 
+    static addLineItem(resource_id){
+        return ResourceMapper.addLineItem(resource_id);
+    }
+
+    static deleteLineItem(resource_line_item_id){
+        return ResourceMapper.deleteLineItem(resource_line_item_id);
+    }
+
     static Find(id) {
       return ResourceMapper.select(id);
     }

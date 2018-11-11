@@ -806,7 +806,24 @@ class ResourceMapper {
         }
     }
 
+    // Method add New Line Item for a specific Ressource
+    static addLineItem(resource_id){
+        try{
+         connection.query("INSERT INTO resource_line_item (resource_id, date_due)VALUES ("+resource_id+", 'Never')");
+         return {message: 'Resource Added'};
+        }catch(error){
+        return {message: 'Resource '+error};
+        }
+    }
 
+    static deleteLineItem(resource_line_item_id){
+        try{
+         connection.query("delete from resource_line_item where id ="+resource_line_item_id);
+         return {message: 'Resource Deleted'};
+        }catch(error){
+        return {message: 'Resource '+error};
+        }
+    }
 
     // Method to insert resource into resources table 
     static insert(resource_obj, type) {

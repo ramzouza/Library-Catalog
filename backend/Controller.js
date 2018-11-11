@@ -330,6 +330,41 @@ app.delete('/resources', (req,res) => {
 })
 
 
+app.post('/addLineItem' , (req,res) =>{
+
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+    // get resources here
+    const {resource_id} = req.body;
+    const message = ResourceCatalog.addLineItem(resource_id);
+    
+    res.json({"results":message});
+    logger(`GET - [/resources] - ${200} - ${sender_id} `)     
+})
+
+app.post('/deleteLineItem' , (req,res) =>{
+
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    }
+    // get resources here
+    const {resource_line_item_id} = req.body;
+    const message = ResourceCatalog.deleteLineItem(resource_line_item_id);
+    
+    res.json({"results":message});
+    logger(`GET - [/resources] - ${200} - ${sender_id} `)     
+})
+
+
 // Search for resources:
 // the body of the request contains a json with a key called 'type' which determines
 // what type of resource the client is searching for and it also contains all possible

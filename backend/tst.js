@@ -8,4 +8,5 @@ let resource_obj = {"id": 44 ,"title": "Jon is the bestest","author":"Ramez", "f
 let type = "book";
 
 let yanis = { checked:['magazine','book','music','movie']}
-let x= ResourceMapper.advSelect(yanis,true);
+let x= ResourceMapper.deleteLineItem(69);
+console.log(x);
