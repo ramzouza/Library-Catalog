@@ -70,7 +70,7 @@ class SearchResult extends Component {
             <div class="card-body">
                 <h1>{resource.title}</h1>
                 {Jsx}
-                <button type="button" onClick={() => this.handleDetails()} class="btn btn-primary">Details</button>
+                <button type="button" onClick={() => this.handleDetails()} class="btn btn-primary" data-toggle="modal" data-target="#myModal">Details</button>
             </div>          
         </div>
         );
