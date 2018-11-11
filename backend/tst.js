@@ -7,5 +7,6 @@ const ResourceMapper = require('./Resources/ResourceMapper.js');
 let resource_obj = {"id": 44 ,"title": "Jon is the bestest","author":"Ramez", "format":" Hardcovers","pages":" 500","publisher":"New publisher ","language":"Arab", "isbn_10":"great ", "isbn_13":"ewr"}
 let type = "book";
 
-let x= ResourceMapper.selectAll();
-console.log(x.results);
+let yanis = { checked:['book']}
+let x= ResourceMapper.advSelect(yanis,true);
+console.log(x);

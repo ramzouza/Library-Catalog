@@ -23,7 +23,6 @@ class Logged extends Component {
         <Navbar/>
         <div class= "logged-body">
             <Search/>
-            <Resources/>
         </div>
         {!logged ? <Redirect to="/login"/> : null}
       </div>

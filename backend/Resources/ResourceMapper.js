@@ -64,6 +64,7 @@ class ResourceMapper {
     }
 
     static advSelect(search,isadvancedSearch){
+        console.log("TEST");
         if(isadvancedSearch){
             let verifyIfNoelement= { checked:[]};
             let AllInfo = [];
