@@ -35,7 +35,7 @@ app.post('/login', (req, res) => {
     const { status, results } = AuthService.AuthenticateUser(email, password);
     if (status == 1) {
         res.status(400)
-        res.json({ status, results, message: 'Bad Credentials' })
+        res.json({ status, results, message: 'Wrong email and/or password.' })
         logger(`POST - [/login] - ${400} - ${email} `)
     } else {
         res.status(200)

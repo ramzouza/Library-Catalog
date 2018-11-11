@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 /* App */
 .app-main {
     display: flex;
@@ -190,30 +192,109 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: "Archivo Narrow";
+    font-family:  'Open Sans', sans-serif;
     border-radius: 5px;
-    height: 300px;
+    height: 350px;
     font-size: 30px;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
     background-color: rgba(244, 244, 244, 0.7);
     margin-top: 10%;
+    border-top: 5px solid #037d9e;
+}
+
+.login-main h1{
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.login-main p{
+    color: red;
+    font-size: 14px;
 }
 
 .login-main input{
-    font-size: 30px;
-    text-align: center;
-    font-family: inherit;
-    padding: 10px;
-    border-radius: 5px;
+        width: 100%;
+        height: 42px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        font-size: 20px;
+        font-family:  'Open Sans', sans-serif;
+        padding: 0 20px 0 50px;
+        outline: none;
+    
 }
 
 .login-main button{
-    height: 50px;
+    border-radius: 4px;
+    background-color: #037d9e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    font-family:  'Open Sans', sans-serif;
+    padding: 20px;
     width: 100%;
-    font-size: 20px;
-    border-radius: 5px;
-    font-family: inherit;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    
+}
+
+
+
+.login-main button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .login-main button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  .login-main button:hover span {
+    padding-right: 25px;
+  }
+  
+  .login-main button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+
+.login-main input#email {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+    background-size: 16px 80px;
+    
+}
+
+.login-main input#email:focus {
+    background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+    background-size: 16px 80px;
+    border-color: #037d9e;
+}
+
+.login-main input#password {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+}
+
+.login-main input#password:focus {
+    background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+    background-size: 16px 80px;
+    border-color: #037d9e;
 }
 
 /* LoggedUser */
@@ -239,7 +320,6 @@
     padding-top: 10%;
     font-size: 25px;
 }
-
 
 .loggedusers-style{
     color: white;

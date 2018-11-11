@@ -9,6 +9,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password:'',
+      message:'',
     }
   }
 
@@ -17,7 +18,7 @@ class Login extends Component {
     apiCall('/login', {email, password})
       .then(response => response.json())
       .then( response => {
-        alert(response.message)
+        this.setState({message:response.message})
 
         if(response.status === 0){
           
@@ -36,22 +37,20 @@ class Login extends Component {
 
   render() {
     const logged = cookie.load('logged') === 'yes'
-
+    const message = this.state.message;
     return (
       <div class="login-main" >
-        <span style={{fontWeight: 'bold'}} >Login</span>
+        <h1>LOGIN</h1>
         
-        <input onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
+        <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
-        <input onChange={evt => {this.setState({password: evt.target.value})}}  type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
+        <input id="password" onChange={evt => {this.setState({password: evt.target.value})}}  type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
-        <span style={{width:'100%', padding: '0px 40px', textAlign: 'right', fontSize: 15}}>
-            Password Forgotten?
-        </span>
-
-          <button type="button" onClick={ this.loginEvent.bind(this) }>
-            Login
-          </button>
+        <button class="button" type="button" onClick={ this.loginEvent.bind(this) }><span>
+            SUBMIT
+        </span></button>
+        
+        <p id="wrong">{message}</p>
           {logged ? <Redirect to="/"/> : null}
       </div>
     );
