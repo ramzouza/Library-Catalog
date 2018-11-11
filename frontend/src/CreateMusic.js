@@ -53,23 +53,23 @@ class CreateMusic extends Component {
   render() {
   const admin = cookie.load('admin') === 'yes'
     return (
-      <div style={main} >
+      <div class="create-main">
         <span style={{fontWeight: 'bold'}} >New Music</span>
 
-        <input onChange={evt => {this.setState({title: evt.target.value})}} style={input} type="text" placeholder="Title" ></input>
+        <input onChange={evt => {this.setState({title: evt.target.value})}}  type="text" placeholder="Title" ></input>
 
-        <input onChange={evt => {this.setState({type: evt.target.value})}} style={input} type="text" placeholder="Type" ></input>
+        <input onChange={evt => {this.setState({type: evt.target.value})}}  type="text" placeholder="Type" ></input>
         
-        <input onChange={evt => {this.setState({artist: evt.target.value})}} style={input} type="text" placeholder="Artist" ></input>
+        <input onChange={evt => {this.setState({artist: evt.target.value})}}  type="text" placeholder="Artist" ></input>
         
-        <input onChange={evt => {this.setState({label: evt.target.value})}} style={input} type="text" placeholder="Label" ></input>
+        <input onChange={evt => {this.setState({label: evt.target.value})}}  type="text" placeholder="Label" ></input>
         Release Date 
-        <input onChange={evt => {this.setState({release_date: evt.target.value})}} style={input} type="text" placeholder="DD/MM/YYYY" ></input>
+        <input onChange={evt => {this.setState({release_date: evt.target.value})}}  type="text" placeholder="DD/MM/YYYY" ></input>
 
-         <input onChange={evt => {this.setState({ASIN: evt.target.value})}} style={input} type="text" placeholder="ASIN" ></input>
+         <input onChange={evt => {this.setState({ASIN: evt.target.value})}}  type="text" placeholder="ASIN" ></input>
         
         
-        <button style={button}
+        <button
            onClick={this.handleClick.bind(this)} type="button">Create</button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
@@ -78,37 +78,3 @@ class CreateMusic extends Component {
 }
 
 export default CreateMusic;
-const  main = {
-    display:'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    borderRadius: 5,
-    minHeight: 400,
-    fontSize: 30,
-    padding: 30,
-    boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
-    backgroundColor: 'rgba(244,244,244,0.7)',
-    marginTop: '5%',
-    // width: 200,
-}
-
-const input = {
-    fontSize: 30,
-    textAlign: 'center',
-    padding: 10,
-    borderRadius: 5,
-    margin: 5
-}
-
-const button = {
-    height: 50,
-    width: '100%',
-    fontSize: 20,
-    borderRadius: 5,
-    fontFamily: 'inherit',
-    // padding: '0px 10px',
-    // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
-
-}
