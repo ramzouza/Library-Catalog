@@ -38,18 +38,18 @@ class Login extends Component {
     const logged = cookie.load('logged') === 'yes'
 
     return (
-      <div style={main} >
+      <div class="login-main" >
         <span style={{fontWeight: 'bold'}} >Login</span>
         
-        <input onChange={evt => {this.setState({email: evt.target.value})}} style={input} type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
+        <input onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
-        <input onChange={evt => {this.setState({password: evt.target.value})}} style={input} type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
+        <input onChange={evt => {this.setState({password: evt.target.value})}}  type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
         <span style={{width:'100%', padding: '0px 40px', textAlign: 'right', fontSize: 15}}>
             Password Forgotten?
         </span>
 
-          <button style={button} type="button" onClick={ this.loginEvent.bind(this) }>
+          <button type="button" onClick={ this.loginEvent.bind(this) }>
             Login
           </button>
           {logged ? <Redirect to="/"/> : null}
@@ -59,37 +59,3 @@ class Login extends Component {
 }
 
 export default Login;
-const  main = {
-    display:'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Archivo Narrow',
-    borderRadius: 5,
-    height: 300,
-    fontSize: 30,
-    padding: 30,
-    boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
-    backgroundColor: 'rgba(244,244,244,0.7)',
-  marginTop: '10%',
-    // width: 200,
-}
-
-const input = {
-    fontSize: 30,
-    textAlign: 'center',
-    fontFamily: 'inherit',
-    padding: 10,
-    borderRadius: 5,
-}
-
-const button = {
-    height: 50,
-    width: '100%',
-    fontSize: 20,
-    borderRadius: 5,
-    fontFamily: 'inherit',
-    // padding: '0px 10px',
-    // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
-
-}

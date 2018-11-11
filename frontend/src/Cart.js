@@ -42,15 +42,15 @@ class Cart extends Component {
     const {logs} = this.state
     
     return (
-      <div style={main}>
+      <div class="cart">
         <Navbar/>
-        <div style={body}>
+        <div class="cart-body">
           <h2>Cart</h2>
           <hint>The following data will be modified:</hint>
             <div>
               {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
             </div>
-          <button style={savebtn} type="button" onClick={() => this.handleClickSave()}> Save </ button>
+          <button class="cart-btn" type="button" onClick={() => this.handleClickSave()}> Save </ button>
         </div>
       </div>
     );
@@ -58,30 +58,3 @@ class Cart extends Component {
 }
 
 export default Cart;
-
-const  main = {
-      display:'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      fontFamily: 'Impact',
-      borderRadius: 5,
-      width: '100%',
-}
-
-const body = {
-    'padding-top': '10%',
-    minWidth: '30%',
-    display:'flex',
-    flexDirection: 'column',
-    alignItems:'center',
-    justifyContent: 'center'
-}
-
-const savebtn = {
-  borderRadius: 5,
-  fontFamily: 'inherit',
-  padding: '5px 40px',
-  margin: 10,
-  boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
-}

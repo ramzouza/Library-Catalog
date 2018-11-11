@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './style.css';
 
 import Login from './Login'
 import Logged from './Logged'
@@ -44,7 +44,7 @@ class App extends Component {
   
   render() {
     return (
-      <div style={main}>
+      <div class="app-main">
         <Router>
           <Switch>
             <Route exact path="/login" component={Login}/>
@@ -65,9 +65,3 @@ class App extends Component {
 }
 
 export default App;
-const main = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-  fontFamily: 'Impact'
-}

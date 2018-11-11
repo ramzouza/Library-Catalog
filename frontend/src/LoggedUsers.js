@@ -27,12 +27,12 @@ class LoggedUsers extends Component {
   render() {
     const {logs} = this.state
     return (
-      <div style={main}>
+      <div class="loggedusers-main">
         <Navbar/>
-        <div style={body}>
+        <div class="loggedusers-body">
           <p>Logged Users</p>
-          <div style={logStyle}>
-            {logs.map( ({user, isAdmin}) => <p style={{fontFamily:'Times',color: 'black', textShadow: 'none'}}><span><img src={require('./LoggedUsers.png')}/></span> {user}  ({isAdmin})</p> )}
+          <div class="loggedusers-style">
+            {logs.map( ({user, isAdmin}) => <p><span><img src={require('./LoggedUsers.png')}/></span> {user}  ({isAdmin})</p> )}
           </div>
         </div>
         
@@ -42,35 +42,3 @@ class LoggedUsers extends Component {
 }
 
 export default LoggedUsers;
-const  main = {
-      display:'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      fontFamily: 'Impact',
-      borderRadius: 5,
-      // height: 900,
-      width: '100%',
-}
-
-const body = {
-  height: '100%',
-  width: '100%',
-  display:'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  paddingTop: '10%',
-  fontSize: 25,
-}
-
-const logStyle ={
-  color: 'white',
-  width: '50%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  fontSize: 20,
-  textShadow: '0px 0px 2px black',
-
-}
