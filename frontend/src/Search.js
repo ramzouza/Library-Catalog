@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
 import SearchResult from './SearchResult.js';
+import Loading from 'react-loading-components';
 
 class Search extends Component {
 
@@ -27,7 +28,8 @@ class Search extends Component {
       pickedPublisher: "",
       pickedArtist: "",
       titleSearch: "",
-      ISBNSearch: ""
+      ISBNSearch: "",
+      loading: false,
     }
   }
 
@@ -35,12 +37,16 @@ class Search extends Component {
   
   handleClick(){
     let SearchRandom = document.getElementById("SearchRandom").value;
+    this.setState({loading: true, TotalArray: []})
     POST('/resource', {"resource_data": SearchRandom,isFilter:false})
         .then( res => res.json() )
         .then ( json => {
           let TotalArray = json.results;
-          this.setState({TotalArray})
-        })}
+          this.setState({TotalArray}, () => this.setState({loading: false}))
+        }).catch( err => {
+          this.setState({loading: false})
+        })
+  }
   handlePickedAuthor(event) {
     this.setState({pickedAuthor: event.target.value})
   }
@@ -125,7 +131,7 @@ class Search extends Component {
   
 
 render() {
-    const {TotalArray, resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+    const {loading, TotalArray, resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
 
     console.log(TotalArray);
     
@@ -239,9 +245,10 @@ render() {
 
 
         {TotalArray.map( resource => <SearchResult key={resource.resource_id} id={resource.resource_id} type={resource.restype} resource={resource} />)}
-
-
-          
+        
+         <div style ={loader}>     
+        {loading ? <Loading type='tail_spin' width={100} height={100} fill='#037d9e'   /> : null}  
+          </div>
      </div>
      
     );
@@ -262,4 +269,10 @@ const input = {
     textAlign: 'left',
     borderRadius: 2,
     width: '100%'
+}
+
+const loader ={
+  width:  '100%',
+  display: 'flex',
+  justifyContent: 'center' 
 }
