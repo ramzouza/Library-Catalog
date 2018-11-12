@@ -37,7 +37,7 @@ class SearchResult extends Component {
         this.setState({editing: false})
         const { id, type } = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = this.state
-        PUT('/resources',{type, resource_id: id, resource_data: {title,author, format, pages, publisher, language , isbn_10, isbn_13, available}})
+        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available}})
             .then( res => res.json())
             .then( res => {
                 alert(JSON.stringify(res))
@@ -106,7 +106,9 @@ class SearchResult extends Component {
                     <div class="modal-content">
                     <div class="modal-header">
                     
-                        <h1 class="modal-title">{editing ? <input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.title})}} /> : <p>{resource.title}</p>}</h1>
+                        <div class="modal-title">
+                        {editing ? <h1><input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.value})}} /></h1> : <h1>{resource.title}</h1>}
+                        </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>

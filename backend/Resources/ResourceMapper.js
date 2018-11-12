@@ -877,6 +877,8 @@ class ResourceMapper {
             const id = resource_obj.id;
             delete resource_obj.id;
             delete resource_obj.title;
+            delete resource_obj.available;
+
             const data = connection.query(`UPDATE ${type} SET ${this.objectToUpdateString(resource_obj)} WHERE resource_id='${id}'`);
             return {status : 0, message : 'Resource updated.', results : data}
         }

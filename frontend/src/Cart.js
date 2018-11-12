@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from './Navbar'
-import { apiCall, GET, POST } from './ApiCall'
+import { apiCall, POST } from './ApiCall'
 import cookie from 'react-cookies'
 import CartItem from './CartItem'
 
