@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {GET, POST, PUT} from './ApiCall';
 import cookie from 'react-cookies'
 import ResourceLineItem from './ResourceLineItem';
+
 class SearchResult extends Component {
 
 
@@ -16,19 +17,31 @@ class SearchResult extends Component {
             publisher: '',
             language: '' ,
             isbn_10: '',
-            sbn_13:'',
+            isbn_13:'',
             available: '',
             editing: false,
-            title: ''
+            title: '',
+            line_items: []
         }
+    }
+
+    handleNewResourceLineItem(){
+        POST('/addLineItem', {"resource_id": this.props.resource.id})
+        .then( res => res.json() )
+        .then ( json => {
+          console.log(json.results);
+        }).catch( err => {
+        })
     }
 
 
 
     componentDidMount(){
-        const {resource} = this.props
+        const {resource, line_items} = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = resource
         this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available })
+
+        this.setState({"line_items":line_items}); // for line items
     }
 
     handleSave(){
@@ -38,20 +51,28 @@ class SearchResult extends Component {
         PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available}})
             .then( res => res.json())
             .then( res => {
-                alert(JSON.stringify(res))
+                console.log(JSON.stringify(res))
             })
     }
 
     render() {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
-        const editing = this.state.editing
-        const line_items = resource.lineItem
-
-        console.log(line_items);
+        const editing = this.state.editing;
+        const line_items = this.state.line_items;
         let Jsx;
-        let icon;
+        let cardJsx;
         if (resource.restype == "book"){
+            cardJsx = <div>
+                    <p><b> Author: </b>{resource.author}</p>
+                    <p><b> Format: </b>{resource.format}</p>
+                    <p><b> Pages: </b>{resource.pages}</p>
+                    <p><b> Publisher: </b>{resource.publisher}</p>
+                    <p><b> Language: </b>{resource.language}</p>
+                    <p><b> isbn_10: </b>{resource.isbn_10}</p>
+                    <p><b> isbn_13: </b>{resource.isbn_13}</p>
+                    <p><b> Copies Available: </b>{resource.available}</p>
+            </div>
             Jsx = <div>
                 {editing ? <p> Author: <input placeholder={resource.author}  onChange={evt => {this.setState({author: evt.target.value})}} /></p> : <p><b> Author: </b>{resource.author}</p>}
                 {editing ? <p> Format: <input placeholder={resource.format}  onChange={evt => {this.setState({format: evt.target.value})}} /></p> : <p><b> Format: </b>{resource.format}</p>}
@@ -61,20 +82,17 @@ class SearchResult extends Component {
                 {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
                 {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
                 {editing ? <p> Copies Available: <input placeholder={resource.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{resource.available}</p>}
-
             </div>
-            icon = <i class="fas fa-book"></i>
         } else if (resource.restype == "magazine"){
             console.log(resource)
-            Jsx = <div>
+            cardJsx = <div>
                 <p><b>Publisher: </b>{resource.publisher}</p>
                 <p><b>Language: </b>{resource.language}</p>
                 <p><b>ISBN 10: </b>{resource.isbn_10}</p>
                 <p><b>ISBN 13: </b>{resource.isb_13}</p>
             </div>
-            icon = <i class="fas fa-book-reader"></i>
         } else if (resource.restype == "music"){
-            Jsx = <div>
+            cardJsx = <div>
                 <p><b>Type: </b>{resource.type}</p>
                 <p><b>Artist: </b>{resource.artist}</p>
                 <p><b>Release: </b>{resource.release}</p>
@@ -82,9 +100,8 @@ class SearchResult extends Component {
                 <p><b>Label: </b>{resource.label}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
-            icon = <i class="fas fa-music"></i>
         } else if (resource.restype == "movie"){
-            Jsx = <div>
+            cardJsx = <div>
                 <p><b>Director: </b>{resource.director}</p>
                 <p><b>Producers: </b>{resource.producers}</p>
                 <p><b>Actors: </b>{resource.actors}</p>
@@ -95,20 +112,18 @@ class SearchResult extends Component {
                 <p><b>Run Time: </b>{resource.run_time}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
-            icon = <i class="fas fa-film"></i>
         }
 
         return (
         <div class="card search-result">
             <div class="card-body">
-                {icon}
                 <h1>{resource.title}</h1>
-                {Jsx}
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">Details</button>
+                {cardJsx}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
             </div>
 
 
-            <div class="modal  fade" tabindex="-1" role="dialog" id="edit">
+            <div class="modal  fade" tabindex="-1" role="dialog" id={"edit"+resource.id}>
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -122,30 +137,17 @@ class SearchResult extends Component {
                     </div>
                     <div class="modal-body">
                         {Jsx}
-                        {
-                            line_items.map( line_item => <ResourceLineItem key={line_item.id} id={line_item.id} type={resource.restype} line_item={line_item} resource={resource} />)
-                        }
-                        {
-                            admin ?
-                            <div>
-                                <button type="button" class="btn btn-danger"><i class="fas fa-plus"></i></button>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">id</th>
-                                            <th scope="col">type</th>
-                                            <th scope="col">User Id</th>
-                                            <th scope="col">Date Due</th>
-                                        </tr>
-                                    </thead> 
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>:
-                            <div></div>
-                        }
-                        
-                    
+
+                        <table class="table">
+                        <tr>
+                            <th>id</th>
+                            <th>type</th>
+                            <th>User Id</th>
+                            <th>Date Due</th>
+                            <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
+                        </tr>
+                        {resource.lineItem.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} type={resource.restype} line_item={line_item} resource={resource} />)}
+                        </table>
 
                     </div>
                     <div class="modal-footer">

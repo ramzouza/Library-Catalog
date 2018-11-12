@@ -61,6 +61,8 @@ class Search extends Component {
   }
 
   handleClickSearch(){
+    let TotalArray = [];
+    this.setState({TotalArray})
     const{pickedAuthor, pickedDirector, pickedPublisher, pickedArtist, titleSearch, ISBNSearch } = this.state
     let checked = []
     if(this.refs.book.checked) checked.push("book")
@@ -77,9 +79,11 @@ class Search extends Component {
 
           let TotalArray = json.results;
           this.setState({TotalArray})
+          this.setState({loading: false})
 
           // SEARCH ADVANCED 
         })
+      
   }
   handleClickAdvancedSearch(){
     let author_dropdown =[];
