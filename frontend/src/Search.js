@@ -129,6 +129,11 @@ class Search extends Component {
 
 }
   
+  _handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.handleClickSearch()
+    }
+  }
 
 render() {
     const {loading, TotalArray, resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
@@ -140,7 +145,7 @@ render() {
     return (
       <div>
         <div style={main}>
-          <input style={input} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
+          <input style={input} onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
         </div>
 
         <div>
