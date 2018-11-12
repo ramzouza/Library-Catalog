@@ -44,6 +44,7 @@ class CartItem extends Component {
 
     render() {
         const {resource_data, operation, index } = this.props
+        console.log({resource_data})
         const admin = cookie.load('admin') === 'yes';
 
         return (

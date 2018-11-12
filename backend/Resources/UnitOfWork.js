@@ -13,6 +13,7 @@ class UnitOfWork {
     }
 
     static EditResource(resourceData, type){
+        if(!IdentifyMap[resourceData.id]) IdentifyMap[resourceData.id]=resourceData
         unitofwork[index] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
         index++;
         return {status: 0, message: 'Update Resource sent to cart', results: resourceData};

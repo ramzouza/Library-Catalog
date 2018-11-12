@@ -35,11 +35,6 @@ class ResourceItem extends Component {
                 return defPic
         } 
     }
-
-
-
-
-
   handleClickEdit(id){
     if(this.state.editing) {
         const {title} = this.state;

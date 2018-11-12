@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET, POST} from './ApiCall';
+import {GET, POST, PUT} from './ApiCall';
 import cookie from 'react-cookies'
 
 class SearchResult extends Component {
@@ -9,6 +9,15 @@ class SearchResult extends Component {
         super()
 
         this.state = {
+            title: '',
+            author: '',
+            format: '',
+            pages: '',
+            publisher: '',
+            language: '' ,
+            isbn_10: '',
+            sbn_13:'',
+            available: '',
             editing: false,
             title: ''
         }
@@ -18,23 +27,39 @@ class SearchResult extends Component {
 
     }
 
+    componentDidMount(){
+        const {resource} = this.props
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = resource
+        this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available })
+    }
+
+    handleSave(){
+        this.setState({editing: false})
+        const { id, type } = this.props
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = this.state
+        PUT('/resources',{type, resource_id: id, resource_data: {title,author, format, pages, publisher, language , isbn_10, isbn_13, available}})
+            .then( res => res.json())
+            .then( res => {
+                alert(JSON.stringify(res))
+            })
+    }
+
     render() {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
-
-
-        
+        const editing = this.state.editing
         let Jsx;
         if (resource.restype == "book"){
             Jsx = <div>
-                <p><b>Author: </b>{resource.author}</p>
-                <p><b>Format: </b>{resource.format}</p>
-                <p><b>Pages: </b>{resource.pages}</p>
-                <p><b>Publisher: </b>{resource.publisher}</p>
-                <p><b>Language: </b>{resource.language}</p>
-                <p><b>ISBN 10: </b>{resource.isbn_10}</p>
-                <p><b>ISBN 13: </b>{resource.isb_13}</p>
-                <p><b>Copies Available: </b>{resource.available}</p>
+                {editing ? <p> Author: <input placeholder={resource.author}  onChange={evt => {this.setState({author: evt.target.value})}} /></p> : <p><b> Author: </b>{resource.author}</p>}
+                {editing ? <p> Format: <input placeholder={resource.format}  onChange={evt => {this.setState({format: evt.target.value})}} /></p> : <p><b> Format: </b>{resource.format}</p>}
+                {editing ? <p> Pages: <input placeholder={resource.pages}  onChange={evt => {this.setState({pages: evt.target.value})}} /></p> : <p><b> Pages: </b>{resource.pages}</p>}
+                {editing ? <p> Publisher: <input placeholder={resource.publisher}  onChange={evt => {this.setState({publisher: evt.target.value})}} /></p> : <p><b> Publisher: </b>{resource.publisher}</p>}
+                {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
+                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
+                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
+                {editing ? <p> Copies Available: <input placeholder={resource.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{resource.available}</p>}
+
             </div>
         } else if (resource.restype == "magazine"){
             console.log(resource)
@@ -67,8 +92,6 @@ class SearchResult extends Component {
             </div>
         }
 
-       
-
         return (
         <div class="card search-result">
             <div class="card-body">
@@ -82,7 +105,8 @@ class SearchResult extends Component {
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title">{resource.title}</h1>
+                    
+                        <h1 class="modal-title">{editing ? <input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.title})}} /> : <p>{resource.title}</p>}</h1>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -91,9 +115,9 @@ class SearchResult extends Component {
                         {Jsx}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Edit</button>
+                        <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button>
                         <button type="button" class="btn btn-primary">Loan</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button>
                     </div>
                     </div>
                 </div>

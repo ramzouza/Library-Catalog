@@ -283,7 +283,7 @@ app.put('/resources', (req,res) => {
 
     // get resource data and their type
     const { resource_id, resource_data , type } = req.body
-    console.log(type)
+    console.log('putting',{ resource_id, resource_data , type })
     // Edit the Resource
     const {status, message, results, error} = ResourceCatalog.EditResource(resource_id, resource_data, type);
 
@@ -399,7 +399,7 @@ app.post('/cart', (req, res) =>{
       logger(`POST -  [/cart] - ${400} - ${sender_id} `)
   } else {
       const cart = UnitOfWork.ViewUnitOfWork();
-      console.log(cart)
+      console.log({cart})
       const message = `Ok`
       res.status(200)
       res.json({ status: 0, results: cart, message })
