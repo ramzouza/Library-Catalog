@@ -13,7 +13,7 @@ class UnitOfWork {
     }
 
     static EditResource(resourceData, type){
-        if(!IdentifyMap[resourceData.id]) IdentifyMap[resourceData.id]=resourceData
+        IdentifyMap[resourceData.id]=resourceData
         unitofwork[index] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
         index++;
         return {status: 0, message: 'Update Resource sent to cart', results: resourceData};
@@ -26,7 +26,7 @@ class UnitOfWork {
     }
 
     static save(){
-        var unitOfStatus = []; // of same length as the unitofwork array
+            var unitOfStatus = []; // of same length as the unitofwork array
             var statusOfWork = false; // false means no error
             var errMsg;
         for (var i = 0; i < unitofwork.length ; i++){
@@ -73,9 +73,12 @@ class UnitOfWork {
                 }
             }
         }
-        
+
+        unitofwork =[];
+        console.log('Cart should be cleared:');
+        console.log(unitofwork);
+
         if(statusOfWork == false){
-            unitofwork = []; // clear array once completed successfully
             return {status : 0, message : 'Resources have been updated.'};
         }
         else
@@ -93,6 +96,7 @@ class UnitOfWork {
     }
 
     static ViewUnitOfWork(){
+        unitofwork = unitofwork.filter(Boolean);
         return unitofwork.map((item, index) => { return { resource: item.resource, operation: item.operation, index: index }});
     }
 }
