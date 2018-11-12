@@ -506,6 +506,14 @@
     margin: 5px;
 }
 
+#SearchRandom{
+    font-size: 30px;
+    padding: '15px 15px';
+    text-align: 'left';
+    border-radius: 2;
+    width: 100%;
+}
+
 .create-main button {
     height: 50px;
     width: 100%;
@@ -523,6 +531,8 @@
     /*margin: 0.5em 0 0.5em 0;*/
 }
 
+
+
 .btn-search{
     margin: 0.5em 0 0.5em 0;
 }
@@ -533,4 +543,12 @@
 
 .modal{
     font-size: 1.5em;
+}
+
+.custom-select{
+    height: auto;
+}
+
+.dropdown{
+    margin-bottom: 1em;
 }

@@ -145,7 +145,7 @@ render() {
     return (
       <div>
         <div style={main}>
-          <input style={input} onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
+          <input id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
         </div>
 
         <div>
@@ -166,18 +166,41 @@ render() {
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                <span>Type : </span>
-                 <input id= "advanced_checkbox_book" type="checkbox" name="book" value="book" ref ="book"/> Book &nbsp;
-                 <input id= "advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" ref="magazine" /> Magazine &nbsp;
-                 <input id= "advanced_checkbox_movie" type="checkbox" name="movie" value="movie" ref="movie" /> Movie &nbsp;
-                 <input id= "advanced_checkbox_music" type="checkbox" name="music" value="music" ref="music"/> Music &nbsp;<br></br>
-                 <span>Title  : </span><input onChange={ e => this.setState({titleSearch: e.target.value})} id= "advanced_title"></input><br></br>
-                 <span>ISBN : </span><input onChange={ e => this.setState({ISBNSearch: e.target.value})} id= "advanced_isbn"></input><br></br>
-             
-                  <div class="dropdown">
-                    
-                    <span>Author</span>
-                    <select onChange={ e => this.handlePickedAuthor(e)} ref="userInput" defaultValue="" required>
+                <label>Type : </label><br></br>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" id="advanced_checkbox_book" type="checkbox" name="book" value="book" ref ="book"/> 
+              <label class="form-check-label" for="advanced_checkbox_book">Book</label>
+            </div>
+            
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" id="advanced_checkbox_magazine"  type="checkbox" name="magazine" value="magazine" ref="magazine" />
+              <label class="form-check-label" for="advanced_checkbox_magazine">Magazine</label>
+            </div>
+
+              <div class="form-check form-check-inline">
+              <input class="form-check-input" id="advanced_checkbox_movie" type="checkbox" name="movie" value="movie" ref="movie" />
+              <label class="form-check-label" for="advanced_checkbox_movie">Movie</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+              <input class="form-check-input" id="advanced_checkbox_music" type="checkbox" name="music" value="music" ref="music"/> 
+              <label class="form-check-label" for="advanced_checkbox_music">Movie</label>
+              </div>
+            
+            <div class="form-group">
+             <label for="advanced_title">Title</label>
+             <input onChange={ e => this.setState({titleSearch: e.target.value})} class="form-control" id= "advanced_title"></input>
+            </div>
+
+            <div class="form-group">
+             <label for="advanced_isbn">ISBN</label>
+             <input onChange={ e => this.setState({ISBNSearch: e.target.value})} class="form-control"  id= "advanced_isbn"></input>
+             </div>
+
+        <div class="dropdown">
+       
+        <label for="author_select">Author</label>
+        <select class="custom-select" id="author_select" onChange={ e => this.handlePickedAuthor(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {author_dropdown ? 
                   author_dropdown.map(function(username) {
@@ -187,12 +210,11 @@ render() {
                 : null
               }
                    </select>
-                  
-                  </div>
+        </div>
                   <div class="dropdown">
                     
-                    <span>Director</span>
-                    <select onChange={ e => this.handlePickedDirector(e)} ref="userInput" defaultValue="" required>
+                    <label for="director_select">Director</label>
+                    <select class="custom-select" id="director_select"  onChange={ e => this.handlePickedDirector(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {director_dropdown ? 
                   director_dropdown.map(function(username) {
@@ -207,8 +229,8 @@ render() {
 
                    <div class="dropdown">
                     
-                    <span>Publisher</span>
-                    <select onChange={ e => this.handlePickedPublisher(e)} ref="userInput" defaultValue="" required>
+                   <label for="publisher_select">Publisher</label>
+                    <select class="custom-select" id="publisher_select" onChange={ e => this.handlePickedPublisher(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {publisher_dropdown ? 
                   publisher_dropdown.map(function(username) {
@@ -222,8 +244,8 @@ render() {
                   </div>
                   <div class="dropdown">
                     
-                    <span>Artist</span>
-                    <select onChange={ e => this.handlePickedArtist(e)} ref="userInput" defaultValue="" required>
+                    <label for="artist_select">Artist</label>
+                    <select class="custom-select" id="artist_select" onChange={ e => this.handlePickedArtist(e)} ref="userInput" defaultValue="" required>
                   <option value="" disabled>User</option>
                 {artist_dropdown ? 
                   artist_dropdown.map(function(username) {
@@ -263,18 +285,10 @@ render() {
 
 export default Search;
 const  main = {
-    minWidth: '30%',
-    flexDirection: 'row',
-    
+    minWidth: '30%'
 }
 
-const input = {
-    fontSize: 30,
-    padding: '15px 15px',
-    textAlign: 'left',
-    borderRadius: 2,
-    width: '100%'
-}
+
 
 const loader ={
   width:  '100%',
