@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {GET, POST, PUT} from './ApiCall';
 import cookie from 'react-cookies'
-
+import ResourceLineItem from './ResourceLineItem';
 class SearchResult extends Component {
 
 
@@ -23,9 +23,7 @@ class SearchResult extends Component {
         }
     }
 
-    handleDetails(){
 
-    }
 
     componentDidMount(){
         const {resource} = this.props
@@ -48,7 +46,11 @@ class SearchResult extends Component {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
         const editing = this.state.editing
+        const line_items = resource.lineItem
+
+        console.log(line_items);
         let Jsx;
+        let icon;
         if (resource.restype == "book"){
             Jsx = <div>
                 {editing ? <p> Author: <input placeholder={resource.author}  onChange={evt => {this.setState({author: evt.target.value})}} /></p> : <p><b> Author: </b>{resource.author}</p>}
@@ -61,6 +63,7 @@ class SearchResult extends Component {
                 {editing ? <p> Copies Available: <input placeholder={resource.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{resource.available}</p>}
 
             </div>
+            icon = <i class="fas fa-book"></i>
         } else if (resource.restype == "magazine"){
             console.log(resource)
             Jsx = <div>
@@ -69,6 +72,7 @@ class SearchResult extends Component {
                 <p><b>ISBN 10: </b>{resource.isbn_10}</p>
                 <p><b>ISBN 13: </b>{resource.isb_13}</p>
             </div>
+            icon = <i class="fas fa-book-reader"></i>
         } else if (resource.restype == "music"){
             Jsx = <div>
                 <p><b>Type: </b>{resource.type}</p>
@@ -78,6 +82,7 @@ class SearchResult extends Component {
                 <p><b>Label: </b>{resource.label}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
+            icon = <i class="fas fa-music"></i>
         } else if (resource.restype == "movie"){
             Jsx = <div>
                 <p><b>Director: </b>{resource.director}</p>
@@ -90,11 +95,13 @@ class SearchResult extends Component {
                 <p><b>Run Time: </b>{resource.run_time}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
+            icon = <i class="fas fa-film"></i>
         }
 
         return (
         <div class="card search-result">
             <div class="card-body">
+                {icon}
                 <h1>{resource.title}</h1>
                 {Jsx}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit">Details</button>
@@ -115,6 +122,31 @@ class SearchResult extends Component {
                     </div>
                     <div class="modal-body">
                         {Jsx}
+                        {
+                            line_items.map( line_item => <ResourceLineItem key={line_item.id} id={line_item.id} type={resource.restype} line_item={line_item} resource={resource} />)
+                        }
+                        {
+                            admin ?
+                            <div>
+                                <button type="button" class="btn btn-danger"><i class="fas fa-plus"></i></button>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">id</th>
+                                            <th scope="col">type</th>
+                                            <th scope="col">User Id</th>
+                                            <th scope="col">Date Due</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>:
+                            <div></div>
+                        }
+                        
+                    
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button>

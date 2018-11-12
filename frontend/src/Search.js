@@ -129,8 +129,9 @@ class Search extends Component {
 
 }
   
-  _handleKeyPress(e) {
+_handleKeyPress(e) {
     if (e.key === 'Enter') {
+      this.setState({"loading":true})
       this.handleClickSearch()
     }
   }
@@ -145,7 +146,7 @@ render() {
     return (
       <div>
         <div style={main}>
-          <input id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
+        <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
         </div>
 
         <div>
