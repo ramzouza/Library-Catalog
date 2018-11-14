@@ -22,6 +22,10 @@ class SearchResult extends Component {
             editing: false,
             title: '',
 
+            artist:'',
+            release:'',
+            ASIN:'',
+            label:'',
             director:'',
             producers:'',
             actors:'',
@@ -49,8 +53,8 @@ class SearchResult extends Component {
 
     componentDidMount(){
         const {resource, line_items} = this.props
-        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time} = resource
-        this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time })
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label} = resource
+        this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time, artist, release,ASIN, label })
 
         this.setState({"line_items":line_items}); // for line items
     }
@@ -58,8 +62,8 @@ class SearchResult extends Component {
     handleSave(){
         this.setState({editing: false})
         const { id, type } = this.props
-        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time } = this.state
-        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time}})
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
+        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
             .then( res => res.json())
             .then( res => {
                 console.log(JSON.stringify(res))
@@ -101,6 +105,7 @@ class SearchResult extends Component {
                 <p><b>Language: </b>{resource.language}</p>
                 <p><b>ISBN 10: </b>{resource.isbn_10}</p>
                 <p><b>ISBN 13: </b>{resource.isbn_13}</p>
+                <p><b>Copies Available: </b>{resource.available}</p>
             </div>
 
             Jsx= <div>
@@ -119,6 +124,15 @@ class SearchResult extends Component {
                 <p><b>Label: </b>{resource.label}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
+
+            Jsx= <div>
+            {editing ? <p> Artist: <input placeholder={resource.artist}  onChange={evt => {this.setState({artist: evt.target.value})}} /></p> : <p><b> Artist: </b>{resource.artist}</p>}
+            {editing ? <p> Release: <input placeholder={resource.release}  onChange={evt => {this.setState({release: evt.target.value})}} /></p> : <p><b> Release: </b>{resource.release}</p>}
+            {editing ? <p> ASIN: <input placeholder={resource.ASIN}  onChange={evt => {this.setState({ASIN: evt.target.value})}} /></p> : <p><b> ASIN: </b>{resource.ASIN}</p>}
+            {editing ? <p> Label: <input placeholder={resource.label}  onChange={evt => {this.setState({label: evt.target.value})}} /></p> : <p><b> label: </b>{resource.label}</p>}
+            </div>
+
+
         } else if (resource.restype == "movie"){
             cardJsx = <div>
                 <p><b>Director: </b>{resource.director}</p>

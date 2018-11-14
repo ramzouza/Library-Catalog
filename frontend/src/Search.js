@@ -189,7 +189,7 @@ render() {
 
               <div class="form-check form-check-inline">
               <input class="form-check-input" id="advanced_checkbox_music" type="checkbox" name="music" value="music" ref="music"/> 
-              <label class="form-check-label" for="advanced_checkbox_music">Movie</label>
+              <label class="form-check-label" for="advanced_checkbox_music">Music</label>
               </div>
             
             <div class="form-group">

@@ -70,13 +70,13 @@
     justify-content: space-between;
 }
 
-.navbar-main .leftside a{
+.links .leftside{
     text-decoration: none;
     color: white;
     border-left: 2px solid white;
 }
 
-.navbar-main .leftside div{
+.links .leftside{
     padding: 15px;
 }
 
