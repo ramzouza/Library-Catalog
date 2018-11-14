@@ -21,6 +21,17 @@ class SearchResult extends Component {
             available: '',
             editing: false,
             title: '',
+
+            director:'',
+            producers:'',
+            actors:'',
+            subtitles:'',
+            dubbed:'',
+            release_date:'',
+            run_time:'',
+
+
+
             line_items: []
         }
     }
@@ -38,8 +49,8 @@ class SearchResult extends Component {
 
     componentDidMount(){
         const {resource, line_items} = this.props
-        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = resource
-        this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available })
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time} = resource
+        this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time })
 
         this.setState({"line_items":line_items}); // for line items
     }
@@ -47,8 +58,8 @@ class SearchResult extends Component {
     handleSave(){
         this.setState({editing: false})
         const { id, type } = this.props
-        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available } = this.state
-        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available}})
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time } = this.state
+        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time}})
             .then( res => res.json())
             .then( res => {
                 console.log(JSON.stringify(res))
@@ -120,6 +131,18 @@ class SearchResult extends Component {
                 <p><b>Run Time: </b>{resource.run_time}</p>
                 <p><b>Copies Available: </b>{resource.available}</p>
             </div>
+
+            Jsx = <div>
+                {editing ? <p> Director: <input placeholder={resource.director}  onChange={evt => {this.setState({director: evt.target.value})}} /></p> : <p><b> Director: </b>{resource.director}</p>}
+                {editing ? <p> Producers: <input placeholder={resource.producers}  onChange={evt => {this.setState({producers: evt.target.value})}} /></p> : <p><b> Producers: </b>{resource.producers}</p>}
+                {editing ? <p> Actors: <input placeholder={resource.actors}  onChange={evt => {this.setState({actors: evt.target.value})}} /></p> : <p><b> Actors: </b>{resource.actors}</p>}
+                {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
+                {editing ? <p> Subtitles: <input placeholder={resource.subtitles}  onChange={evt => {this.setState({subtitles: evt.target.value})}} /></p> : <p><b> Subtitles </b>{resource.subtitles}</p>}
+                {editing ? <p> Dubbed: <input placeholder={resource.dubbed}  onChange={evt => {this.setState({dubbed: evt.target.value})}} /></p> : <p><b> Dubbed: </b>{resource.dubbed}</p>}
+                {editing ? <p> Release Date: <input placeholder={resource.release_date}  onChange={evt => {this.setState({release_date: evt.target.value})}} /></p> : <p><b> Release Date: </b>{resource.release_date}</p>}
+                {editing ? <p> Run Time: <input placeholder={resource.run_time}  onChange={evt => {this.setState({run_time: evt.target.value})}} /></p> : <p><b> Run Time: </b>{resource.run_time}</p>}
+            </div>
+
         }
 
         return (
