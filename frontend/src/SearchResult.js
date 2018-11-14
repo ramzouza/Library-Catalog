@@ -89,8 +89,16 @@ class SearchResult extends Component {
                 <p><b>Publisher: </b>{resource.publisher}</p>
                 <p><b>Language: </b>{resource.language}</p>
                 <p><b>ISBN 10: </b>{resource.isbn_10}</p>
-                <p><b>ISBN 13: </b>{resource.isb_13}</p>
+                <p><b>ISBN 13: </b>{resource.isbn_13}</p>
             </div>
+
+            Jsx= <div>
+                {editing ? <p> Publisher: <input placeholder={resource.publisher}  onChange={evt => {this.setState({publisher: evt.target.value})}} /></p> : <p><b> Publisher: </b>{resource.publisher}</p>}
+                {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
+                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
+                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
+            </div>
+            
         } else if (resource.restype == "music"){
             cardJsx = <div>
                 <p><b>Type: </b>{resource.type}</p>
