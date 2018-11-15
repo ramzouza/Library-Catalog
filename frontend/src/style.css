@@ -372,6 +372,10 @@
     border-color: #037d9e;
 }
 
+.login-main img{
+    width:8em;
+}
+
 /* LoggedUser */
 
 .loggedusers-main{
