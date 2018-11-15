@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
+
+
 
 const bookPic = "http://pngimg.com/uploads/book/book_PNG51061.png"
 const magPic = "http://icons.iconarchive.com/icons/icons8/windows-8/256/Printing-Magazine-icon.png"
@@ -16,7 +19,14 @@ class CreateResource extends Component {
   render() {
     const admin = cookie.load('admin') === 'yes'
     return (
+      <div>
+      <div class='resource'>
+      <Navbar/>
+      </div>
+      
+      <div class='resourcepadding'>
       <div class="create-resource" >
+   
         Create a resource
         <button  onClick={() => this.handleClick('/create/book')} type="button">Book <img  alt="illustration" src={bookPic}/> </button>
         <button  onClick={() => this.handleClick('/create/magazine')} type="button">Magazine <img  alt="illustration" src={magPic}/> </button>
@@ -24,6 +34,9 @@ class CreateResource extends Component {
         <button  onClick={() => this.handleClick('/create/music')} type="button">Music <img  alt="illustration" src={musicPic}/></button>
         
         {!admin ? <Redirect to="/"/> : null}
+
+      </div>
+      </div>
       </div>
     );
   }

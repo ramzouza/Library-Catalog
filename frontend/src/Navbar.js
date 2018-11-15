@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
+import { Glyphicon,MenuItem, DropdownButton, ButtonToolbar,Image,Dropdown } from 'react-bootstrap';
 
 
 class Navbar extends Component {
@@ -15,11 +16,40 @@ class Navbar extends Component {
     const logged = cookie.load('logged') === 'yes'
     const admin = cookie.load('admin') === 'yes'
 
-     
+    
+    let create_resource = '/create'
+    let create_user = '/create/user' 
+    let logged_users = '/loggedusers'
+    let view_cart = '/cart' 
 
+    
     return (
       
-      <div class="navbar-main" >
+      
+    <div class="navbar-main" >
+
+    
+    <ButtonToolbar>
+    <DropdownButton
+    bsStyle="default"
+    title={<Glyphicon glyph='list'/>}
+    noCaret
+    pullRight
+    id="dropdown-no-caret"  
+    >
+      <MenuItem eventKey="1">Action</MenuItem>
+      <MenuItem eventKey="2">Another actionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</MenuItem>
+      <MenuItem eventKey="3" active>
+        Active Item
+      </MenuItem>
+      <MenuItem divider />
+      <MenuItem eventKey="4">Separated link</MenuItem>
+     
+    </DropdownButton>
+  </ButtonToolbar>
+
+
+  {/*
 
         {!logged?<Redirect to="/login"/> : null}
 
@@ -72,11 +102,16 @@ class Navbar extends Component {
           </Link>
           
 
-          
+           
         </div>
+        
+            */}
+      
       </div>
-    );
+      
+            );
   }
 }
 
 export default Navbar;
+
