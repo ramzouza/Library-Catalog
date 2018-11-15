@@ -39,8 +39,16 @@ class Login extends Component {
     const logged = cookie.load('logged') === 'yes'
     const message = this.state.message;
     return (
+      
+      <React.Fragment>
+      
       <div class="login-main" >
+                
         <h1>LOGIN</h1>
+
+        <h2>THE LOAN ZONE</h2>
+
+        <img src={require('./TheZone.png')}/>
         
         <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
@@ -53,6 +61,7 @@ class Login extends Component {
         <p id="wrong">{message}</p>
           {logged ? <Redirect to="/"/> : null}
       </div>
+      </React.Fragment>
     );
   }
 }
