@@ -465,12 +465,12 @@
 
 .create-resource button{
     border-radius: 4px;
-    background-color: #037d9e;
-    border: none;
-    color: #FFFFFF;
+    background-color: rgba(244, 244, 244, 0.7);
+    border: 2px solid #037d9e;
+    color: #037d9e;
     text-align: center;
-    font-size: 18px;
-    font-family:  'Open Sans', sans-serif;
+    font-size: 20px;
+    font-family:  'Audiowide', cursive;
     padding: 20px;
     width: 100%;
     transition: all 0.5s;
@@ -489,6 +489,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    border-top: 4px solid #037d9e;
     border-radius: 5px;
     min-height: 400px;
     font-size: 30px;
@@ -500,10 +501,15 @@
 
 .create-main input {
     font-size: 30px;
+    border : 2px solid #037d9e;
     text-align: center;
     padding: 10px;
     border-radius: 5px;
     margin: 5px;
+}
+
+.create-main span {
+    font-family: 'Audiowide', cursive;
 }
 
 #SearchRandom{
@@ -517,9 +523,11 @@
 .create-main button {
     height: 50px;
     width: 100%;
-    font-size: 20px;
+    font-size: 30px;
+    border : 2px solid rgba(244, 244, 244, 0.7);
     border-radius: 5px;
-    font-family: inherit;
+    font-family: 'Audiowide', cursive;
+    background-color: #037d9e;
 }
 
 .card-body{
@@ -531,14 +539,45 @@
     /*margin: 0.5em 0 0.5em 0;*/
 }
 
+.search-main button{
+    border : 2px solid #037d9e;
+    border-radius: 5px;
+    text-align: left;
+}
 
+.search-main h2 {
+    text-align: center;
+    color: #037d9e;
+    font-family:  'Audiowide', cursive;
+    font-size: 3em;
+    text-transform: uppercase;
+}
+
+.search-main input {
+    border : 2px solid #037d9e;
+    border-radius: 5px;
+}
+
+.search-main img {
+    height: 15em;
+    width: 15em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .btn-search{
     margin: 0.5em 0 0.5em 0;
+    border : #037d9e;
 }
 
 .search-result{
     margin-bottom: 1em;
+}
+
+.dropdown select{
+    border : 2px solid #037d9e;
+    border-radius: 5px;
 }
 
 .modal{

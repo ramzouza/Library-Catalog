@@ -63,7 +63,7 @@ class CreateMusic extends Component {
         <input onChange={evt => {this.setState({artist: evt.target.value})}}  type="text" placeholder="Artist" ></input>
         
         <input onChange={evt => {this.setState({label: evt.target.value})}}  type="text" placeholder="Label" ></input>
-        Release Date 
+        <span style={{fontSize: 25}}>Release Date </span>
         <input onChange={evt => {this.setState({release_date: evt.target.value})}}  type="text" placeholder="DD/MM/YYYY" ></input>
 
          <input onChange={evt => {this.setState({ASIN: evt.target.value})}}  type="text" placeholder="ASIN" ></input>
