@@ -26,7 +26,7 @@ class ResourceCatalog {
         return ResourceMapper.deleteLineItem(resource_line_item_id);
     }
 
-    static Find(id) {
+    static GetResourceById(id) {
       return ResourceMapper.select(id);
     }
 

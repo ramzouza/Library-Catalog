@@ -21,7 +21,7 @@ class ResourceMapper {
     static select(id){
         try {
             resource = IdentifyMap[id];
-            return resource;
+            return {status: 0, message: 'Ok', results: resource};
         } catch (e) {
             try{
                 let resource = {};
@@ -29,14 +29,9 @@ class ResourceMapper {
                 if (resource_data.length > 0){
                     const resource_id = resource_data[0].id;
                     const resource_type = resource_data[0].type;
-                    console.log(resource_type);
-                    console.log(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
                     const query = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
                     const child_data = query[0];
-                    child_data.title = resource_data[0].title;
-
-                    console.log(child_data)
-                    
+                    child_data.title = resource_data[0].title;                    
                     switch(resource_type){
                         case "book":
                             resource = new Book(child_data,resource_id);
@@ -51,11 +46,13 @@ class ResourceMapper {
                         case "music":
                             resource = new Music(child_data,resource_id);
                             break;
-                    }
+                    } 
                     resource.resource_type = resource_type;
                     IdentifyMap[resource_id] = resource;
-                }
-                return {status: 0, message: 'Ok', results: resource};
+                    return {status: 0, message: 'Ok', results: resource};
+                } else {
+                    throw "Invalid Resource Id."
+                }    
             } catch (error){
                 return{ status: 1, message: 'Error: ' + error, error}
             }
@@ -809,7 +806,7 @@ class ResourceMapper {
     // Method add New Line Item for a specific Ressource
     static addLineItem(resource_id){
         try{
-         let data = connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", 'Never')");
+         let data = connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", '')");
          let data2 = connection.query(`SELECT * FROM resource_line_item WHERE id=${data.insertId}`)
          return {message: 'Resource Added', lineItem: data2[0]};
         }catch(error){

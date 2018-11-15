@@ -544,7 +544,6 @@
 }
 
 .search-main button{
-    border : 2px solid #037d9e;
     border-radius: 5px;
     text-align: left;
 }
@@ -558,7 +557,7 @@
 }
 
 .search-main input {
-    border : 2px solid #037d9e;
+    /*border : 2px solid #037d9e;*/
     border-radius: 5px;
 }
 
@@ -571,8 +570,8 @@
 }
 
 .btn-search{
-    margin: 0.5em 0 0.5em 0;
-    border : #037d9e;
+    margin: 0.5em  0.5em 0.5em 0;
+    border : 2px solid #037d9e;
 }
 
 .search-result{
@@ -580,7 +579,7 @@
 }
 
 .dropdown select{
-    border : 2px solid #037d9e;
+    /*border : 2px solid #037d9e;*/
     border-radius: 5px;
 }
 

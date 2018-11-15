@@ -30,9 +30,13 @@ class UserMapper{
     static RetrieveUserById(id){
         try {
             const data = connection.query(`SELECT * FROM users where id='${id}'`)
-            return { status: 0, message: "User found.", results: data }
+            if (data.length > 0){
+                return { status: 0, message: "User found.", results: data[0]}
+            } else {
+                throw "User not found."
+            }
         } catch (error) {
-            return { status: 1, message : "Error...", error }
+            return { status: 1, message : error, error }
         }
     }
 
