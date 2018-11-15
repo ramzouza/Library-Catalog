@@ -44,18 +44,18 @@ class Login extends Component {
       
       <div class="login-main" >
                 
-        <h1>LOGIN</h1>
+        
 
         <h2>THE LOAN ZONE</h2>
 
-        <img src={require('./TheZone.png')}/>
+        <img src={require('./TheLoanZoneLogo.png')}/>
         
         <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
         <input id="password" onChange={evt => {this.setState({password: evt.target.value})}}  type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
         <button class="button" type="button" onClick={ this.loginEvent.bind(this) }><span>
-            SUBMIT
+            LOGIN
         </span></button>
         
         <p id="wrong">{message}</p>
