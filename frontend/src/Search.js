@@ -136,7 +136,7 @@ class Search extends Component {
 _handleKeyPress(e) {
     if (e.key === 'Enter') {
       this.setState({"loading":true})
-      this.handleClickSearch()
+      this.handleClick()
     }
   }
 

@@ -809,8 +809,9 @@ class ResourceMapper {
     // Method add New Line Item for a specific Ressource
     static addLineItem(resource_id){
         try{
-         connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", 'Never')");
-         return {message: 'Resource Added'};
+         let data = connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", 'Never')");
+         let data2 = connection.query(`SELECT * FROM resource_line_item WHERE id=${data.insertId}`)
+         return {message: 'Resource Added', lineItem: data2[0]};
         }catch(error){
         return {message: 'Resource '+error};
         }
@@ -837,7 +838,8 @@ class ResourceMapper {
             resource_obj.resource_id = parent_data.insertId; // with the insert id of the resource table, reference the fk of the child data to the pk of the parent
             resource_obj.id = 0;
             connection.query(`INSERT INTO ${type} VALUES (${this.objectToQueryString(resource_obj)})`); // Insert into the child table the child data (book, magazine, music, movie)
-            const resource_line_item = {"id":0, "resource_id": parent_data.insertId, "user_id": null, "date_due": "Never"}; // declare schema for the line item instance (this table represents the number of instances)
+            //const date = new Date(Date.now() + (1000 /*sec*/ * 60 /*min*/ * 60 /*hour*/ * 24 /*day*/ * 10)).toString();
+            const resource_line_item = {"id":0, "resource_id": parent_data.insertId, "user_id": null, "date_due": ''}; // declare schema for the line item instance (this table represents the number of instances)
             connection.query(`INSERT INTO resource_line_item (id, resource_id, user_id, date_due) VALUES(0, ${resource_line_item.resource_id}, NULL, '${resource_line_item.date_due}')`); 
             const resource = this.select(parent_data.insertId).results
             return {status: 0, message: 'Resource Added', results: resource};

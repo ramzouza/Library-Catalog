@@ -337,14 +337,13 @@ app.post('/addLineItem' , (req,res) =>{
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+        logger(`POST -  [/addLineItem] - ${400} - ${sender_id} `)
     }
     // get resources here
     const {resource_id} = req.body;
-    const message = ResourceCatalog.addLineItem(resource_id);
-    
-    res.json({"results":message});
-    logger(`GET - [/resources] - ${200} - ${sender_id} `)     
+    const {message, lineItem} = ResourceCatalog.addLineItem(resource_id);
+    res.json({"results":message, "lineItem":lineItem});
+    logger(`POST - [/addLineItem] - ${200} - ${sender_id} `)     
 })
 
 app.post('/deleteLineItem' , (req,res) =>{
