@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './Navbar'
 import { apiCall } from './ApiCall'
 import cookie from 'react-cookies'
+import {Link} from 'react-router-dom'
 
 class LoggedUsers extends Component {
   constructor(){
@@ -34,6 +35,9 @@ class LoggedUsers extends Component {
       <div class= "logged-main">
       <Navbar/>
       <div class= "logged-body">
+      <h1>Active Users</h1>
+      <button class="btn btn-success action-bar-btn" onClick={ _ => this.refresh()}><i class="fas fa-sync-alt"></i></button>
+      <Link className="btn btn-primary action-bar-btn" to="/create/user" ><i class="fas fa-plus"></i></Link>
           <table class="table table-dark transaction-table">
           <thead>
             <tr>
@@ -50,7 +54,6 @@ class LoggedUsers extends Component {
               
             </tr> )}
             </table>
-            <button class="btn btn-success" onClick={ _ => this.refresh()}><i class="fas fa-sync-alt"></i></button>
 
     </div>
     </div>

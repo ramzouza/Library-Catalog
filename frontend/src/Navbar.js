@@ -44,7 +44,7 @@ LogOut(){
         <NavItem eventKey="1" >
         
             <NavIcon><Link to="/" >
-                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
+                <i className="fa fa-fw fa-search" style={{ fontSize: '1.75em' }} /></Link>
             </NavIcon>
             <NavText>
             <Link to="/" >

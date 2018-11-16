@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import { apiCall } from './ApiCall'
 import cookie from 'react-cookies'
 import Transaction from './Transaction.js'
+import {Link} from 'react-router-dom'
 
 class Transactions extends Component {
   constructor(){
@@ -36,7 +37,7 @@ class Transactions extends Component {
       <div class= "logged-main">
       <Navbar/>
       <div class= "logged-body">
-
+      <h1>Transactions</h1>
           <table class="table table-dark transaction-table">
                   <thead>
                     <tr>
