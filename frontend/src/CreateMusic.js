@@ -36,12 +36,10 @@ class CreateMusic extends Component {
         release_date}
 
 
-        alert(JSON.stringify(newMusic))
 
         apiCall('/resources', {"resource_data": newMusic,"type":"Music"})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')

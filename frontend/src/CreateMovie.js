@@ -45,7 +45,6 @@ class CreateMovie extends Component {
       apiCall('/resources', {"resource_data": newMovie,"type":"Movie"})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')

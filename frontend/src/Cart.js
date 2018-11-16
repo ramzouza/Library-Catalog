@@ -29,7 +29,6 @@ class Cart extends Component {
       handleClickSave() {
         const isAdmin = cookie.load('admin') === 'yes' ?  true : false
         const id = cookie.load('id')
-        alert("saving...");
         POST('/saveCart', {is_Admin:isAdmin,id:id})
           .then(res => res.json())
           .then( json => {
@@ -50,7 +49,7 @@ class Cart extends Component {
             <div>
               {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
             </div>
-          <button class="cart-btn" type="button" onClick={() => this.handleClickSave()}> Save </ button>
+          <button class="btn-cart btn btn-success" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i></ button>
         </div>
       </div>
     );

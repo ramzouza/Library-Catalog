@@ -47,7 +47,6 @@ class ResourceItem extends Component {
         PUT('/resources', obj)
           .then( res => res.json() )
           .then ( json => {
-            alert(json.message)
             if(json.status === 0){
                 window.location.reload()
             }
@@ -64,7 +63,6 @@ class ResourceItem extends Component {
       DELETE('/resources', {"resource_id": id})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
           window.location.reload()
         })
       
