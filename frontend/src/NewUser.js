@@ -37,9 +37,6 @@ class NewUser extends Component {
         phoneNumber, isAdmin}
 
 
-        console.log(newUser)
-
-
         apiCall('/createnewuser', newUser)
         .then( res => res.json() )
         .then (json => {

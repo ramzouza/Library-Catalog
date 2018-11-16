@@ -11,7 +11,7 @@ const connection = new MySql({
 class UserMapper{
     static PersistUser(user){
         try {
-            const data = connection.query(`INSERT INTO users VALUES (${this.objectToQueryString(user)})`)
+            const data = connection.query(`INSERT INTO users VALUES (${this.objectToQueryString(user)},NULL)`)
             return { status: 0, message: 'Ok', results: data }
         } catch (error) {
             return { status: 1, message: 'Error'+error, error }

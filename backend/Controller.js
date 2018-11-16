@@ -92,7 +92,8 @@ app.post('/createnewuser', (req, res) => {
         lastName,
         physicalAddress,
         email,
-        phoneNumber, isAdmin
+        phoneNumber, 
+        isAdmin
     } = req.body;
 
     // hash the password and delete the password
