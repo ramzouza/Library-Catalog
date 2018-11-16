@@ -3,7 +3,10 @@ const ResourceMapper = require('./ResourceMapper');
 
 var unitofwork = [];
 var index = 0;
-var callbackMsg = "";
+
+//Used to store user session cart
+var users = [];
+var usersIndex =[];
 
 class UnitOfWork {
     static InsertResource(resourceData, type){
@@ -13,6 +16,7 @@ class UnitOfWork {
     }
 
     static EditResource(resourceData, type){
+
         IdentifyMap[resourceData.id]=resourceData
         unitofwork[index] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
         index++;
@@ -98,6 +102,25 @@ class UnitOfWork {
     static ViewUnitOfWork(){
         unitofwork = unitofwork.filter(Boolean);
         return unitofwork.map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
+    }
+
+    static SaveUnitOfWork(sender_id){
+        users[sender_id] = unitofwork;
+        usersIndex[sender_id] = index;
+        unitofwork = [];
+        index = 0;
+    }
+
+    static LoadUnitOfWork(sender_id){
+        if(users[sender_id] == undefined){
+            unitofwork = [];
+            index = 0;
+        } else{
+            unitofwork = users[sender_id];
+            index = usersIndex[sender_id];
+            users[sender_id] = []; 
+            usersIndex[sender_id] = 0;
+        }
     }
 }
 
