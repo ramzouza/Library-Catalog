@@ -593,7 +593,14 @@
 .transaction-table{
     font-size: 1.4em;
 }
-.glyphicon {
+
+nav.sidenav---sidenav---_2tBP.sidenav---collapsed---LQDEv {
+    position: fixed;
+}
+
+nav.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL {
+    position: fixed;
+}.glyphicon {
     font-size: 1.5em;
 }
 .glyphicon.glyphicon-list {
