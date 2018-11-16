@@ -35,7 +35,9 @@ class Login extends Component {
       }).catch(e => alert('error, make sure the backend is running'))
   }
 
+
   render() {
+    
     const logged = cookie.load('logged') === 'yes'
     const message = this.state.message;
     return (
@@ -44,11 +46,9 @@ class Login extends Component {
       
       <div class="login-main" >
                 
-        
-
         <h2>THE LOAN ZONE</h2>
 
-        <img src={require('./TheLoanZoneLogo.png')}/>
+        <img  id="coinSpin" src={require('./TheZone.png')}/>
         
         <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         

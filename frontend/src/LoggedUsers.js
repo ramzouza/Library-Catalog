@@ -30,7 +30,7 @@ class LoggedUsers extends Component {
       <div class="loggedusers-main">
         <Navbar/>
         <div class="loggedusers-body">
-          <p>Logged Users</p>
+          <p><span style={{fontFamily: 'Audiowide'}}>Logged Users</span></p>
           <div class="loggedusers-style">
             {logs.map( ({user, isAdmin}) => <p><span><img src={require('./LoggedUsers.png')}/></span> {user}  ({isAdmin})</p> )}
           </div>

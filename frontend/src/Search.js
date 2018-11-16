@@ -148,7 +148,7 @@ render() {
     return (
       <div class="search-main">
 
-        <img src={require('./TheZone.png')}/>
+        <img src={require('./TheZone.png')}/><br/>
         <h2>THE LOAN ZONE</h2><br/>
 
         <div style={main}>

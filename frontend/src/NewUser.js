@@ -70,7 +70,7 @@ class NewUser extends Component {
         <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} type="text" placeholder="Phone Number" ></input>
         
         
-            <label><input id="checkbox" onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"/>Admin</label>
+            <label><input id="checkbox" onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"/> Admin</label>
 
         
         <button 
