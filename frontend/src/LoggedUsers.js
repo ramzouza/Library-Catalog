@@ -13,6 +13,10 @@ class LoggedUsers extends Component {
   }
 
   componentDidMount(){
+    this.refresh();
+  }
+
+  refresh(){
     const isAdmin = cookie.load('admin') === 'yes' ?  true : false
     const id = cookie.load('id')
 
@@ -27,16 +31,29 @@ class LoggedUsers extends Component {
   render() {
     const {logs} = this.state
     return (
-      <div class="loggedusers-main">
-        <Navbar/>
-        <div class="loggedusers-body">
-          <p>Logged Users</p>
-          <div class="loggedusers-style">
-            {logs.map( ({user, isAdmin}) => <p><span></span> {user}  ({isAdmin})</p> )}
-          </div>
-        </div>
-        
-      </div>
+      <div class= "logged-main">
+      <Navbar/>
+      <div class= "logged-body">
+          <table class="table table-dark transaction-table">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Last Login</th>
+              <th>User Type</th>
+            </tr>
+          </thead>
+            {logs.map( ({user}) => 
+            <tr>
+              <th>{user.id}</th>
+              <th>{user.last_login}</th>
+              <th>{user.isAdmin ? "Admin" : "Client"}</th>
+              
+            </tr> )}
+            </table>
+            <button class="btn btn-success" onClick={ _ => this.refresh()}><i class="fas fa-sync-alt"></i></button>
+
+    </div>
+    </div>
     );
   }
 }

@@ -52,7 +52,7 @@ class UserMapper{
     static ActiveUsers(){
         try {
             const data = connection.query(`SELECT * FROM users where isActive=1`)
-            const usersArray = data.map(user => { return { user: user.email, isAdmin: user.isAdmin ? 'Admin' : 'Client' } })
+            const usersArray = data.map(user => { return { user: user, isAdmin: user.isAdmin ? 'Admin' : 'Client' } })
 
             return { status: 0, results: data,users: usersArray }
         } catch (error) {
@@ -62,7 +62,15 @@ class UserMapper{
 
     static SetActive(id,isActive){
         try{
-            const data = connection.query(`UPDATE users SET isActive=${isActive} WHERE id='${id}'`)
+            let last_login;
+            if (isActive){
+                last_login = "now()";
+            } else {
+                last_login = null;
+            }
+            console.log(last_login)
+
+            const data = connection.query(`UPDATE users SET isActive=${isActive}, last_login=${last_login}  WHERE id='${id}'`)
             return { status: 0, results: data }
         } catch (error) {
             return { status: 1, error}
