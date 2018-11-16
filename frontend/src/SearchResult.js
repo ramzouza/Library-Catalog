@@ -87,7 +87,9 @@ class SearchResult extends Component {
         //const line_items = this.state.line_items;
         let Jsx;
         let cardJsx;
+        let icon;
         if (resource.restype == "book"){
+            icon = <i class="fas fa-book"></i>;
             cardJsx = <div>
                     <p><b> Author: </b>{resource.author}</p>
                     <p><b> Language: </b>{resource.language}</p>
@@ -103,6 +105,7 @@ class SearchResult extends Component {
                 {editing ? <p> Copies Available: <input placeholder={this.state.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{this.state.available}</p>}
             </div>
         } else if (resource.restype == "magazine"){
+            icon = <i class="fas fa-book-reader"></i>;
             cardJsx = <div>
                 <p><b>Publisher: </b>{resource.publisher}</p>
                 <p><b>Language: </b>{resource.language}</p>
@@ -116,6 +119,7 @@ class SearchResult extends Component {
             </div>
             
         } else if (resource.restype == "music"){
+            icon = <i class="fas fa-music"></i>;
             cardJsx = <div>
                 <p><b>Artist: </b>{resource.artist}</p>
                 <p><b>Release: </b>{resource.release}</p>
@@ -125,11 +129,13 @@ class SearchResult extends Component {
             {editing ? <p> Artist: <input placeholder={resource.artist}  onChange={evt => {this.setState({artist: evt.target.value})}} /></p> : <p><b> Artist: </b>{resource.artist}</p>}
             {editing ? <p> Release: <input placeholder={resource.release}  onChange={evt => {this.setState({release: evt.target.value})}} /></p> : <p><b> Release: </b>{resource.release}</p>}
             {editing ? <p> ASIN: <input placeholder={resource.ASIN}  onChange={evt => {this.setState({ASIN: evt.target.value})}} /></p> : <p><b> ASIN: </b>{resource.ASIN}</p>}
-            {editing ? <p> Label: <input placeholder={resource.label}  onChange={evt => {this.setState({label: evt.target.value})}} /></p> : <p><b> label: </b>{resource.label}</p>}
+            {editing ? <p> Label: <input placeholder={resource.label}  onChange={evt => {this.setState({label: evt.target.value})}} /></p> : <p><b> Label: </b>{resource.label}</p>}
+            {editing ? <p> Type: <input placeholder={resource.type}  onChange={evt => {this.setState({label: evt.target.value})}} /></p> : <p><b> Type: </b>{resource.type}</p>}
             </div>
 
 
         } else if (resource.restype == "movie"){
+            icon = <i class="fas fa-film"></i>;
             cardJsx = <div>
                 <p><b>Actors: </b>{resource.actors}</p>
                 <p><b>Language: </b>{resource.language}</p>
@@ -146,11 +152,14 @@ class SearchResult extends Component {
                 {editing ? <p> Run Time: <input placeholder={resource.run_time}  onChange={evt => {this.setState({run_time: evt.target.value})}} /></p> : <p><b> Run Time: </b>{resource.run_time}</p>}
             </div>
 
+
+
         }
 
         return (
         <div class="card search-result">
             <div class="card-body">
+                {icon}
                 <h1>{resource.title}</h1>
                 {cardJsx}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>

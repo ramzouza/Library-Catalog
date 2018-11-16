@@ -74,7 +74,7 @@ class UnitOfWork {
             }
         }
 
-        unitofwork =[];
+        unitofwork = [];
         console.log('Cart should be cleared:');
         console.log(unitofwork);
 
@@ -97,7 +97,7 @@ class UnitOfWork {
 
     static ViewUnitOfWork(){
         unitofwork = unitofwork.filter(Boolean);
-        return unitofwork.map((item, index) => { return { resource: item.resource, operation: item.operation, index: index }});
+        return unitofwork.map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
     }
 }
 

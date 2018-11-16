@@ -40,18 +40,18 @@ class Cart extends Component {
   render() {
     const {logs} = this.state
     
+    
     return (
-      <div class="cart">
-        <Navbar/>
-        <div class="cart-body">
-          <h2>Cart</h2>
-          <hint>The following data will be modified:</hint>
-            <div>
-              {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
-            </div>
-          <button class="btn-cart btn btn-success" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i></ button>
-        </div>
+      <div class= "logged-main">
+      <Navbar/>
+      <div class= "logged-body">
+          <h1>Cart</h1>
+          <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>
+          <h4>The following data will be modified:</h4>
+          {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
       </div>
+      </div>
+      
     );
   }
 }
