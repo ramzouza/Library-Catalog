@@ -38,6 +38,7 @@ class Transactions extends Component {
       <Navbar/>
       <div class= "logged-body">
       <h1>Transactions</h1>
+      <button class="btn btn-success action-bar-btn" onClick={ _ => this.refresh()}><i class="fas fa-sync-alt"></i></button>
           <table class="table table-dark transaction-table">
                   <thead>
                     <tr>
@@ -52,7 +53,6 @@ class Transactions extends Component {
                     {transactions.map( (transaction) => <Transaction transaction={transaction} /> )}
                   </tbody>
               </table>
-              <button class="btn btn-success" onClick={ _ => this.refresh()}><i class="fas fa-sync-alt"></i></button>
       </div>
       </div>
        
