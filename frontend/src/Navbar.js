@@ -40,7 +40,9 @@ LogOut(){
 >
     <SideNav.Toggle />
     <SideNav.Nav defaultSelected="home">
+   
         <NavItem eventKey="1" >
+        
             <NavIcon><Link to="/" >
                 <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
             </NavIcon>
@@ -49,7 +51,10 @@ LogOut(){
                    Home
             </Link>
             </NavText>
+            
         </NavItem>
+        
+    
         <NavItem eventKey="2" >
             <NavIcon>
             <Link to="/create/user" >
