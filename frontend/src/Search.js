@@ -152,7 +152,7 @@ render() {
         <h2>THE LOAN ZONE</h2><br/>
 
         <div style={main}>
-          <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
+          <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." style={{height: 63, width: '50%', padding: 20}}></input>
         </div>
 
         <div>
@@ -294,7 +294,10 @@ render() {
 
 export default Search;
 const  main = {
-    minWidth: '30%'
+    minWidth: '30%',
+    display:'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
 }
 
 
