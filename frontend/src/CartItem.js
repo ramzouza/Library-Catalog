@@ -36,7 +36,6 @@ class CartItem extends Component {
         DELETE('/cartItem', {"index": index})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
           window.location.reload()
         })
             
@@ -52,7 +51,7 @@ class CartItem extends Component {
                     <span style={{ marginLeft: 10,fontFamily: 'Arial'}}> <strong>Operation:</strong> {operation}</span> <br />
                     <span style={{ marginLeft: 10,fontFamily: 'Arial'}}>  Title: {resource_data.title}</span> <br />
                     <span style={{ marginLeft: 10,fontFamily: 'Arial'}}>  Information: {JSON.stringify(resource_data)}</span><br />
-                    <button class="cart-btn" type="button" onClick={() => this.handleClickRemove(index)}> Remove </ button>
+                    <button class="cart-btn btn btn-primary" type="button" onClick={() => this.handleClickRemove(index)}> Remove </ button>
             </div>
         );
     }

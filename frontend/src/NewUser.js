@@ -43,7 +43,6 @@ class NewUser extends Component {
         apiCall('/createnewuser', newUser)
         .then( res => res.json() )
         .then (json => {
-          alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')

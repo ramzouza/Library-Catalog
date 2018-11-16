@@ -223,7 +223,6 @@ LogOut(){
                 cookie.remove('email')
                 cookie.remove('id')
                 
-                alert('Goodbye!')
                 apiCall('/disconnect',{id})
               }} 
                 class="navbar-logout"><span><i class="fas fa-sign-out-alt"></i> </span>Log out</div>

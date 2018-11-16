@@ -30,12 +30,10 @@ class CreateMagazine extends Component {
         title}
 
 
-        alert(JSON.stringify(newMagazine))
 
         apiCall('/resources', {"resource_data": newMagazine,"type":"Magazine"})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
