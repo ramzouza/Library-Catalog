@@ -91,7 +91,22 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
-        <NavItem eventKey="5" >
+
+    <NavItem eventKey="5" >
+            <NavIcon>
+            <Link to="/transactions" >
+                <Glyphicon glyph='folder-open'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/transactions" >
+            View Logged Users
+            </Link>
+            </NavText>
+        </NavItem>
+
+
+        <NavItem eventKey="6" >
             <NavIcon>
             <Link to="/cart" >
                 <Glyphicon glyph='shopping-cart'/>
@@ -103,7 +118,7 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
-        <NavItem eventKey="6" onClick={this.LogOut}>
+        <NavItem eventKey="7" onClick={this.LogOut}>
             <NavIcon>
             <Link to="/" >
                 <Glyphicon glyph='log-out'/>
