@@ -27,11 +27,11 @@ class CreateResource extends Component {
       <div class='resourcepadding'>
       <div class="create-resource" >
    
-        Create a resource
-        <button  onClick={() => this.handleClick('/create/book')} type="button">Book <img  alt="illustration" src={bookPic}/> </button>
-        <button  onClick={() => this.handleClick('/create/magazine')} type="button">Magazine <img  alt="illustration" src={magPic}/> </button>
-        <button  onClick={() => this.handleClick('/create/movie')} type="button">Movie <img  alt="illustration" src={movPic}/></button>
-        <button  onClick={() => this.handleClick('/create/music')} type="button">Music <img  alt="illustration" src={musicPic}/></button>
+        Create resource
+        <button  onClick={() => this.handleClick('/create/book')} type="button">Book</button>
+        <button  onClick={() => this.handleClick('/create/magazine')} type="button">Magazine</button>
+        <button  onClick={() => this.handleClick('/create/movie')} type="button">Movie</button>
+        <button  onClick={() => this.handleClick('/create/music')} type="button">Music</button>
         
         {!admin ? <Redirect to="/"/> : null}
 

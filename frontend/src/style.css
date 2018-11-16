@@ -21,6 +21,8 @@
     margin: 0px;
     padding: 0px;
     overflow-x: hidden; 
+
+
   }
   
   .App-logo {
@@ -122,6 +124,7 @@
     background-color: rgba(244, 244, 244, 0.7);
     margin-top: 3%;
     border-top: 5px solid #037d9e;
+    background-image: url("./bg.jpg");
 }
 
 .newuser-main input {
@@ -240,6 +243,7 @@
     background-color: rgba(244, 244, 244, 0.7);
     margin-top: 1em;
     border-top: 5px solid #037d9e;
+    background-image: url("./bg.jpg");
    }
 
 .login-main h1{
@@ -266,9 +270,7 @@
     margin-bottom: 10px;
 }
 
-#coinSpin{
-    -webkit-animation: rotation 2.5s infinite linear;
-}
+
 
 @-webkit-keyframes rotation{
     from{-webkit-transform: rotateY(0deg);}
@@ -435,6 +437,7 @@
 /* Create Resources */
 
 .create-resource {
+    font-family:  'Audiowide', cursive;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -447,7 +450,49 @@
     background-color: rgba(244, 244, 244, 0.7);
     margin-top: 3%;
     border-top: 5px solid #037d9e;
+    background-image: url("./bg.jpg");
 
+}
+
+.create-resource button {
+    border-radius: 4px;
+    background-color: #037d9e;
+    border: 2px solid #037d9e;
+    color: white;
+    display: inline-block;
+    position: relative;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: -webkit-transform;
+    transition-property: transform;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.create-resource button:before {
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    top: -webkit-calc(50% - 10px);
+    top: calc(50% - 10px);
+    right: 0;
+    content:'';
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #037d9e;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: right;
+    transition-property: right;
+}
+.create-resource button:hover {
+    -webkit-transform: translateX(-5px);
+    -ms-transform: translateX(-5px);
+    transform: translateX(-5px);
+}
+.create-resource button:hover:before {
+    right: -10px;
 }
 
 .resourcepadding{
@@ -455,33 +500,7 @@
     padding:12em;
 }
 
-.create-resource button {
-    height: 150px;
-    width: 150px;
-    font-size: 25px;
-    border-radius: 5px;
-    font-family: inherit;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-}
 
-.create-resource button{
-    border-radius: 4px;
-    background-color: rgba(244, 244, 244, 0.7);
-    border: 2px solid #037d9e;
-    color: #037d9e;
-    text-align: center;
-    font-size: 20px;
-    font-family:  'Audiowide', cursive;
-    padding: 20px;
-    width: 100%;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 5px;
-}
 
 .create-resource img {
     height: 35px;
@@ -499,22 +518,64 @@
     font-size: 30px;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
-    background-color: rgba(244, 244, 244, 0.7);
     margin-top: 5%;
+  
 }
 
 .create-main input {
-    font-size: 30px;
-    border : 2px solid #037d9e;
-    text-align: center;
-    padding: 10px;
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
     border-radius: 5px;
-    margin: 5px;
+    /*border: 2px solid #037d9e;*/
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-family:  'Open Sans', sans-serif;
+    text-align: left;
+    padding: 0 20px 0 10px;
+    outline: none;
 }
 
-.create-main span {
-    font-family: 'Audiowide', cursive;
+.create-main button{
+    border-radius: 4px;
+    background-color: #037d9e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    font-family:  'Audiowide', cursive;
+    padding: 20px;
+    width: 100%;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    
 }
+.create-main button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+.create-main button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+.create-main button:hover span {
+    padding-right: 25px;
+  }
+  
+.create-main button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+
 
 #SearchRandom{
     font-size: 30px;
@@ -524,15 +585,7 @@
     width: 100%;
 }
 
-.create-main button {
-    height: 50px;
-    width: 100%;
-    font-size: 30px;
-    border : 2px solid rgba(244, 244, 244, 0.7);
-    border-radius: 5px;
-    font-family: 'Audiowide', cursive;
-    background-color: #037d9e;
-}
+
 
 .card-body{
     font-size: 1.5em;

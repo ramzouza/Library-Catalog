@@ -70,7 +70,7 @@ class CreateMusic extends Component {
         
         
         <button
-           onClick={this.handleClick.bind(this)} type="button">Create</button>
+           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );

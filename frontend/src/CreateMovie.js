@@ -80,7 +80,7 @@ class CreateMovie extends Component {
         <input onChange={evt => {this.setState({run_time: evt.target.value})}}  type="text" placeholder="Run Time" ></input>
                 
         <button
-           onClick={this.handleClick.bind(this)} type="button">Create</button>
+           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );
