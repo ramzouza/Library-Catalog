@@ -10,6 +10,7 @@ import CreateBook from './CreateBook'
 import CreateMagazine from './CreateMagazine'
 import CreateMovie from './CreateMovie'
 import CreateMusic from './CreateMusic'
+import Transactions from './Transactions'
 import Cart from './Cart'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies'
@@ -56,6 +57,7 @@ class App extends Component {
             <Route exact path="/create/movie" component={CreateMovie} />
             <Route exact path="/create/music" component={CreateMusic} />
             <Route exact path="/loggedusers" component={LoggedUsers} />
+            <Route exact path="/transactions" component={Transactions} />
             <Route exact path="/cart" component={Cart} />
           </Switch>
         </Router>

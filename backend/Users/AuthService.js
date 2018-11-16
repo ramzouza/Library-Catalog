@@ -26,7 +26,7 @@ class AuthService {
         if (status == 1 || results.length == 0){
             return {status: 1, message, isAuthorized: false};
         } else {
-            const user = results[0];
+            const user = results;
             return {status, message, isAuthorized: requiresAdmin == user.isAdmin};
         }
     }
