@@ -11,6 +11,7 @@ class ResourceLineItem extends Component {
             title: '',
             deleted: false
         }
+
     }
 
     handleDeleteResourceLineItem(){
@@ -18,6 +19,7 @@ class ResourceLineItem extends Component {
         .then( res => res.json() )
         .then ( json => {
             this.setState({deleted: true});
+            this.props.handler()
         }).catch( err => {
         })
     }

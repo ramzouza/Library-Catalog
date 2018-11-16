@@ -13,7 +13,7 @@ const AuthService = require('./Users/AuthService')
 const UserCatalog = require('./Users/UserCatalog')
 const ResourceCatalog = require('./Resources/ResourceCatalog')
 const UnitOfWork = require('./Resources/UnitOfWork')
-
+const TransactionLogger = require('./Resources/TransactionLogger')
 // ============ Allow Requests from a Browser ==========
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -337,14 +337,13 @@ app.post('/addLineItem' , (req,res) =>{
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+        logger(`POST -  [/addLineItem] - ${400} - ${sender_id} `)
     }
     // get resources here
     const {resource_id} = req.body;
-    const message = ResourceCatalog.addLineItem(resource_id);
-    
-    res.json({"results":message});
-    logger(`GET - [/resources] - ${200} - ${sender_id} `)     
+    const {message, lineItem} = ResourceCatalog.addLineItem(resource_id);
+    res.json({"results":message, "lineItem":lineItem});
+    logger(`POST - [/addLineItem] - ${200} - ${sender_id} `)     
 })
 
 app.post('/deleteLineItem' , (req,res) =>{
@@ -438,7 +437,6 @@ app.delete('/cartItem', (req,res) => {
 // Route to handle the Unit Of Work's save
 app.post('/saveCart', (req, res) =>{
     // check if the sender is authenticated
-    console.log("...saving...");
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAuthorized) {
@@ -454,6 +452,25 @@ app.post('/saveCart', (req, res) =>{
         logger(`POST - [/saveCart] - ${200} - ${message}`)
     }
   
+})
+
+// Route to handle the Unit Of Work's save
+app.post('/transactions', (req, res) =>{
+    // check if the sender is authenticated
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized", results:[] })
+        logger(`GET -  [/transactions] - ${400} - ${sender_id} `)
+    } else {
+        const transactions = TransactionLogger.getLogs(); // get the transaction logs
+        console.log(transactions)
+        res.status(200)
+        res.json({ status: 0, results: transactions })
+        logger(`GET - [/transactions] - ${200} - ${message}`)
+    }
+
 })
 
 server = app.listen(port, () => {

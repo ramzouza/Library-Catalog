@@ -38,25 +38,36 @@ class SearchResult extends Component {
 
             line_items: []
         }
+
+        this.handleDecrementAvailable = this.handleDecrementAvailable.bind(this)
+
     }
 
     handleNewResourceLineItem(){
         POST('/addLineItem', {"resource_id": this.props.resource.id})
         .then( res => res.json() )
         .then ( json => {
-          console.log(json.results);
+            const line_item = json.lineItem;
+            const line_items = this.state.line_items.slice()
+            line_items.push(line_item)
+            this.setState({"line_items":line_items,"available":this.state.available+1})
+            console.log(this.state)
         }).catch( err => {
         })
+    }
+
+    handleDecrementAvailable(){
+        this.setState({"available":this.state.available-1})
     }
 
 
 
     componentDidMount(){
-        const {resource, line_items} = this.props
+        const {resource} = this.props
+        console.log(resource)
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label} = resource
         this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time, artist, release,ASIN, label })
-
-        this.setState({"line_items":line_items}); // for line items
+        this.setState({"line_items": resource.lineItem})
     }
 
     handleSave(){
@@ -66,7 +77,6 @@ class SearchResult extends Component {
         PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
             .then( res => res.json())
             .then( res => {
-                console.log(JSON.stringify(res))
             })
     }
 
@@ -74,7 +84,7 @@ class SearchResult extends Component {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
         const editing = this.state.editing;
-        const line_items = this.state.line_items;
+        //const line_items = this.state.line_items;
         let Jsx;
         let cardJsx;
         if (resource.restype == "book"){
@@ -86,7 +96,7 @@ class SearchResult extends Component {
                     <p><b> Language: </b>{resource.language}</p>
                     <p><b> isbn_10: </b>{resource.isbn_10}</p>
                     <p><b> isbn_13: </b>{resource.isbn_13}</p>
-                    <p><b> Copies Available: </b>{resource.available}</p>
+                    <p><b> Copies Available: </b>{this.state.available}</p>
             </div>
             Jsx = <div>
                 {editing ? <p> Author: <input placeholder={resource.author}  onChange={evt => {this.setState({author: evt.target.value})}} /></p> : <p><b> Author: </b>{resource.author}</p>}
@@ -96,16 +106,14 @@ class SearchResult extends Component {
                 {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
                 {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
                 {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
-                {editing ? <p> Copies Available: <input placeholder={resource.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{resource.available}</p>}
+                {editing ? <p> Copies Available: <input placeholder={this.state.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{this.state.available}</p>}
             </div>
         } else if (resource.restype == "magazine"){
-            console.log(resource)
             cardJsx = <div>
                 <p><b>Publisher: </b>{resource.publisher}</p>
                 <p><b>Language: </b>{resource.language}</p>
                 <p><b>ISBN 10: </b>{resource.isbn_10}</p>
                 <p><b>ISBN 13: </b>{resource.isbn_13}</p>
-                <p><b>Copies Available: </b>{resource.available}</p>
             </div>
 
             Jsx= <div>
@@ -122,7 +130,7 @@ class SearchResult extends Component {
                 <p><b>Release: </b>{resource.release}</p>
                 <p><b>ASIN: </b>{resource.ASIN}</p>
                 <p><b>Label: </b>{resource.label}</p>
-                <p><b>Copies Available: </b>{resource.available}</p>
+                <p><b>Copies Available: </b>{this.state.available}</p>
             </div>
 
             Jsx= <div>
@@ -191,7 +199,7 @@ class SearchResult extends Component {
                             <th>Date Due</th>
                             <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
                         </tr>
-                        {resource.lineItem.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} type={resource.restype} line_item={line_item} resource={resource} />)}
+                        {this.state.line_items.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
                         </table>
 
                     </div>

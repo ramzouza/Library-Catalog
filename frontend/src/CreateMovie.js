@@ -74,8 +74,7 @@ class CreateMovie extends Component {
         <input onChange={evt => {this.setState({subtitles: evt.target.value})}}  type="text" placeholder="Subtitles" ></input>
 
         <input onChange={evt => {this.setState({dubbed: evt.target.value})}}  type="text" placeholder="Dubbed" ></input>
-
-         Release Date 
+        <span style={{fontSize: 25}}>Release Date </span>
         <input onChange={evt => {this.setState({release_date: evt.target.value})}}  type="text" placeholder="DD/MM/YYYY" ></input>
                 
         <input onChange={evt => {this.setState({run_time: evt.target.value})}}  type="text" placeholder="Run Time" ></input>

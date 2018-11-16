@@ -1,12 +1,5 @@
-const ResourceMapper = require('./Resources/ResourceMapper.js');
+const TransactionLogger = require('./Resources/TransactionLogger.js');
 
+let x = TransactionLogger.getLogs(34246,173,"loan");
 
-//console.log(ResourceMapper.select(1).results);
-
-
-let resource_obj = {"id": 44 ,"title": "Jon is the bestest","author":"Ramez", "format":" Hardcovers","pages":" 500","publisher":"New publisher ","language":"Arab", "isbn_10":"great ", "isbn_13":"ewr"}
-let type = "book";
-
-let yanis = { checked:['magazine','book','music','movie']}
-let x= ResourceMapper.deleteLineItem(69);
 console.log(x);

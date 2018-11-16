@@ -136,7 +136,7 @@ class Search extends Component {
 _handleKeyPress(e) {
     if (e.key === 'Enter') {
       this.setState({"loading":true})
-      this.handleClickSearch()
+      this.handleClick()
     }
   }
 
@@ -145,16 +145,18 @@ render() {
 
     console.log(TotalArray);
     
-
-
     return (
-      <div>
+      <div class="search-main">
+
+        <img src={require('./TheZone.png')}/><br/>
+        <h2>THE LOAN ZONE</h2><br/>
+
         <div style={main}>
-        <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
+          <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." ></input>
         </div>
 
         <div>
-          <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button>
+          <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
           <button  class="btn btn-default btn-search" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
         </div>
 
@@ -171,7 +173,7 @@ render() {
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                <label>Type : </label><br></br>
+                <label>Type : </label><br/>
             <div class="form-check form-check-inline">
             <input class="form-check-input" id="advanced_checkbox_book" type="checkbox" name="book" value="book" ref ="book"/> 
               <label class="form-check-label" for="advanced_checkbox_book">Book</label>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
 
 /* App */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
@@ -73,16 +74,26 @@
 
 
 .cart-body{
-    padding-top: 10%;
+    margin: 10%;
     min-width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-top: 5px solid #037d9e;
+    border-radius: 5px;
+    background-color: rgba(244, 244, 244, 0.7);
+    font-size: 18px;
+}
+
+.cart h2 {
+    font-family: 'Audiowide', cursive;
+    font-size: 2em;
 }
 
 .cart-btn {
     border-radius: 5px;
+    border : 2px solid #037d9e;
     font-family: inherit;
     padding: 5px 40px;
     margin: 10px;
@@ -105,6 +116,7 @@
     align-items: center;
     border-radius: 5px;
     height: 18em;
+    width: 15em;
     font-size: 30px;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
@@ -118,7 +130,7 @@
     height: 42px;
     box-sizing: border-box;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 2px solid #037d9e;
     margin-bottom: 20px;
     font-size: 14px;
     font-family:  'Open Sans', sans-serif;
@@ -134,15 +146,13 @@
 
 .newuser-main h1{
     margin-top: 0px;
-    font-size:18px;
-    font-family:  'Open Sans', sans-serif;
+    font-size: 1em;
+    font-family:  'Audiowide', cursive;
 }
 
 .newuser-main label {
     font-size:14px;
 }
-
-
 
 .newuser-main button{
     border-radius: 4px;
@@ -150,8 +160,8 @@
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 18px;
-    font-family:  'Open Sans', sans-serif;
+    font-size: 20px;
+    font-family:  'Audiowide', cursive;
     padding: 20px;
     width: 100%;
     transition: all 0.5s;
@@ -219,39 +229,51 @@
 
 .login-main {
     display: flex;
-    flex-direction: column;display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     font-family:  'Open Sans', sans-serif;
     border-radius: 5px;
-    height: 350px;
+    height: 18em;
     font-size: 30px;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
     background-color: rgba(244, 244, 244, 0.7);
-    margin-top: 10%;
+    margin-top: 1em;
     border-top: 5px solid #037d9e;
-    justify-content: space-between;
-    align-items: center;
-    font-family:  'Open Sans', sans-serif;
-    border-radius: 5px;
-    height: 350px;
-    font-size: 30px;
-    padding: 30px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
-    background-color: rgba(244, 244, 244, 0.7);
-    margin-top: 10%;
-    border-top: 5px solid #037d9e;
-}
+   }
 
 .login-main h1{
     text-align: center;
-    color: #000;
-    font-size: 18px;
+    color: #037d9e;
+    font-family:  'Audiowide', cursive;
+    font-size: 1em;
     text-transform: uppercase;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+}
+
+.login-main h2 {
+    text-align: center;
+    color: #037d9e;
+    font-family:  'Audiowide', cursive;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+.login-main img{
+    height: 4em;
+    width: 4em;
+    margin-bottom: 10px;
+}
+
+#coinSpin{
+    -webkit-animation: rotation 2.5s infinite linear;
+}
+
+@-webkit-keyframes rotation{
+    from{-webkit-transform: rotateY(0deg);}
+    to{-webkit-transform: rotateY(359deg);}
 }
 
 .login-main p{
@@ -264,13 +286,12 @@
         height: 42px;
         box-sizing: border-box;
         border-radius: 5px;
-        border: 1px solid #ccc;
+        border: 2px solid #037d9e;
         margin-bottom: 20px;
         font-size: 20px;
         font-family:  'Open Sans', sans-serif;
         padding: 0 20px 0 50px;
         outline: none;
-    
 }
 
 .login-main button{
@@ -279,17 +300,14 @@
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 18px;
-    font-family:  'Open Sans', sans-serif;
+    font-size: 1em;
+    font-family:  'Audiowide', cursive;
     padding: 20px;
     width: 100%;
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-    
 }
-
-
 
 .login-main button span {
     cursor: pointer;
@@ -306,6 +324,7 @@
     right: -20px;
     transition: 0.5s;
   }
+  
   .login-main button:hover span {
     padding-right: 25px;
   }
@@ -314,7 +333,6 @@
     opacity: 1;
     right: 0;
   }
-
 
 .login-main input#email {
     background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
@@ -350,16 +368,21 @@
     width: 100%;
 }
 
-
 .loggedusers-body{
-    height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 10%;
     font-size: 25px;
+    font-family:  'Open Sans', sans-serif;
+    border-radius: 5px;
+    height: 18em;
+    width: 15em;
+    padding: 2em;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
+    background-color: rgba(244, 244, 244, 0.7);
+    margin-top: 5em;
+    border-top: 5px solid #037d9e;
 }
 
 .loggedusers-style{
@@ -448,18 +471,17 @@
 
 .create-resource button{
     border-radius: 4px;
-    background-color: #037d9e;
-    border: none;
-    color: #FFFFFF;
+    background-color: rgba(244, 244, 244, 0.7);
+    border: 2px solid #037d9e;
+    color: #037d9e;
     text-align: center;
-    font-size: 18px;
-    font-family:  'Open Sans', sans-serif;
+    font-size: 20px;
+    font-family:  'Audiowide', cursive;
     padding: 20px;
     width: 100%;
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
-    
 }
 
 .create-resource img {
@@ -472,6 +494,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    border-top: 4px solid #037d9e;
     border-radius: 5px;
     min-height: 400px;
     font-size: 30px;
@@ -483,10 +506,15 @@
 
 .create-main input {
     font-size: 30px;
+    border : 2px solid #037d9e;
     text-align: center;
     padding: 10px;
     border-radius: 5px;
     margin: 5px;
+}
+
+.create-main span {
+    font-family: 'Audiowide', cursive;
 }
 
 #SearchRandom{
@@ -500,9 +528,11 @@
 .create-main button {
     height: 50px;
     width: 100%;
-    font-size: 20px;
+    font-size: 30px;
+    border : 2px solid rgba(244, 244, 244, 0.7);
     border-radius: 5px;
-    font-family: inherit;
+    font-family: 'Audiowide', cursive;
+    background-color: #037d9e;
 }
 
 .card-body{
@@ -514,14 +544,44 @@
     /*margin: 0.5em 0 0.5em 0;*/
 }
 
+.search-main button{
+    border-radius: 5px;
+    text-align: left;
+}
 
+.search-main h2 {
+    text-align: center;
+    color: #037d9e;
+    font-family: 'Audiowide', cursive;
+    font-size: 3em;
+    text-transform: uppercase;
+}
+
+.search-main input {
+    /*border : 2px solid #037d9e;*/
+    border-radius: 5px;
+}
+
+.search-main img {
+    height: 15em;
+    width: 15em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .btn-search{
-    margin: 0.5em 0 0.5em 0;
+    margin: 0.5em  0.5em 0.5em 0;
+    border : 2px solid #037d9e;
 }
 
 .search-result{
     margin-bottom: 1em;
+}
+
+.dropdown select{
+    /*border : 2px solid #037d9e;*/
+    border-radius: 5px;
 }
 
 .modal{
@@ -535,9 +595,7 @@
 .dropdown{
     margin-bottom: 1em;
 }
-.glyphicon {
-    font-size: 1.5em;
-}
-.glyphicon.glyphicon-list {
-    font-size: 1em;
+
+.transaction-table{
+    font-size: 1.4em;
 }

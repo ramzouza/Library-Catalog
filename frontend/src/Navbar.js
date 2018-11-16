@@ -156,7 +156,7 @@ LogOut(){
 
         {logged?         
          (<Link to="/">
-            <div class="home"> <span><img src={require('./Home.png')}/></span>Home</div>
+            <div class="home"> <span><i class="fas fa-home"></i>  </span>Home</div>
           </Link>)
           : null }
           
@@ -166,25 +166,31 @@ LogOut(){
         
         { admin?         
          (<Link to="/create/user" class="leftside">
-            <div >Create User</div>
+            <div><span><i class="fas fa-user-plus"></i> </span>Create User</div>
           </Link>)
           : null }
           
           { admin? 
            (<Link to="/loggedusers" class="leftside" >
-              <div ><span><img  src={require('./LogUsers.png')}/></span>Logged Users</div>
+              <div ><span><i class="fas fa-users"></i> </span>Logged Users</div>
+            </Link>)
+          : null }
+
+          { admin? 
+           (<Link to="/transactions" class="leftside" >
+              <div ><span><i class="far fa-question-circle"></i> </span>Transactions</div>
             </Link>)
           : null }
 
           { admin? 
            (<Link to="/create" class="leftside" >
-              <div ><span><img  src={require('./BookResource.gif')}/></span>Create ressource</div>
+              <div ><span><i class="fas fa-book-reader"></i> </span>Create ressource</div>
             </Link>)
           : null }
 
            { admin? 
            (<Link to="/cart" class="leftside" >
-              <div ><span><img src={require('./Cart.png')}/></span>View Cart</div>
+              <div ><span><i class="fas fa-cart-arrow-down"></i> </span>View Cart</div>
             </Link>)
           : null }
           
@@ -199,7 +205,7 @@ LogOut(){
                 alert('Goodbye!')
                 apiCall('/disconnect',{id})
               }} 
-                class="navbar-logout"><span><img  src={require('./LogOff.png')}/></span>Log out</div>
+                class="navbar-logout"><span><i class="fas fa-sign-out-alt"></i> </span>Log out</div>
           </Link>
           
 

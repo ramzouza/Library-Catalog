@@ -35,24 +35,33 @@ class Login extends Component {
       }).catch(e => alert('error, make sure the backend is running'))
   }
 
+
   render() {
+    
     const logged = cookie.load('logged') === 'yes'
     const message = this.state.message;
     return (
+      
+      <React.Fragment>
+      
       <div class="login-main" >
-        <h1>LOGIN</h1>
+                
+        <h2>THE LOAN ZONE</h2>
+
+        <img  id="coinSpin" src={require('./TheZone.png')}/>
         
         <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
         <input id="password" onChange={evt => {this.setState({password: evt.target.value})}}  type="password"  placeholder="Password" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         
         <button class="button" type="button" onClick={ this.loginEvent.bind(this) }><span>
-            SUBMIT
+            LOGIN
         </span></button>
         
         <p id="wrong">{message}</p>
           {logged ? <Redirect to="/"/> : null}
       </div>
+      </React.Fragment>
     );
   }
 }
