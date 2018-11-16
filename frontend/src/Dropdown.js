@@ -64,7 +64,6 @@ class Dropdown extends Component {
                 cookie.remove('email')
                 cookie.remove('id')
                 
-                alert('Goodbye!')
                 apiCall('/disconnect',{id})
              } }>Logout</MenuItem>
           </DropdownButton>
