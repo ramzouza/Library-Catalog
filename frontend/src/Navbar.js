@@ -17,7 +17,6 @@ LogOut(){
     cookie.remove('email')
     cookie.remove('id')
     
-    alert('Goodbye!')
     apiCall('/disconnect',{id})
     window.location.reload();
 }
