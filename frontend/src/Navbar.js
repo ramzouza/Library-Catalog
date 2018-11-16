@@ -104,7 +104,23 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
-        <NavItem eventKey="6" onClick={this.LogOut}>
+       
+        <NavItem eventKey="6" >
+            <NavIcon>
+            <Link to="/Transactions" >
+                <Glyphicon glyph='list-alt'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/cart" >
+        Transactions History
+            </Link>
+            </NavText>
+        </NavItem>
+
+
+
+        <NavItem eventKey="7" onClick={this.LogOut}>
             <NavIcon>
             <Link to="/" >
                 <Glyphicon glyph='log-out'/>
