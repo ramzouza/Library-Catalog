@@ -90,13 +90,7 @@ class SearchResult extends Component {
         if (resource.restype == "book"){
             cardJsx = <div>
                     <p><b> Author: </b>{resource.author}</p>
-                    <p><b> Format: </b>{resource.format}</p>
-                    <p><b> Pages: </b>{resource.pages}</p>
-                    <p><b> Publisher: </b>{resource.publisher}</p>
                     <p><b> Language: </b>{resource.language}</p>
-                    <p><b> isbn_10: </b>{resource.isbn_10}</p>
-                    <p><b> isbn_13: </b>{resource.isbn_13}</p>
-                    <p><b> Copies Available: </b>{this.state.available}</p>
             </div>
             Jsx = <div>
                 {editing ? <p> Author: <input placeholder={resource.author}  onChange={evt => {this.setState({author: evt.target.value})}} /></p> : <p><b> Author: </b>{resource.author}</p>}
@@ -112,8 +106,6 @@ class SearchResult extends Component {
             cardJsx = <div>
                 <p><b>Publisher: </b>{resource.publisher}</p>
                 <p><b>Language: </b>{resource.language}</p>
-                <p><b>ISBN 10: </b>{resource.isbn_10}</p>
-                <p><b>ISBN 13: </b>{resource.isbn_13}</p>
             </div>
 
             Jsx= <div>
@@ -125,12 +117,8 @@ class SearchResult extends Component {
             
         } else if (resource.restype == "music"){
             cardJsx = <div>
-                <p><b>Type: </b>{resource.type}</p>
                 <p><b>Artist: </b>{resource.artist}</p>
                 <p><b>Release: </b>{resource.release}</p>
-                <p><b>ASIN: </b>{resource.ASIN}</p>
-                <p><b>Label: </b>{resource.label}</p>
-                <p><b>Copies Available: </b>{this.state.available}</p>
             </div>
 
             Jsx= <div>
@@ -143,15 +131,8 @@ class SearchResult extends Component {
 
         } else if (resource.restype == "movie"){
             cardJsx = <div>
-                <p><b>Director: </b>{resource.director}</p>
-                <p><b>Producers: </b>{resource.producers}</p>
                 <p><b>Actors: </b>{resource.actors}</p>
                 <p><b>Language: </b>{resource.language}</p>
-                <p><b>Subtitles: </b>{resource.subtitles}</p>
-                <p><b>Dubbed: </b>{resource.dubbed}</p>
-                <p><b>Release Date: </b>{resource.release_date}</p>
-                <p><b>Run Time: </b>{resource.run_time}</p>
-                <p><b>Copies Available: </b>{resource.available}</p>
             </div>
 
             Jsx = <div>
