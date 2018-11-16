@@ -18,6 +18,7 @@ class ResourceCatalog {
     }
 
     static addLineItem(resource_id){
+        console.log(resource_id);
         return ResourceMapper.addLineItem(resource_id);
     }
 
@@ -25,7 +26,7 @@ class ResourceCatalog {
         return ResourceMapper.deleteLineItem(resource_line_item_id);
     }
 
-    static Find(id) {
+    static GetResourceById(id) {
       return ResourceMapper.select(id);
     }
 

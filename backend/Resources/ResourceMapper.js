@@ -21,7 +21,7 @@ class ResourceMapper {
     static select(id){
         try {
             resource = IdentifyMap[id];
-            return resource;
+            return {status: 0, message: 'Ok', results: resource};
         } catch (e) {
             try{
                 let resource = {};
@@ -29,14 +29,9 @@ class ResourceMapper {
                 if (resource_data.length > 0){
                     const resource_id = resource_data[0].id;
                     const resource_type = resource_data[0].type;
-                    console.log(resource_type);
-                    console.log(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
                     const query = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
                     const child_data = query[0];
-                    child_data.title = resource_data[0].title;
-
-                    console.log(child_data)
-                    
+                    child_data.title = resource_data[0].title;                    
                     switch(resource_type){
                         case "book":
                             resource = new Book(child_data,resource_id);
@@ -51,11 +46,13 @@ class ResourceMapper {
                         case "music":
                             resource = new Music(child_data,resource_id);
                             break;
-                    }
+                    } 
                     resource.resource_type = resource_type;
                     IdentifyMap[resource_id] = resource;
-                }
-                return {status: 0, message: 'Ok', results: resource};
+                    return {status: 0, message: 'Ok', results: resource};
+                } else {
+                    throw "Invalid Resource Id."
+                }    
             } catch (error){
                 return{ status: 1, message: 'Error: ' + error, error}
             }
@@ -809,8 +806,9 @@ class ResourceMapper {
     // Method add New Line Item for a specific Ressource
     static addLineItem(resource_id){
         try{
-         connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", 'Never')");
-         return {message: 'Resource Added'};
+         let data = connection.query("INSERT INTO resource_line_item (resource_id, date_due) VALUES ("+resource_id+", '')");
+         let data2 = connection.query(`SELECT * FROM resource_line_item WHERE id=${data.insertId}`)
+         return {message: 'Resource Added', lineItem: data2[0]};
         }catch(error){
         return {message: 'Resource '+error};
         }
@@ -837,7 +835,8 @@ class ResourceMapper {
             resource_obj.resource_id = parent_data.insertId; // with the insert id of the resource table, reference the fk of the child data to the pk of the parent
             resource_obj.id = 0;
             connection.query(`INSERT INTO ${type} VALUES (${this.objectToQueryString(resource_obj)})`); // Insert into the child table the child data (book, magazine, music, movie)
-            const resource_line_item = {"id":0, "resource_id": parent_data.insertId, "user_id": null, "date_due": "Never"}; // declare schema for the line item instance (this table represents the number of instances)
+            //const date = new Date(Date.now() + (1000 /*sec*/ * 60 /*min*/ * 60 /*hour*/ * 24 /*day*/ * 10)).toString();
+            const resource_line_item = {"id":0, "resource_id": parent_data.insertId, "user_id": null, "date_due": ''}; // declare schema for the line item instance (this table represents the number of instances)
             connection.query(`INSERT INTO resource_line_item (id, resource_id, user_id, date_due) VALUES(0, ${resource_line_item.resource_id}, NULL, '${resource_line_item.date_due}')`); 
             const resource = this.select(parent_data.insertId).results
             return {status: 0, message: 'Resource Added', results: resource};
