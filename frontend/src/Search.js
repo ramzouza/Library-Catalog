@@ -156,8 +156,10 @@ render() {
         </div>
 
         <div>
-          <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
-          <button  class="btn btn-default btn-search" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+          <p class="search-p">
+            <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
+            <button  class="btn btn-default btn-search" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+          </p>          
         </div>
 
         <div>

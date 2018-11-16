@@ -47,13 +47,13 @@
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
+
 /* Nav Bar */
 
 .navbar-main{
-   
-    
+   font-family: 'Audiowide', cursive;
+   font-size: 2em;    
 }
-
 
 .navbar-logout{
     padding: 15px;
@@ -536,6 +536,8 @@
 
 .card-body{
     font-size: 1.5em;
+    border: 3px solid #037d9e;
+    border-radius: 5px;
 }
 
 .btn{
@@ -543,9 +545,12 @@
     /*margin: 0.5em 0 0.5em 0;*/
 }
 
-.search-main button{
+.search-p{
+    text-align: center;
+}
+
+.search-main button {
     border-radius: 5px;
-    text-align: left;
 }
 
 .search-main h2 {
