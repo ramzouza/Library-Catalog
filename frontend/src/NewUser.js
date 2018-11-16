@@ -64,7 +64,7 @@ class NewUser extends Component {
         
         <input onChange={evt => {this.setState({email: evt.target.value})}} type="text" placeholder="Email" ></input>
         
-        <input onChange={evt => {this.setState({address: evt.target.value})}} type="text" placeholder="Address" ></input>
+        <input onChange={evt => {this.setState({physicalAddress: evt.target.value})}} type="text" placeholder="Address" ></input>
 
         <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} type="text" placeholder="Phone Number" ></input>
         
