@@ -104,14 +104,14 @@ class UnitOfWork {
         return unitofwork.map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
     }
 
-    static SaveUnitOfWork(sender_id){
+    static StoreSessionCart(sender_id){
         users[sender_id] = unitofwork;
         usersIndex[sender_id] = index;
         unitofwork = [];
         index = 0;
     }
 
-    static LoadUnitOfWork(sender_id){
+    static LoadSessionCart(sender_id){
         if(users[sender_id] == undefined){
             unitofwork = [];
             index = 0;

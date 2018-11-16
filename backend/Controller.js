@@ -48,7 +48,7 @@ app.post('/disconnect', (req, res) => {
     const { id } = req.body
     const { status, error } = UserCatalog.SetIsActive(id, 0)
     const ok = status === 0
-    UnitOfWork.SaveUnitOfWork(id); 
+    UnitOfWork.StoreSessionCart(id); 
     res.status(ok ? 200 : 500)
     res.json({ status: ok ? 'logged out' : 'an error occured', error })
     logger(`POST - [/disconnect] - ${200} - ${id} `)
@@ -58,7 +58,7 @@ app.post('/connect', (req, res) => {
     const { id } = req.body
     const { status, error } = UserCatalog.SetIsActive(id, 1)
     const ok = status === 0
-    UnitOfWork.LoadUnitOfWork(id);
+    UnitOfWork.LoadSessionCart(id);
     res.status(ok ? 200 : 500)
     res.json({ status: ok ? 'logged out' : 'an error occured', error })
     logger(`POST - [/connect] - ${200} - ${id} `)
