@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { apiCall } from './ApiCall'
-
 import { Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
+
 
 class NewUser extends Component {
   constructor(){
@@ -53,8 +54,10 @@ class NewUser extends Component {
   }
   render() {
   const admin = cookie.load('admin') === 'yes'
-    return (
+    return (<div>
+      <Navbar/>
       <div class="newuser-main" >
+      
         <h1 id="text">Create User</h1>
         
         <input onChange={evt => {this.setState({firstName: evt.target.value})}} type="text" placeholder="First Name" ></input>
@@ -76,6 +79,7 @@ class NewUser extends Component {
         <button 
            onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
+      </div>
       </div>
     );
   }

@@ -4,11 +4,13 @@ import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
 import { Glyphicon,MenuItem, DropdownButton, ButtonToolbar,Image,Dropdown,SplitButton } from 'react-bootstrap';
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import './SideBar.css';
 
 
 class Navbar extends Component {
 
-Test(){
+LogOut(){
   const id = cookie.load('id')  
     cookie.remove('logged') 
     cookie.remove('admin') 
@@ -29,60 +31,124 @@ Test(){
     return (
       
       
-    <div class='navbar-main' >
-
-    <div class='menu'>
-     { admin?
-   ( <ButtonToolbar>
-    <SplitButton
-    bsStyle="default"
-    title={<Glyphicon glyph='list'/> }
-    pullRight
-    id="split-button-dropup-pull-right"  
-    >
-    <MenuItem eventKey="1"  > <Link to="/" >
-      <Glyphicon glyph='home'/> Home
-            </Link></MenuItem>
-      <MenuItem eventKey="2"  > <Link to="/create/user" >
-      <Glyphicon glyph='user'/> Create user
-            </Link></MenuItem>
-      <MenuItem eventKey="3" ><Link to='/create'>
-          <Glyphicon glyph='pencil'/> Create Resource
-            </Link></MenuItem>
-      <MenuItem eventKey="4" ><Link to='/loggedusers'>
-      <Glyphicon glyph='eye-open'/> View Logged Users
-            </Link></MenuItem>
-      <MenuItem eventKey="5" ><Link to='/cart'>
-      <Glyphicon glyph='shopping-cart'/> View Cart
-            </Link></MenuItem>
-      <MenuItem divider />
-      <MenuItem eventKey="6" onClick={this.Test}><Link to='/login'>
-      <Glyphicon glyph='log-out'/>  Log Off
-            </Link>
-            </MenuItem>
-     
-    </SplitButton>
-  </ButtonToolbar>)
-  :    (
-  <ButtonToolbar>
-   <DropdownButton
-    bsStyle="default"
-    title={<Glyphicon glyph='list'/>}
-    noCaret
-    id="dropdown-no-caret"  
-    >
-    
-    <MenuItem eventKey="1" ><Link to='/'>
-              Home
-          </Link></MenuItem>
-    <MenuItem divider />
-    <MenuItem eventKey="2" onSelect={this.Test}><Link to='/login'>
-    <Glyphicon glyph='log-out'/>  Log Off
-            </Link></MenuItem>
    
-  </DropdownButton>
-</ButtonToolbar>)}
-</div>
+   <div class='navbar-main' >
+   {admin ?(
+    <SideNav 
+    onSelect={(selected) => {
+        
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav defaultSelected="home">
+        <NavItem eventKey="1" >
+            <NavIcon><Link to="/" >
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/" >
+                   Home
+            </Link>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="2" >
+            <NavIcon>
+            <Link to="/create/user" >
+                <Glyphicon glyph='user'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/create/user" >
+        Create user
+            </Link>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="3" >
+            <NavIcon>
+            <Link to="/create" >
+                <Glyphicon glyph='pencil'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/create" >
+        Create Resource
+            </Link>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="4" >
+            <NavIcon>
+            <Link to="/loggedusers" >
+                <Glyphicon glyph='eye-open'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/loggedusers" >
+            View Logged Users
+            </Link>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="5" >
+            <NavIcon>
+            <Link to="/cart" >
+                <Glyphicon glyph='shopping-cart'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/cart" >
+        View Cart
+            </Link>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="6" onClick={this.LogOut}>
+            <NavIcon>
+            <Link to="/" >
+                <Glyphicon glyph='log-out'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/" >
+        Log Out
+            </Link>
+            </NavText>
+        </NavItem>
+       
+    </SideNav.Nav>
+</SideNav>) :
+<SideNav 
+    onSelect={(selected) => {
+        
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav defaultSelected="home">
+        <NavItem eventKey="1" >
+            <NavIcon><Link to="/" >
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/" >
+                   Home
+            </Link>
+            </NavText>
+        </NavItem>
+       
+        <NavItem eventKey="2" onClick={this.LogOut}>
+            <NavIcon>
+            <Link to="/" >
+                <Glyphicon glyph='log-out'/>
+                </Link>
+            </NavIcon>
+            <NavText>
+            <Link to="/" >
+        Log Out
+            </Link>
+            </NavText>
+        </NavItem>
+       
+    </SideNav.Nav>
+</SideNav>}
+
+
 
   {/*
 
