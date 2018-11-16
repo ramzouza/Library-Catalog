@@ -52,6 +52,7 @@ class NewUser extends Component {
   const admin = cookie.load('admin') === 'yes'
     return (<div>
       <Navbar/>
+      <div class="create-padding">
       <div class="newuser-main" >
       
         <h1 id="text">Create User</h1>
@@ -75,6 +76,7 @@ class NewUser extends Component {
         <button 
            onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
+      </div>
       </div>
       </div>
     );

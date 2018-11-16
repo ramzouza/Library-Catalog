@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
+
 
 class CreateMovie extends Component {
   constructor(){
@@ -57,6 +59,12 @@ class CreateMovie extends Component {
   render() {
     const admin = cookie.load('admin') === 'yes'
     return (
+
+      <div>
+
+      <Navbar/>
+      
+      <div class="create-padding">
       <div class="create-main">
 
         
@@ -82,6 +90,8 @@ class CreateMovie extends Component {
            onClick={this.handleClick.bind(this)} type="button"><span>Create Movie</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
+       </div>
+       </div>
     );
   }
 }

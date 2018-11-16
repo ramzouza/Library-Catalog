@@ -46,7 +46,7 @@ LogOut(){
             <NavIcon><Link to="/" >
                 <i className="fa fa-fw fa-search" style={{ fontSize: '1.75em' }} /></Link>
             </NavIcon>
-            <NavText>
+            <NavText style={{ fontSize: '1.2em' }}>
             <Link to="/" >
                    Home
             </Link>
@@ -60,9 +60,9 @@ LogOut(){
                 <Glyphicon glyph='user'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText style={{ fontSize: '1.2em' }} >
             <Link to="/create/user" >
-        Create user
+        Create User
             </Link>
             </NavText>
         </NavItem>
@@ -73,7 +73,7 @@ LogOut(){
                 <Glyphicon glyph='pencil'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText style={{ fontSize: '1.2em' }}>
             <Link to="/create" >
         Create Resource
             </Link>
@@ -86,7 +86,7 @@ LogOut(){
                 <Glyphicon glyph='eye-open'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText style={{ fontSize: '1.2em' }}>
             <Link to="/loggedusers" >
             View Logged Users
             </Link>
@@ -99,7 +99,7 @@ LogOut(){
                 <Glyphicon glyph='shopping-cart'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText style={{ fontSize: '1.2em' }}>
             <Link to="/cart" >
         View Cart
             </Link>
@@ -112,7 +112,7 @@ LogOut(){
                 <Glyphicon glyph='list-alt'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText  style={{ fontSize: '1.2em' }}>
             <Link to="/Transactions" >
         Transactions History
             </Link>
@@ -127,7 +127,7 @@ LogOut(){
                 <Glyphicon glyph='log-out'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText  style={{ fontSize: '1.2em' }}>
             <Link to="/" >
         Log Out
             </Link>
@@ -147,7 +147,7 @@ LogOut(){
             <NavIcon><Link to="/" >
                 <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
             </NavIcon>
-            <NavText>
+            <NavText  style={{ fontSize: '1.2em' }}>
             <Link to="/" >
                    Home
             </Link>
@@ -160,7 +160,7 @@ LogOut(){
                 <Glyphicon glyph='log-out'/>
                 </Link>
             </NavIcon>
-            <NavText>
+            <NavText  style={{ fontSize: '1.2em' }}>
             <Link to="/" >
         Log Out
             </Link>

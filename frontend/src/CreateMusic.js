@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
+
 
 class CreateMusic extends Component {
   constructor(){
@@ -51,6 +53,11 @@ class CreateMusic extends Component {
   render() {
   const admin = cookie.load('admin') === 'yes'
     return (
+
+      <div>
+
+      <Navbar/>
+      <div class="create-padding">
       <div class="create-main">
 
 
@@ -69,6 +76,8 @@ class CreateMusic extends Component {
         <button
            onClick={this.handleClick.bind(this)} type="button"><span>Create Music</span></button>
         {!admin ? <Redirect to="/"/> : null}
+        </div>
+      </div>
       </div>
     );
   }

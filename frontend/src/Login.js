@@ -48,7 +48,7 @@ class Login extends Component {
                 
         <h2>THE LOAN ZONE</h2>
 
-        <img src={require('./TheZone.png')}/>
+        <img class="App-logo" src={require('./TheZone.png')}/>
         
         <input id="email" onChange={evt => {this.setState({email: evt.target.value})}}  type="text"  placeholder="Email" onKeyPress={ ({key}) => key==='Enter'?this.loginEvent():null} />
         

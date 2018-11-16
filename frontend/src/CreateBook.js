@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
 
 class CreateBook extends Component {
   constructor(){
@@ -54,8 +55,12 @@ class CreateBook extends Component {
   render() {
     const admin = cookie.load('admin') === 'yes'
     return (
-      <div class="create-main" >
+      <div>
+
+      <Navbar/>
         
+      <div class="create-padding">
+      <div class="create-main" >
         <input onChange={evt => {this.setState({title: evt.target.value})}}  type="text" placeholder="Title" ></input>
 
         <input onChange={evt => {this.setState({author: evt.target.value})}}  type="text" placeholder="Author" ></input>
@@ -75,6 +80,8 @@ class CreateBook extends Component {
         <button
            onClick={this.handleClick.bind(this)} type="button"><span>Create Book</span></button>
         {!admin ? <Redirect to="/"/> : null}
+      </div>
+      </div>
       </div>
     );
   }

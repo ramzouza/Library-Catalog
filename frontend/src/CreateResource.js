@@ -21,17 +21,18 @@ class CreateResource extends Component {
       <Navbar/>
       </div>
       
-      
+      <div class="create-padding">
       <div class="create-resource" >
    
         Create a resource
-        <button  onClick={() => this.handleClick('/create/book')} type="button">Book<i class="fas fa-book"></i></button>
-        <button  onClick={() => this.handleClick('/create/magazine')} type="button">Magazine<i class="fas fa-book-reader"></i></button>
+        <button  onClick={() => this.handleClick('/create/book')} type="button">Book <i class="fas fa-book"></i></button>
+        <button  onClick={() => this.handleClick('/create/magazine')} type="button">Magazine <i class="fas fa-book-reader"></i></button>
         <button  onClick={() => this.handleClick('/create/movie')} type="button">Movie <i class="fas fa-film"></i></button>
         <button  onClick={() => this.handleClick('/create/music')} type="button">Music <i class="fas fa-music"></i></button>
         
         {!admin ? <Redirect to="/"/> : null}
 
+      </div>
       </div>
       </div>
       
