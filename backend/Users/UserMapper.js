@@ -20,7 +20,8 @@ class UserMapper{
 
     static RetrieveUserByEmail(email){
         try {
-            const data = connection.query(`SELECT * FROM users where email='${email}'`)
+            const data = connection.query(
+                `SELECT * FROM users WHERE email='${email}'`)
             return { status: 0, results: data }
         } catch (error) {
             return { status: 1, error }
@@ -36,6 +37,7 @@ class UserMapper{
                 throw "User not found."
             }
         } catch (error) {
+            console.log("error =>",error)
             return { status: 1, message : error, error }
         }
     }
