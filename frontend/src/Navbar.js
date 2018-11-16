@@ -26,7 +26,7 @@ LogOut(){
   render() {
     const logged = cookie.load('logged') === 'yes'
     const admin = cookie.load('admin') === 'yes'
-    
+
     return (
       
       
@@ -54,7 +54,6 @@ LogOut(){
             
         </NavItem>
         
-    
         <NavItem eventKey="2" >
             <NavIcon>
             <Link to="/create/user" >
@@ -67,6 +66,7 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
+
         <NavItem eventKey="3" >
             <NavIcon>
             <Link to="/create" >
@@ -79,6 +79,7 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
+
         <NavItem eventKey="4" >
             <NavIcon>
             <Link to="/loggedusers" >
@@ -92,21 +93,7 @@ LogOut(){
             </NavText>
         </NavItem>
 
-    <NavItem eventKey="5" >
-            <NavIcon>
-            <Link to="/transactions" >
-                <Glyphicon glyph='folder-open'/>
-                </Link>
-            </NavIcon>
-            <NavText>
-            <Link to="/transactions" >
-            View Logged Users
-            </Link>
-            </NavText>
-        </NavItem>
-
-
-        <NavItem eventKey="6" >
+        <NavItem eventKey="5" >
             <NavIcon>
             <Link to="/cart" >
                 <Glyphicon glyph='shopping-cart'/>
@@ -126,7 +113,7 @@ LogOut(){
                 </Link>
             </NavIcon>
             <NavText>
-            <Link to="/cart" >
+            <Link to="/Transactions" >
         Transactions History
             </Link>
             </NavText>
