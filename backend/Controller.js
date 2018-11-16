@@ -464,11 +464,16 @@ app.post('/transactions', (req, res) =>{
         res.json({ status: 1, message: "Not Authorized", results:[] })
         logger(`GET -  [/transactions] - ${400} - ${sender_id} `)
     } else {
-        const transactions = TransactionLogger.getLogs(); // get the transaction logs
-        console.log(transactions)
+        let transactions = TransactionLogger.getLogs(); // get the transaction logs
+        transactions = transactions.map( x => {
+            return {
+                ...x,
+                userData: UserCatalog.GetUserById(x.user_id)
+            }
+        })
         res.status(200)
         res.json({ status: 0, results: transactions })
-        logger(`GET - [/transactions] - ${200} - ${message}`)
+        logger(`GET - [/transactions] - ${200} - Ok`)
     }
 
 })

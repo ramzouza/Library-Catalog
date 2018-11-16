@@ -43,6 +43,7 @@ class Transactions extends Component {
                   <thead>
                     <tr>
                       <th>Transaction Id</th>
+                      <th>User Email</th>
                       <th>User Id</th>
                       <th>Resource Id</th>
                       <th>Loan or Return</th>

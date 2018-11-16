@@ -27,6 +27,7 @@ class Transaction extends Component {
         return (
             <tr>
                 <td>{transaction.id}</td>
+                <td>{transaction.userData.results.email}</td>
                 <td>{transaction.user_id}</td>
                 <td>{transaction.resource_id}</td>
                 <td>{transaction.transaction_type}</td>
