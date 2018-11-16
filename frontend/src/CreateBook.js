@@ -57,7 +57,6 @@ class CreateBook extends Component {
     const admin = cookie.load('admin') === 'yes'
     return (
       <div class="create-main" >
-        <span style={{fontWeight: 'bold'}} >New Book</span>
         
         <input onChange={evt => {this.setState({title: evt.target.value})}}  type="text" placeholder="Title" ></input>
 
@@ -76,7 +75,7 @@ class CreateBook extends Component {
         <input onChange={evt => {this.setState({ISBN_13: evt.target.value})}}  type="text" placeholder="ISBN 13" ></input>
                 
         <button
-           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
+           onClick={this.handleClick.bind(this)} type="button"><span>Create Book</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );

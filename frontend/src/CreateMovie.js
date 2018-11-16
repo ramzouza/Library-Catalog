@@ -59,7 +59,7 @@ class CreateMovie extends Component {
     const admin = cookie.load('admin') === 'yes'
     return (
       <div class="create-main">
-        <span style={{fontWeight: 'bold'}} >New Movie</span>
+
         
         <input onChange={evt => {this.setState({title: evt.target.value})}}  type="text" placeholder="Title" ></input>
 
@@ -74,13 +74,13 @@ class CreateMovie extends Component {
         <input onChange={evt => {this.setState({subtitles: evt.target.value})}}  type="text" placeholder="Subtitles" ></input>
 
         <input onChange={evt => {this.setState({dubbed: evt.target.value})}}  type="text" placeholder="Dubbed" ></input>
-        <span style={{fontSize: 25}}>Release Date </span>
+      
         <input onChange={evt => {this.setState({release_date: evt.target.value})}}  type="text" placeholder="DD/MM/YYYY" ></input>
                 
         <input onChange={evt => {this.setState({run_time: evt.target.value})}}  type="text" placeholder="Run Time" ></input>
                 
         <button
-           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
+           onClick={this.handleClick.bind(this)} type="button"><span>Create Movie</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );

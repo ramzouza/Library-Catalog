@@ -24,7 +24,7 @@ class CreateResource extends Component {
       <Navbar/>
       </div>
       
-      <div class='resourcepadding'>
+      
       <div class="create-resource" >
    
         Create resource
@@ -37,7 +37,7 @@ class CreateResource extends Component {
 
       </div>
       </div>
-      </div>
+      
     );
   }
 }

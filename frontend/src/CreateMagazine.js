@@ -48,7 +48,7 @@ class CreateMagazine extends Component {
     const admin = cookie.load('admin') === 'yes'
     return (
       <div class="create-main">
-        <span style={{fontWeight: 'bold'}} >New Magazine</span>
+        
 
         <input onChange={evt => {this.setState({title: evt.target.value})}}  type="text" placeholder="Title" ></input>
         
@@ -62,7 +62,7 @@ class CreateMagazine extends Component {
         
         
         <button
-           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
+           onClick={this.handleClick.bind(this)} type="button"><span>Create Magazine</span></button>
         {!admin ? <Redirect to="/"/> : null}
       </div>
     );

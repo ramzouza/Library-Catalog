@@ -455,6 +455,7 @@
 }
 
 .create-resource button {
+    width: 8em;
     border-radius: 4px;
     background-color: #037d9e;
     border: 2px solid #037d9e;
@@ -495,10 +496,7 @@
     right: -10px;
 }
 
-.resourcepadding{
 
-    padding:12em;
-}
 
 
 
@@ -518,13 +516,16 @@
     font-size: 30px;
     padding: 30px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 30px;
-    margin-top: 5%;
+    margin-top: 2%;
+    background-image: url("./bg.jpg");
   
 }
 
+
+
 .create-main input {
     width: 100%;
-    height: 42px;
+    height: 2em;
     box-sizing: border-box;
     border-radius: 5px;
     /*border: 2px solid #037d9e;*/
@@ -534,6 +535,7 @@
     text-align: left;
     padding: 0 20px 0 10px;
     outline: none;
+
 }
 
 .create-main button{
