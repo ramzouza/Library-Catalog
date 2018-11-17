@@ -2,5 +2,5 @@ ResourceMapper = require('./Resources/ResourceMapper')
 
 let yanis=[137,63,138];
 
-let grissel =ResourceMapper.loan(34243,yanis);
+let grissel =ResourceMapper.returnItem(63);
 console.log(grissel);

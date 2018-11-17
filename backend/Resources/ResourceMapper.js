@@ -729,7 +729,7 @@ class ResourceMapper {
     }
 
     static returnItem(itemId){
-        const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = '"+itemId);
+        const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
         if(alreadyloan['changedRows']==0)
             return { status: 1}
         return { status: 0}
