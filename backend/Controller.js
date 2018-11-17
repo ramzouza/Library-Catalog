@@ -191,13 +191,13 @@ app.post('/resources', (req, res) => {
 // GET ALL RESOURCES
 app.get('/resources', (req, res) => {
     // check if the sender is authenticated
-    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`GET -  [/resources] - ${400} - ${sender_id} `)
-    }
+    // const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`GET -  [/resources] - ${400} - ${sender_id} `)
+    // }
     // get resources here
     const resource_list = ResourceCatalog.GetAllResources();
     res.status(200);
