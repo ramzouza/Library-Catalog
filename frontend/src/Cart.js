@@ -12,13 +12,10 @@ class Cart extends Component {
       logs: []
     }
   }
-
   componentDidMount(){
-    const isAdmin = cookie.load('admin') === 'yes' ?  true : false
-    const id = cookie.load('id')
-
+  const isAdmin = cookie.load('admin') === 'yes' ?  true : false
   if(isAdmin){  
-    apiCall('/cart', {isAdmin}, {id})
+    apiCall('/cart')
       .then(res => res.json())
       .then( json => {
         console.log('res', json)
@@ -26,7 +23,7 @@ class Cart extends Component {
     })
   }  
   else{
-    apiCall('/UserCart', {isAdmin}, {id})
+    apiCall('/UserCart', {isAdmin})
       .then(res => res.json())
       .then( json => {
         console.log('res', json)
@@ -37,9 +34,8 @@ class Cart extends Component {
 
       // Call Controller when user clicks on save button
       handleClickSave() {
-        const isAdmin = cookie.load('admin') === 'yes' ?  true : false
-        const id = cookie.load('id')
-        POST('/saveCart', {is_Admin:isAdmin,id:id})
+      
+        POST('/saveCart')
           .then(res => res.json())
           .then( json => {
             console.log(json.results)

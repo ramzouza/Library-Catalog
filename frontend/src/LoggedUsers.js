@@ -19,9 +19,8 @@ class LoggedUsers extends Component {
 
   refresh(){
     const isAdmin = cookie.load('admin') === 'yes' ?  true : false
-    const id = cookie.load('id')
 
-    apiCall('/loggedusers', {isAdmin}, {id})
+    apiCall('/loggedusers', {isAdmin})
       .then(res => res.json())
       .then( json => {
         console.log('res', json)
