@@ -41,4 +41,4 @@ function invariant(){
     }
 }
 
-module.exports = ensure;
+module.exports = inv;

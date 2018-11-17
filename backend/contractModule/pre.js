@@ -1,5 +1,5 @@
 
-function ensure(){
+function pre(){
     /*
         pre is a function that accepts unlimitted arguments.
         The arguments must be objects of type {"title": str, "expression": bool }
@@ -40,4 +40,4 @@ function ensure(){
     }
 }
 
-module.exports = ensure;
+module.exports = pre;

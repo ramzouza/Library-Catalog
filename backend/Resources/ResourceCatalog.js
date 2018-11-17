@@ -21,14 +21,6 @@ class ResourceCatalog {
         return ResourceMapper.addLineItem(resource_id);
     }
 
-    static loanItem(userId,item){
-        return ResourceMapper.loanItem(userId,item);
-    }
-
-    static returnItem(itemId){
-        return ResourceMapper.returnItem(itemId);
-    }
-
     static deleteLineItem(resource_line_item_id){
         return ResourceMapper.deleteLineItem(resource_line_item_id);
     }

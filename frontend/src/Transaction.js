@@ -33,6 +33,15 @@ class Transaction extends Component {
                 <td>{transaction.transaction_type}</td>
                 <td>{transaction.timestamp}</td>
             </tr> 
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr> 
         );
 
     }
