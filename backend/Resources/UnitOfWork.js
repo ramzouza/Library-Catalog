@@ -45,7 +45,7 @@ class UnitOfWork {
             errMsg='';
             if(unitofwork[i].operation == 'insert'){
                 var res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
-                
+
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;
@@ -57,9 +57,9 @@ class UnitOfWork {
             }
 
             if(unitofwork[i].operation == 'update'){
-                
+
                 var res = ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
-                
+
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;
@@ -137,7 +137,7 @@ class UnitOfWork {
         } else{
             unitofwork = users[sender_id];
             index = usersIndex[sender_id];
-            users[sender_id] = []; 
+            users[sender_id] = [];
             usersIndex[sender_id] = 0;
         }
     }

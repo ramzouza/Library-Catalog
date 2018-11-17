@@ -417,7 +417,7 @@ app.post('/resource', (req, res) => {
     }
     // get resources here
     const { resource_data, isFilter } = req.body;
-    const advancedInfo = ResourceCatalog.Find(resource_data, isFilter);
+    const advancedInfo = ResourceCatalog.SearchResource(resource_data, isFilter);
     console.log(advancedInfo);
     res.json({ "results": advancedInfo });
     logger(`GET - [/resources] - ${200} - ${sender_id} `);

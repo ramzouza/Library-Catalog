@@ -14,7 +14,7 @@ class ResourceCatalog {
     static MakeNewResource(resourceData, type){
         //return ResourceMapper.insert(resourceData, type);
         return UnitOfWork.InsertResource(resourceData, type)
-        
+
     }
 
     static addLineItem(resource_id){
@@ -29,7 +29,7 @@ class ResourceCatalog {
       return ResourceMapper.select(id);
     }
 
-    static Find(search,isadvancedSearch){
+    static SearchResource(search,isadvancedSearch){
         return ResourceMapper.advSelect(search,isadvancedSearch);
     }
 
@@ -60,7 +60,7 @@ class ResourceCatalog {
     }
 
     static DeleteResource(id){
-        //return ResourceMapper.delete(id); 
+        //return ResourceMapper.delete(id);
         return  UnitOfWork.DeleteResource(id);
     }
 
