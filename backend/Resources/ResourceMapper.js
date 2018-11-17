@@ -703,7 +703,7 @@ class ResourceMapper {
         }
     }
 
-    static loan(userId,item){
+    static loanItem(userId,item){
         const alreadyloan = connection.query("SELECT COUNT(*) as count FROM resource_line_item where user_id ='"+userId+"'");
         
         if(item.length > (10-alreadyloan[0]['count'])){
@@ -726,6 +726,13 @@ class ResourceMapper {
             }
             return { status: 0, message: 'loan', info:alreadyLoanItem}
         }
+    }
+
+    static returnItem(itemId){
+        const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = '"+itemId);
+        if(alreadyloan['changedRows']==0)
+            return { status: 1}
+        return { status: 0}
     }
 
     static selectAll(){

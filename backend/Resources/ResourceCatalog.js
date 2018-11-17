@@ -18,8 +18,15 @@ class ResourceCatalog {
     }
 
     static addLineItem(resource_id){
-        console.log(resource_id);
         return ResourceMapper.addLineItem(resource_id);
+    }
+
+    static loanItem(userId,item){
+        return ResourceMapper.loanItem(userId,item);
+    }
+
+    static returnItem(itemId){
+        return ResourceMapper.returnItem(itemId);
     }
 
     static deleteLineItem(resource_line_item_id){

@@ -349,6 +349,39 @@ app.post('/addLineItem', (req, res) => {
     logger(`POST - [/addLineItem] - ${200} - ${sender_id} `)
 })
 
+app.post('/loanItem', (req, res) => {
+
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = false);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`POST -  [/loanItem] - ${400} - ${sender_id} `)
+    }
+    // get item  here
+    const { userId,item } = req.body;
+    const { status, message, info } = ResourceCatalog.loanItem(userId,item);
+    console.log(info)
+    res.json({ "status": status, "message": message ,"info":info});
+    logger(`POST - [/loanItem] - ${200} - ${sender_id} `)
+})
+
+app.post('/returnItem', (req, res) => {
+
+    const sender_id = req.header.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    if (!auth.isAuthorized) {
+        res.status(400)
+        res.json({ status: 1, message: "Not Authorized" })
+        logger(`POST -  [/returnItem] - ${400} - ${sender_id} `)
+    }
+    // get resources here
+    const { itemId } = req.body;
+    const { status } = ResourceCatalog.returnItem(itemId);
+    res.json({ "status": status });
+    logger(`POST - [/returnItem] - ${200} - ${sender_id} `)
+})
+
 app.post('/deleteLineItem', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
