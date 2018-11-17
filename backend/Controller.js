@@ -369,7 +369,7 @@ app.post('/returnItem', (req, res) => {
     }
     // get resources here
     const { itemId } = req.body;
-    const { status } = ResourceCatalog.returnItem(itemId);
+    const { status } = LoanService.returnItem(auth.isAuthorized,itemId);
     res.json({ "status": status });
     logger(`POST - [/returnItem] - ${200} - ${sender_id} `)
 })

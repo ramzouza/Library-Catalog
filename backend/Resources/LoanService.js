@@ -2,7 +2,6 @@ const pre = require('../contractModule/pre.js');
 const ensure = require('../contractModule/ensure.js');
 const inv = require('../contractModule/inv.js');
 const TransactionLogger = require('./TransactionLogger.js');
-const MySql = require('sync-mysql')
 const connection = new MySql({
     host: '18.221.83.136',
     user: 'root',
@@ -78,12 +77,31 @@ class LoanService {
         }
     }
 
-    static returnItem(itemId){
-        const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
-        if(alreadyloan['changedRows']==0)
-            return { status: 1}
+    static returnItem(isAdmin,itemId){
+        try{
+            const isloaned = connection.query("select user_id from resource_line_item  WHERE id = "+itemId);
+            
+        pre({
+            "title": "User must be an admin",
+            "expression": isAdmin // user must be a client
+        },
+        {
+            "title": "The resource must be loaned",
+            "expression": isloaned[0]['user_id'] != null // resource must be available meaning user id is Null
+        })
+        let update = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
+
+        ensure(
+            {
+                "title": "The resource is available and no longer loaned",
+                "expression": update['changedRows'] == 1 // user must be a client
+            }
+        )
         return { status: 0}
+    }catch(e){
+        return { status: 1}
     }
+}
 
 }
 
