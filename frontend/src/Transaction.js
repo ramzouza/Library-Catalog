@@ -25,6 +25,7 @@ class Transaction extends Component {
     render() {
         const { transaction } = this.props
         return (
+            <React.Fragment>
             <tr>
                 <td>{transaction.id}</td>
                 <td>{transaction.userData.results.email}</td>
@@ -42,6 +43,7 @@ class Transaction extends Component {
                 <td></td>
                 <td></td>
             </tr> 
+            </React.Fragment>
         );
 
     }
