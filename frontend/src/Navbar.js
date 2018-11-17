@@ -153,8 +153,21 @@ LogOut(){
             </Link>
             </NavText>
         </NavItem>
+
+        <NavItem eventKey="2" >
+            <NavIcon>
+            <Link to="/cart" >
+                <Glyphicon glyph='shopping-cart'/>
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/cart" >
+        View Cart
+            </Link>
+            </NavText>
+        </NavItem>
        
-        <NavItem eventKey="2" onClick={this.LogOut}>
+        <NavItem eventKey="3" onClick={this.LogOut}>
             <NavIcon>
             <Link to="/" >
                 <Glyphicon glyph='log-out'/>

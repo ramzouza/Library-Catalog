@@ -10,7 +10,7 @@ var usersIndex =[];
 
 class UnitOfWork {
     static InsertResource(resourceData, type){
-       unitofwork[index] = {resourceData,type, operation: 'insert',resource:resourceData}
+       unitofwork[index] = {resourceData,type, operation: 'insert', resource: resourceData}
        index++;
        return {status: 0, message: 'Insert Resource sent to cart', results: resourceData};
     }
@@ -27,6 +27,12 @@ class UnitOfWork {
         unitofwork[index] = {id, operation: 'delete', resource: IdentifyMap[id]}
         index++;
         return {status: 0, message: 'Delete Resource sent to cart', results: id};
+    }
+
+    static LoanResource(resourceData, id){ // also a sender_id
+        unitofwork[index] = {id, operation: 'loan', resource: resourceData} // must be changed
+        index++;
+        return {status: 0, message: 'Loan Resource sent to cart', results: id};
     }
 
     static save(){
@@ -66,6 +72,19 @@ class UnitOfWork {
 
             if(unitofwork[i].operation == 'delete'){
                 var res = ResourceMapper.delete(unitofwork[i].id);
+
+                if(res.status == 1){
+                    statusOfWork = true;
+                    errMsg = res.error;
+                }
+                else if(res.status == 0) {
+                    statusOfWork = false;
+                    unitOfStatus[i] = {status : 0, message : 'looks good brotha'};
+                }
+            }
+
+            if(unitofwork[i].operation == 'loan'){
+                var res = LoanService.loanItem(unitofwork[i].id);
 
                 if(res.status == 1){
                     statusOfWork = true;

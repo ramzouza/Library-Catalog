@@ -17,12 +17,22 @@ class Cart extends Component {
     const isAdmin = cookie.load('admin') === 'yes' ?  true : false
     const id = cookie.load('id')
 
+  if(isAdmin){  
     apiCall('/cart', {isAdmin}, {id})
       .then(res => res.json())
       .then( json => {
         console.log('res', json)
         this.setState({logs: json.results})
     })
+  }  
+  else{
+    apiCall('/UserCart', {isAdmin}, {id})
+      .then(res => res.json())
+      .then( json => {
+        console.log('res', json)
+        this.setState({logs: json.results})
+    })
+  }
   }
 
       // Call Controller when user clicks on save button

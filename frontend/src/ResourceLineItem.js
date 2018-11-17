@@ -37,7 +37,7 @@ class ResourceLineItem extends Component {
             <td>{line_item.user_id ? line_item.user_id : "Available"}</td>
             <td>{line_item.date_due}</td>
             <td>
-                <button type="button" onClick={ _ => this.handleDeleteResourceLineItem()} class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                {admin? <button type="button" onClick={ _ => this.handleDeleteResourceLineItem()} class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button> : <div></div>}
             </td>
         </tr> 
         }

@@ -64,6 +64,10 @@ class ResourceCatalog {
         return  UnitOfWork.DeleteResource(id);
     }
 
+    static LoanResource(resource_id, resourceData, type, sender_id) { // must be changed
+        return UnitOfWork.LoanResource( resourceData, resource_id); // must be changed with correct parameters
+    }
+
 }
 
 module.exports = ResourceCatalog
