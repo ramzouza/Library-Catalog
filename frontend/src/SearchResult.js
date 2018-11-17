@@ -163,7 +163,7 @@ class SearchResult extends Component {
                 {icon}
                 <h1>{resource.title}</h1>
                 {cardJsx}
-                <button type="button" class="btn btn-default btn-search" data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
+                <button type="button" class="btn btn-default btn-search" onClick={ _ => this.props.handler(resource.id)}  data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
             </div>
         </div>
 

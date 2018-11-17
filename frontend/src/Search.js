@@ -31,6 +31,9 @@ class Search extends Component {
       ISBNSearch: "",
       loading: false,
     }
+
+    this.handleDetails = this.handleDetails.bind(this)
+
   }
 
 
@@ -138,8 +141,10 @@ _handleKeyPress(e) {
     if (e.key === 'Enter') {
       this.setState({"loading":true})
       this.handleClick()
-    }
-  }
+    } 
+}
+
+
 
 shuffle(a) {
     var j, x, i;
@@ -165,9 +170,12 @@ random(){
       )
 }
 
+handleDetails(res_id){
+  console.log(res_id)
+}
+
 render() {
     const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
-
     
     return (
       <div class="search-main">
@@ -181,9 +189,9 @@ render() {
 
         <div>
           <p class="search-p">
-            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
-            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
-            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.random()}  >Random</button>
+            <button class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
+            <button class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+            <button class="btn btn-default btn-search animated fadeIn" onClick={() => this.random()}  >Random</button>
           </p>          
         </div>
 
@@ -305,7 +313,7 @@ render() {
         </div>
 
 
-        {TotalArray.map( resource => <SearchResult id={resource.resource_id} type={resource.restype} resource={resource} />)}
+        {TotalArray.map( resource => <SearchResult id={resource.resource_id} handler={this.handleDetails} type={resource.restype} resource={resource} />)}
         
          <div style ={loader}>     
         {loading ? <Loading type='tail_spin' width={100} height={100} fill='#037d9e'   /> : null}  
