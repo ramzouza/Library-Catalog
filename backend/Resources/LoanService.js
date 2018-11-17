@@ -1,6 +1,7 @@
 const pre = require('../contractModule/pre.js');
 const ensure = require('../contractModule/ensure.js');
 const inv = require('../contractModule/inv.js');
+const MySql = require('sync-mysql')
 const TransactionLogger = require('./TransactionLogger.js');
 
 const connection = new MySql({
@@ -75,4 +76,4 @@ class LoanService {
 
 }
 
-module.exports = ResourceMapper;
+module.exports = LoanService;
