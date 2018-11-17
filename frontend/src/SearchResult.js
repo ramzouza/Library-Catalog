@@ -183,23 +183,23 @@ class SearchResult extends Component {
     </div>
     <div class="modal-body">
         {Jsx}
-
+{admin?
         <table class="table">
         <tr>
             <th>id</th>
             <th>type</th>
             <th>User Id</th>
             <th>Date Due</th>
-            {admin? <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th> : <th></th>}
+            <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
         </tr>
         {this.state.line_items.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
         </table>
-
+: <table></table>}
     </div>
     <div class="modal-footer">
         {admin? <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button> : <div></div>}
         <button type="button" class="btn btn-primary">Loan</button>
-        <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button>
+        {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
     </div>
     </div>
 </div>
