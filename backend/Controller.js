@@ -352,8 +352,8 @@ app.post('/loanItem', (req, res) => {
 
     const { userId,item } = req.body;// will userId suceed if no data sent.
     const auth = AuthService.AuthorizeUser(userId, requiresAdmin = false);
+
     const { status, message, info } = LoanService.loanItem(userId,item,auth.isAuthorized);
-    
     res.json({ "status": status, "message": message ,"info":info});
     logger(`POST - [/loanItem] - ${200} - ${userId} `)
 });
