@@ -1,5 +1,6 @@
-const TransactionLogger = require('./Resources/TransactionLogger.js');
+ResourceMapper = require('./Resources/ResourceMapper')
 
-let x = TransactionLogger.getLogs(34246,173,"loan");
+let yanis=[64,136,137,138];
 
-console.log(x);
+let grissel =ResourceMapper.loan(34243,yanis);
+console.log(grissel);

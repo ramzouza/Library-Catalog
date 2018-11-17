@@ -703,6 +703,22 @@ class ResourceMapper {
         }
     }
 
+    static loan(userId,item){
+        const alreadyloan = connection.query("SELECT COUNT(*) as count FROM resource_line_item where user_id ='"+userId+"'");
+        
+        if(item.length > (10-alreadyloan[0]['count'])){
+        return { status: 1, message: 'extra', info:alreadyloan[0]['count']}
+        }
+        else{
+            let alreadyLoanItem = [];
+
+            for(let x=0;x<item.length;x++){
+                const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"' WHERE id = '"+item[x]+"' and user_id is NULL");
+                alreadyLoanItem.push({loan:alreadyloan['changedRows'],itemid:item[x]})
+            }
+            return { status: 0, message: 'loan', info:alreadyLoanItem}
+        }
+    }
 
     static selectAll(){
         try{
