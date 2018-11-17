@@ -2,6 +2,7 @@ const pre = require('../contractModule/pre.js');
 const ensure = require('../contractModule/ensure.js');
 const inv = require('../contractModule/inv.js');
 const TransactionLogger = require('./TransactionLogger.js');
+const MySql = require('sync-mysql')
 const connection = new MySql({
     host: '18.221.83.136',
     user: 'root',
