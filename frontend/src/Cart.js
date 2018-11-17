@@ -56,7 +56,10 @@ class Cart extends Component {
       <Navbar/>
       <div class= "logged-body">
           <h1>Cart</h1>
-          <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>
+          {cookie.load('admin') === 'yes'?
+            <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>:
+            <button class="btn-cart btn btn-success action-bar-btn" type="button"><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
+          }
           <h4>The following data will be modified:</h4>
           {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
       </div>

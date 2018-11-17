@@ -198,7 +198,10 @@ class SearchResult extends Component {
     </div>
     <div class="modal-footer">
         {admin? <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button> : <div></div>}
-        <button type="button" class="btn btn-primary">Loan</button>
+        {admin?
+            <div> </div>:
+            <button type="button" onClick={ this.handleSave.bind(this) } class="btn btn-primary" data-dismiss="modal">Add to Cart</button>
+        }
         {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
     </div>
     </div>
