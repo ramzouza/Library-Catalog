@@ -172,7 +172,7 @@ app.post('/resources', (req, res) => {
     const { resource_data, type } = req.body;
 
     // make new resource
-    const { status, message, results, error } = ResourceCatalog.MakeNewResource(resource_data, type);
+    const { status, message, results, error } = ResourceCatalog.MakeNewResource(resource_data, type, sender_id);
 
     if (status == 1) {
         res.status(400)
@@ -286,7 +286,7 @@ app.put('/resources', (req, res) => {
     const { resource_id, resource_data, type } = req.body
     console.log('putting', { resource_id, resource_data, type })
     // Edit the Resource
-    const { status, message, results, error } = ResourceCatalog.EditResource(resource_id, resource_data, type);
+    const { status, message, results, error } = ResourceCatalog.EditResource(resource_id, resource_data, type, sender_id);
 
     if (status == 1) {
         res.status(400);
@@ -315,7 +315,7 @@ app.delete('/resources', (req, res) => {
 
 
         // Edit the Resource
-        const { status, message, results, error } = ResourceCatalog.DeleteResource(resource_id);
+        const { status, message, results, error } = ResourceCatalog.DeleteResource(resource_id, sender_id);
 
         if (status == 1) {
             res.status(400);
@@ -438,7 +438,7 @@ app.post('/cart', (req, res) => {
         const message = `Ok`
         res.status(200)
         res.json({ status: 0, results: cart, message })
-        logger(`POST - [/cart] - ${200} - ${message}`)
+        logger(`POST - [/cart] - ${200} - ${sender_id}`)
     }
 
 })
@@ -448,7 +448,7 @@ app.post('/UserCart', (req, res) => {
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
     const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
     if (!auth.isAuthorized) {
-        const cart = UnitOfWork.ViewUnitOfWork();
+        const cart = UnitOfWork.ViewUnitOfWork(sender_id);
         console.log({ cart })
         const message = `Ok`
         res.status(200)
