@@ -11,10 +11,10 @@ class ResourceCatalog {
     // with all possible resources.
     // title
 
-    static MakeNewResource(resourceData, type){
+    static MakeNewResource(resourceData, type, sender_id){
         //return ResourceMapper.insert(resourceData, type);
-        return UnitOfWork.InsertResource(resourceData, type)
-
+        return UnitOfWork.InsertResource(resourceData, type, sender_id);
+        
     }
 
     static addLineItem(resource_id){
@@ -53,15 +53,13 @@ class ResourceCatalog {
         return ResourceMapper.getAllArtists();
     }
 
-    static EditResource(resource_id, resourceData, type){
+    static EditResource(resource_id, resourceData, type, sender_id){
         resourceData.id = resource_id;
-       // return ResourceMapper.update(resourceData, type);
-       return UnitOfWork.EditResource(resourceData, type);
+       return UnitOfWork.EditResource(resourceData, type, sender_id);
     }
 
-    static DeleteResource(id){
-        //return ResourceMapper.delete(id);
-        return  UnitOfWork.DeleteResource(id);
+    static DeleteResource(id, sender_id){
+        return  UnitOfWork.DeleteResource(id, sender_id);
     }
 
     static LoanResource(resource_id, resourceData, type, sender_id) { // must be changed

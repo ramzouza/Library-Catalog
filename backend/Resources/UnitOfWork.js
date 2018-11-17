@@ -1,51 +1,54 @@
 const IdentifyMap = require("../IdentityMap.js");
 const ResourceMapper = require('./ResourceMapper');
 
-var unitofwork = [];
-var index = 0;
-
-//Used to store user session cart
-var users = [];
-var usersIndex =[];
+var unitofwork = {};
+var index = {};
 
 class UnitOfWork {
-    static InsertResource(resourceData, type){
-       unitofwork[index] = {resourceData,type, operation: 'insert', resource: resourceData}
-       index++;
+    
+    static InsertResource(resourceData, type, sender_id){
+        console.log('Insert: ' + sender_id);
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
+        unitofwork[sender_id][index[sender_id]]  = {resourceData,type, operation: 'insert',resource:resourceData}
+       index[sender_id]++;
        return {status: 0, message: 'Insert Resource sent to cart', results: resourceData};
     }
 
-    static EditResource(resourceData, type){
-
+    static EditResource(resourceData, type, sender_id){
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
         IdentifyMap[resourceData.id]=resourceData
-        unitofwork[index] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
-        index++;
+        unitofwork[sender_id][index[sender_id]] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
+        index[sender_id]++;;
         return {status: 0, message: 'Update Resource sent to cart', results: resourceData};
     }
 
-    static DeleteResource(id){
-        unitofwork[index] = {id, operation: 'delete', resource: IdentifyMap[id]}
-        index++;
+    static DeleteResource(id, sender_id){
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
+        unitofwork[sender_id][index[sender_id]] = {id, operation: 'delete', resource: IdentifyMap[id]}
+        index[sender_id]++;;
         return {status: 0, message: 'Delete Resource sent to cart', results: id};
     }
 
-    static LoanResource(resourceData, id){ // also a sender_id
-        unitofwork[index] = {id, operation: 'loan', resource: resourceData} // must be changed
-        index++;
-        return {status: 0, message: 'Loan Resource sent to cart', results: id};
-    }
-
-    static save(){
+    static save(sender_id){
             var unitOfStatus = []; // of same length as the unitofwork array
             var statusOfWork = false; // false means no error
             var errMsg;
-        for (var i = 0; i < unitofwork.length ; i++){
+        for (var i = 0; i < unitofwork[sender_id].length ; i++){
             unitOfStatus = [];
             statusOfWork = false;
             errMsg='';
-            if(unitofwork[i].operation == 'insert'){
-                var res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
-
+            if(unitofwork[sender_id][i].operation == 'insert'){
+                var res = ResourceMapper.insert(unitofwork[sender_id][i].resourceData, unitofwork[sender_id][i].type);
+                
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;
@@ -56,10 +59,10 @@ class UnitOfWork {
                 }
             }
 
-            if(unitofwork[i].operation == 'update'){
-
-                var res = ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
-
+            if(unitofwork[sender_id][i].operation == 'update'){
+                
+                var res = ResourceMapper.update(unitofwork[sender_id][i].resourceData, unitofwork[sender_id][i].type);
+                
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;
@@ -70,8 +73,8 @@ class UnitOfWork {
                 }
             }
 
-            if(unitofwork[i].operation == 'delete'){
-                var res = ResourceMapper.delete(unitofwork[i].id);
+            if(unitofwork[sender_id][i].operation == 'delete'){
+                var res = ResourceMapper.delete(unitofwork[sender_id][i].id);
 
                 if(res.status == 1){
                     statusOfWork = true;
@@ -83,8 +86,8 @@ class UnitOfWork {
                 }
             }
 
-            if(unitofwork[i].operation == 'loan'){
-                var res = LoanService.loanItem(unitofwork[i].id);
+            if(unitofwork[sender_id][i].operation == 'loan'){
+                var res = LoanService.loanItem(unitofwork[sender_id][i].id);
 
                 if(res.status == 1){
                     statusOfWork = true;
@@ -97,9 +100,7 @@ class UnitOfWork {
             }
         }
 
-        unitofwork = [];
-        console.log('Cart should be cleared:');
-        console.log(unitofwork);
+        unitofwork[sender_id] = [];
 
         if(statusOfWork == false){
             return {status : 0, message : 'Resources have been updated.'};
@@ -109,37 +110,21 @@ class UnitOfWork {
 
     }
 
-    static RemoveItem(index){
+    static RemoveItem(index, sender_id){
         try{
-            unitofwork.splice(index,1)
-            return {status : 0, message : "Item removed from cart", result: unitofwork}
+            unitofwork[sender_id].splice(index,1)
+            return {status : 0, message : "Item removed from cart", result: unitofwork[sender_id]}
         }catch(e){
             return {status : 1, message : 'Error' +e, e}
         }
     }
 
-    static ViewUnitOfWork(){
-        unitofwork = unitofwork.filter(Boolean);
-        return unitofwork.map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
-    }
-
-    static StoreSessionCart(sender_id){
-        users[sender_id] = unitofwork;
-        usersIndex[sender_id] = index;
-        unitofwork = [];
-        index = 0;
-    }
-
-    static LoadSessionCart(sender_id){
-        if(users[sender_id] == undefined){
-            unitofwork = [];
-            index = 0;
-        } else{
-            unitofwork = users[sender_id];
-            index = usersIndex[sender_id];
-            users[sender_id] = [];
-            usersIndex[sender_id] = 0;
+    static ViewUnitOfWork(sender_id){
+        if(index[sender_id] == undefined){
+            unitofwork[sender_id] = [];
         }
+        unitofwork[sender_id] = unitofwork[sender_id].filter(Boolean);
+        return unitofwork[sender_id].map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
     }
 }
 
