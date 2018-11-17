@@ -769,31 +769,55 @@ class ResourceMapper {
             `);
             for (let i=0; i<book_data.length;i++){
                 resource = book_data[i]
-                resource.resource_type = 'book';
-                IdentifyMap[resource.id] = resource;
-                resources.push( {"type": 'book', "resource_data": resource  } );
-                
+                resource.restype = 'book';
+                const LineItem = connection.query(`SELECT * FROM resource_line_item where resource_id =${resource.id}`);
+                resource['lineItem'] = [];
+                let eachInfo = {};
+                for(let info=0;info< LineItem.length;info++){
+                    eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+                    resource['lineItem'].push(eachInfo);
+                }
+                resources.push( resource );
+                IdentifyMap[resource.id] = resource;   
             }
             for (let i=0; i<magazine_data.length;i++){
                 resource = magazine_data[i]
-                resource.resource_type = 'magazine';
+                resource.restype = 'magazine';
+                const LineItem = connection.query(`SELECT * FROM resource_line_item where resource_id =${resource.id}`);
+                resource['lineItem'] = [];
+                let eachInfo = {};
+                for(let info=0;info< LineItem.length;info++){
+                    eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+                    resource['lineItem'].push(eachInfo);
+                }
+                resources.push( resource );
                 IdentifyMap[resource.id] = resource;
-                resources.push( {"type": 'magazine', "resource_data": resource  } );
-                
             }
             for (let i=0; i<music_data.length;i++){
                 resource = music_data[i]
-                resource.resource_type = 'music'; 
-                IdentifyMap[resource.id] = resource;
-                resources.push( {"type": 'music', "resource_data": resource  } );
-               
+                resource.restype = 'music'; 
+                const LineItem = connection.query(`SELECT * FROM resource_line_item where resource_id =${resource.id}`);
+                resource['lineItem'] = [];
+                let eachInfo = {};
+                for(let info=0;info< LineItem.length;info++){
+                    eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+                    resource['lineItem'].push(eachInfo);
+                }
+                resources.push( resource );    
+                IdentifyMap[resource.id] = resource;           
             }
             for (let i=0; i<movie_data.length;i++){
                 resource = movie_data[i]
-                resource.resource_type = 'movie';
-                IdentifyMap[resource.id] = resource;
-                resources.push( {"type": 'movie', "resource_data": resource  } );
-                
+                resource.restype = 'movie';
+                const LineItem = connection.query(`SELECT * FROM resource_line_item where resource_id =${resource.id}`);
+                resource['lineItem'] = [];
+                let eachInfo = {};
+                for(let info=0;info< LineItem.length;info++){
+                    eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
+                    resource['lineItem'].push(eachInfo);
+                }
+                resources.push( resource );    
+                IdentifyMap[resource.id] = resource; 
             }
 
             return {status: 0, message: 'Ok', results: resources};

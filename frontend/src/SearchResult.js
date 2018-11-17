@@ -51,7 +51,6 @@ class SearchResult extends Component {
             const line_items = this.state.line_items.slice()
             line_items.push(line_item)
             this.setState({"line_items":line_items,"available":this.state.available+1})
-            console.log(this.state)
         }).catch( err => {
         })
     }
@@ -64,7 +63,6 @@ class SearchResult extends Component {
 
     componentDidMount(){
         const {resource} = this.props
-        console.log(resource)
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label} = resource
         this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time, artist, release,ASIN, label })
         this.setState({"line_items": resource.lineItem})
@@ -84,10 +82,10 @@ class SearchResult extends Component {
         const { id, type, resource } = this.props
         const admin = cookie.load('admin') === 'yes';
         const editing = this.state.editing;
-        //const line_items = this.state.line_items;
         let Jsx;
         let cardJsx;
         let icon;
+
         if (resource.restype == "book"){
             icon = <i class="fas fa-book"></i>;
             cardJsx = <div>
@@ -192,7 +190,7 @@ class SearchResult extends Component {
             <th>Date Due</th>
             <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
         </tr>
-        {this.state.line_items.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
+        {this.state.line_items.map( line_item => <ResourceLineItem id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
         </table>
 : <table></table>}
     </div>

@@ -61,6 +61,7 @@ class Search extends Component {
   }
 
   handleClickSearch(){
+    this.setState({loading: true})
     let TotalArray = [];
     this.setState({TotalArray})
     const{pickedAuthor, pickedDirector, pickedPublisher, pickedArtist, titleSearch, ISBNSearch } = this.state
@@ -98,7 +99,7 @@ class Search extends Component {
           author_dropdown.push(item.author);
         });
         this.setState({author_dropdown})
-        
+
         })
         GET('/director')
         .then( res => res.json() )
@@ -107,7 +108,7 @@ class Search extends Component {
           director_dropdown.push(item.director);
         });
         this.setState({director_dropdown})
-        
+
         })
 
         GET('/publisher')
@@ -117,7 +118,7 @@ class Search extends Component {
           publisher_dropdown.push(item.publisher);
         });
         this.setState({publisher_dropdown})
-        
+
         })
 
         
@@ -128,7 +129,7 @@ class Search extends Component {
           artist_dropdown.push(item.artist);
         });
         this.setState({artist_dropdown})
-        
+
         })
 
 }
@@ -140,10 +141,33 @@ _handleKeyPress(e) {
     }
   }
 
-render() {
-    const {loading, TotalArray, resource_list, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+  }
 
-    console.log(TotalArray);
+
+random(){
+  this.setState({loading: true})
+  this.setState({TotalArray: []})
+  GET('/resources')
+      .then(res => res.json())
+      .then( json => {
+        this.setState({TotalArray: this.shuffle(json.results)})
+        this.setState({loading: false})
+      }
+      )
+}
+
+render() {
+    const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
+
     
     return (
       <div class="search-main">
@@ -159,6 +183,7 @@ render() {
           <p class="search-p">
             <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
             <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.random()}  >Random</button>
           </p>          
         </div>
 
@@ -280,7 +305,7 @@ render() {
         </div>
 
 
-        {TotalArray.map( resource => <SearchResult key={resource.resource_id} id={resource.resource_id} type={resource.restype} resource={resource} />)}
+        {TotalArray.map( resource => <SearchResult id={resource.resource_id} type={resource.restype} resource={resource} />)}
         
          <div style ={loader}>     
         {loading ? <Loading type='tail_spin' width={100} height={100} fill='#037d9e'   /> : null}  

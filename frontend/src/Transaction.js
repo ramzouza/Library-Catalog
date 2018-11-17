@@ -33,6 +33,7 @@ class Transaction extends Component {
                 <td>{transaction.resource_id}</td>
                 <td>{transaction.transaction_type}</td>
                 <td>{transaction.timestamp}</td>
+<<<<<<< HEAD
             </tr> 
 
             <tr>
@@ -44,6 +45,9 @@ class Transaction extends Component {
                 <td></td>
             </tr> 
             </React.Fragment>
+=======
+            </tr>  
+>>>>>>> Fixed Transactions and Added Random View
         );
 
     }
