@@ -399,12 +399,12 @@ app.post('/deleteLineItem', (req, res) => {
 app.post('/resource', (req, res) => {
 
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
-    }
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+    // }
     // get resources here
     const { resource_data, isFilter } = req.body;
     const advancedInfo = ResourceCatalog.SearchResource(resource_data, isFilter);
