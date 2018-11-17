@@ -208,12 +208,12 @@ app.get('/resources', (req, res) => {
 app.get('/author', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`GET -  [/authors] - ${400} - ${sender_id} `)
-    }
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`GET -  [/authors] - ${400} - ${sender_id} `)
+    // }
 
     // get authors here
     const resource_list = ResourceCatalog.getAllAuthors();
@@ -225,12 +225,12 @@ app.get('/author', (req, res) => {
 app.get('/director', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`GET -  [/director] - ${400} - ${sender_id} `)
-    }
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    // }
 
     // get director here
     const resource_list = ResourceCatalog.getAllDirectors();
@@ -242,12 +242,12 @@ app.get('/director', (req, res) => {
 app.get('/publisher', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`GET -  [/director] - ${400} - ${sender_id} `)
-    }
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    // }
 
     // get publisher here
     const resource_list = ResourceCatalog.getAllPublishers();
@@ -259,12 +259,12 @@ app.get('/publisher', (req, res) => {
 app.get('/artist', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`GET -  [/director] - ${400} - ${sender_id} `)
-    }
+    // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    // if (!auth.isAuthorized) {
+    //     res.status(400)
+    //     res.json({ status: 1, message: "Not Authorized" })
+    //     logger(`GET -  [/director] - ${400} - ${sender_id} `)
+    // }
 
     // get artist here
     const resource_list = ResourceCatalog.getAllArtists();
