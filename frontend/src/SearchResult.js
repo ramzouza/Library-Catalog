@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GET, POST, PUT} from './ApiCall';
+import {GET, POST, PUT, DELETE} from './ApiCall';
 import cookie from 'react-cookies'
 import ResourceLineItem from './ResourceLineItem';
 
@@ -73,6 +73,15 @@ class SearchResult extends Component {
         const { id, type } = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
         PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
+            .then( res => res.json())
+            .then( res => {
+            })
+    }
+
+    handleDelete(){
+        const { id, type } = this.props
+        const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
+        DELETE('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
             .then( res => res.json())
             .then( res => {
             })
@@ -201,6 +210,7 @@ class SearchResult extends Component {
             <button type="button" onClick={ this.handleSave.bind(this) } class="btn btn-primary" data-dismiss="modal">Add to Cart</button>
         }
         {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
+        {admin? <button type="button" onClick={ this.handleDelete.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Delete</button> : <div></div>}
     </div>
     </div>
 </div>

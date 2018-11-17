@@ -66,8 +66,9 @@ class ResourceCatalog {
        return UnitOfWork.EditResource(resourceData, type, sender_id);
     }
 
-    static DeleteResource(id, sender_id){
-        return  UnitOfWork.DeleteResource(id, sender_id);
+    static DeleteResource(resource_id, resourceData, type, sender_id){
+        resourceData.id = resource_id;
+        return  UnitOfWork.DeleteResource(resourceData, type, sender_id);
     }
 
     static LoanResource(resource_id, resourceData, type, sender_id) { // must be changed

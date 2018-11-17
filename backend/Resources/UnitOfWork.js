@@ -28,14 +28,15 @@ class UnitOfWork {
         return {status: 0, message: 'Update Resource sent to cart', results: resourceData};
     }
 
-    static DeleteResource(id, sender_id){
+    static DeleteResource(resourceData, type, sender_id){
         if(index[sender_id] == undefined){
             index[sender_id] = 0;
             unitofwork[sender_id] = [];
         }
-        unitofwork[sender_id][index[sender_id]] = {id, operation: 'delete', resource: IdentifyMap[id]}
+        IdentifyMap[resourceData.id]=resourceData
+        unitofwork[sender_id][index[sender_id]] = {resourceData,type, operation: 'delete', resource:IdentifyMap[resourceData.id]}
         index[sender_id]++;;
-        return {status: 0, message: 'Delete Resource sent to cart', results: id};
+        return {status: 0, message: 'Delete Resource sent to cart', results: resourceData};
     }
 
     static save(sender_id){
@@ -74,8 +75,9 @@ class UnitOfWork {
             }
 
             if(unitofwork[sender_id][i].operation == 'delete'){
-                var res = ResourceMapper.delete(unitofwork[sender_id][i].id);
-
+                console.log("Skander")
+                var res = ResourceMapper.delete(unitofwork[sender_id][i].resourceData.id);
+                console.log("Skander2")
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;

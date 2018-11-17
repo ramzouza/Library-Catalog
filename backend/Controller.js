@@ -312,11 +312,11 @@ app.delete('/resources', (req, res) => {
         logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
     } else {
         // get resource data and their type
-        const { resource_id } = req.body;
+        const { resource_id, resource_data, type } = req.body;
 
 
         // Edit the Resource
-        const { status, message, results, error } = ResourceCatalog.DeleteResource(resource_id, sender_id);
+        const { status, message, results, error } = ResourceCatalog.DeleteResource(resource_id, resource_data, type, sender_id);
 
         if (status == 1) {
             res.status(400);
