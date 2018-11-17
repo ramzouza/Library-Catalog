@@ -28,13 +28,13 @@ class AuthService {
         }
     }
 
-    static AuthorizeUser(id, requiresAdmin) {
+    static AuthorizeUser(id, permissionLevel) {
         const { status, message, results } = UserCatalog.GetUserById(id);
         if (status == 1 || results.length == 0) {
             return { status: 1, message, isAuthorized: false };
         } else {
             const user = results;
-            return { status, message, isAuthorized: requiresAdmin == user.isAdmin };
+            return { status, message, isAuthorized: permissionLevel == user.isAdmin };
         }
     }
 

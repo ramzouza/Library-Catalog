@@ -48,7 +48,7 @@ app.post('/disconnect', (req, res) => {
     const { id } = req.body
     const { status, error } = UserCatalog.SetIsActive(id, 0)
     const ok = status === 0
-    UnitOfWork.StoreSessionCart(id); 
+    UnitOfWork.StoreSessionCart(id);
     res.status(ok ? 200 : 500)
     res.json({ status: ok ? 'logged out' : 'an error occured', error })
     logger(`POST - [/disconnect] - ${200} - ${id} `)
@@ -79,7 +79,7 @@ app.post('/connect', (req, res) => {
 app.post('/createnewuser', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.body.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -94,7 +94,7 @@ app.post('/createnewuser', (req, res) => {
         lastName,
         physicalAddress,
         email,
-        phoneNumber, 
+        phoneNumber,
         isAdmin
     } = req.body;
 
@@ -119,7 +119,7 @@ app.post('/createnewuser', (req, res) => {
 app.delete('/deleteuser', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.body.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -143,7 +143,7 @@ app.delete('/deleteuser', (req, res) => {
 app.post('/loggedusers', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized", results: [] })
@@ -163,7 +163,7 @@ app.post('/loggedusers', (req, res) => {
 app.post('/resources', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -193,7 +193,7 @@ app.post('/resources', (req, res) => {
 app.get('/resources', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -209,7 +209,7 @@ app.get('/resources', (req, res) => {
 app.get('/author', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -226,7 +226,7 @@ app.get('/author', (req, res) => {
 app.get('/director', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -243,7 +243,7 @@ app.get('/director', (req, res) => {
 app.get('/publisher', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -260,7 +260,7 @@ app.get('/publisher', (req, res) => {
 app.get('/artist', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -277,7 +277,7 @@ app.get('/artist', (req, res) => {
 app.put('/resources', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -306,7 +306,7 @@ app.put('/resources', (req, res) => {
 app.delete('/resources', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -336,7 +336,7 @@ app.delete('/resources', (req, res) => {
 app.post('/addLineItem', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -352,7 +352,7 @@ app.post('/addLineItem', (req, res) => {
 app.post('/loanItem', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = false);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = false);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -369,7 +369,7 @@ app.post('/loanItem', (req, res) => {
 app.post('/returnItem', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -387,7 +387,7 @@ app.post('/returnItem', (req, res) => {
 app.post('/deleteLineItem', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -409,7 +409,7 @@ app.post('/deleteLineItem', (req, res) => {
 app.post('/resource', (req, res) => {
 
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -429,7 +429,7 @@ app.post('/resource', (req, res) => {
 app.post('/cart', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized", results: [] })
@@ -448,7 +448,7 @@ app.post('/cart', (req, res) => {
 app.delete('/cartItem', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.header.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
@@ -476,7 +476,7 @@ app.delete('/cartItem', (req, res) => {
 app.post('/saveCart', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized", results: [] })
@@ -496,7 +496,7 @@ app.post('/saveCart', (req, res) => {
 app.post('/transactions', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, requiresAdmin = true);
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized", results: [] })
