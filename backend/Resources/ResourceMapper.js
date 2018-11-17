@@ -713,7 +713,15 @@ class ResourceMapper {
             let alreadyLoanItem = [];
 
             for(let x=0;x<item.length;x++){
-                const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"' WHERE id = '"+item[x]+"' and user_id is NULL");
+
+                const getType = connection.query("SELECT type FROM resource_line_item LEFT JOIN resource ON resource_line_item .resource_id=resource .id where resource_line_item.id ="+item[x]+" ")
+                let date = new Date();
+                if(getType[0]['type'] == "movie" || getType[0]['type'] == "music"){
+                    date.setDate(date.getDate() + 2);
+                }else{
+                    date.setDate(date.getDate() + 7);
+                }
+                const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"', date_due ='"+date+"' WHERE id = '"+item[x]+"' and user_id is NULL");
                 alreadyLoanItem.push({loan:alreadyloan['changedRows'],itemid:item[x]})
             }
             return { status: 0, message: 'loan', info:alreadyLoanItem}
