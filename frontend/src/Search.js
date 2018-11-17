@@ -148,17 +148,17 @@ render() {
     return (
       <div class="search-main">
 
-        <img class="App-logo" src={require('./TheZone.png')}/><br/>
-        <h2>THE LOAN ZONE</h2><br/>
+        <img class="App-logo animated fadeIn" src={require('./TheZone.png')}/><br/>
+        <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 
         <div style={main}>
-          <input onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." style={{height: 63, width: '50%', padding: 20}}></input>
+          <input class="animated fadeIn" onKeyPress={this._handleKeyPress.bind(this)} id="SearchRandom" type="text" placeholder="Search for a resource ..." style={{height: 63, width: '50%', padding: 20}}></input>
         </div>
 
         <div>
           <p class="search-p">
-            <button  class="btn btn-default btn-search" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
-            <button  class="btn btn-default btn-search" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
+            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClick()} type="button">Search</button><nbsp/><nbsp/>
+            <button  class="btn btn-default btn-search animated fadeIn" onClick={() => this.handleClickAdvancedSearch()}  data-toggle="modal" data-target="#myModal" >Advanced Search</button>
           </p>          
         </div>
 

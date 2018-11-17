@@ -100,8 +100,8 @@ class SearchResult extends Component {
                 {editing ? <p> Pages: <input placeholder={resource.pages}  onChange={evt => {this.setState({pages: evt.target.value})}} /></p> : <p><b> Pages: </b>{resource.pages}</p>}
                 {editing ? <p> Publisher: <input placeholder={resource.publisher}  onChange={evt => {this.setState({publisher: evt.target.value})}} /></p> : <p><b> Publisher: </b>{resource.publisher}</p>}
                 {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
-                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
-                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
+                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> ISBN 10: </b>{resource.isbn_10}</p>}
+                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> ISBN 13: </b>{resource.isbn_13}</p>}
                 {editing ? <p> Copies Available: <input placeholder={this.state.available}  onChange={evt => {this.setState({available: evt.target.value})}} /></p> : <p><b> Copies Available: </b>{this.state.available}</p>}
             </div>
         } else if (resource.restype == "magazine"){
@@ -114,8 +114,8 @@ class SearchResult extends Component {
             Jsx= <div>
                 {editing ? <p> Publisher: <input placeholder={resource.publisher}  onChange={evt => {this.setState({publisher: evt.target.value})}} /></p> : <p><b> Publisher: </b>{resource.publisher}</p>}
                 {editing ? <p> Language: <input placeholder={resource.language}  onChange={evt => {this.setState({language: evt.target.value})}} /></p> : <p><b> Language: </b>{resource.language}</p>}
-                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> isbn_10: </b>{resource.isbn_10}</p>}
-                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> isbn_13: </b>{resource.isbn_13}</p>}
+                {editing ? <p> isbn_10: <input placeholder={resource.isbn_10}  onChange={evt => {this.setState({isbn_10: evt.target.value})}} /></p> : <p><b> ISBN 10: </b>{resource.isbn_10}</p>}
+                {editing ? <p> isbn_13: <input placeholder={resource.isbn_13}  onChange={evt => {this.setState({isbn_13: evt.target.value})}} /></p> : <p><b> ISBN 13: </b>{resource.isbn_13}</p>}
             </div>
             
         } else if (resource.restype == "music"){
@@ -156,56 +156,55 @@ class SearchResult extends Component {
 
         }
 
+    
         return (
-        <div class="card search-result">
+
+<React.Fragment>
+        <div class="card search-result animated fadeInUp">
             <div class="card-body">
                 {icon}
                 <h1>{resource.title}</h1>
                 {cardJsx}
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
+                <button type="button" class="btn btn-default btn-search" data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
             </div>
-
-
-            <div class="modal  fade" tabindex="-1" role="dialog" id={"edit"+resource.id}>
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                    
-                        <div class="modal-title">
-                        {editing ? <h1><input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.value})}} /></h1> : <h1>{resource.title}</h1>}
-                        </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {Jsx}
-
-                        <table class="table">
-                        <tr>
-                            <th>id</th>
-                            <th>type</th>
-                            <th>User Id</th>
-                            <th>Date Due</th>
-                            <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
-                        </tr>
-                        {this.state.line_items.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
-                        </table>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button>
-                        <button type="button" class="btn btn-primary">Loan</button>
-                        <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
         </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id={"edit"+resource.id}>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    
+        <div class="modal-title">
+        {editing ? <h1><input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.value})}} /></h1> : <h1>{resource.title}</h1>}
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {Jsx}
+
+        <table class="table">
+        <tr>
+            <th>id</th>
+            <th>type</th>
+            <th>User Id</th>
+            <th>Date Due</th>
+            <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
+        </tr>
+        {this.state.line_items.map( line_item => <ResourceLineItem key={resource.resource_id} id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-primary">Loan</button>
+        <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button>
+    </div>
+    </div>
+</div>
+</div>
+</React.Fragment>
         );
     }
 }
