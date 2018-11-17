@@ -12,6 +12,7 @@ const logger = (message) => {
 const AuthService = require('./Users/AuthService')
 const UserCatalog = require('./Users/UserCatalog')
 const ResourceCatalog = require('./Resources/ResourceCatalog')
+const LoanService = require('./Resources/LoanService')
 const UnitOfWork = require('./Resources/UnitOfWork')
 const TransactionLogger = require('./Resources/TransactionLogger')
 // ============ Allow Requests from a Browser ==========
@@ -349,20 +350,13 @@ app.post('/addLineItem', (req, res) => {
 
 app.post('/loanItem', (req, res) => {
 
-    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
-    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = false);
-    if (!auth.isAuthorized) {
-        res.status(400)
-        res.json({ status: 1, message: "Not Authorized" })
-        logger(`POST -  [/loanItem] - ${400} - ${sender_id} `)
-    }
-    // get item  here
-    const { userId,item } = req.body;
-    const { status, message, info } = ResourceCatalog.loanItem(userId,item);
-    console.log(info)
+    const { userId,item } = req.body;// will userId suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(userId, requiresAdmin = false);
+    const { status, message, info } = LoanService.loanItem(userId,item,auth.isAuthorized);
+    
     res.json({ "status": status, "message": message ,"info":info});
-    logger(`POST - [/loanItem] - ${200} - ${sender_id} `)
-})
+    logger(`POST - [/loanItem] - ${200} - ${userId} `)
+});
 
 app.post('/returnItem', (req, res) => {
 
@@ -379,8 +373,6 @@ app.post('/returnItem', (req, res) => {
     res.json({ "status": status });
     logger(`POST - [/returnItem] - ${200} - ${sender_id} `)
 })
-
-
 
 app.post('/deleteLineItem', (req, res) => {
 
