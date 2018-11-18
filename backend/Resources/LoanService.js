@@ -40,6 +40,8 @@ class LoanService {
                 }
                 const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"', date_due ='"+date+"', semaphore = 0 WHERE id = '"+item[x]+"' and user_id is NULL");
                 alreadyLoanItem.push({loan:1,itemid:item[x]})
+
+                TransactionLogger.log(userId, item[x], "loan");
             
            
             ensure(
@@ -91,7 +93,7 @@ class LoanService {
             "expression": isloaned[0]['user_id'] != null // resource must be available meaning user id is Null
         })
         let update = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
-
+        TransactionLogger.log(userId, itemId, "return");
         ensure(
             {
                 "title": "The resource is available and no longer loaned",
