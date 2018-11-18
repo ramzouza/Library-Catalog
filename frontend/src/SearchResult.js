@@ -230,7 +230,7 @@ class SearchResult extends Component {
         {admin? <button type="button" onClick={() => this.setState({editing: true})} class="btn btn-primary">Edit</button> : <div></div>}
         {admin?
             <div> </div>:
-            <button type="button" onClick={ this.handleSave.bind(this) } class="btn btn-primary" data-dismiss="modal">Add to Cart</button>
+            <button class="btn btn-default btn-search animated fadeIn" onClick={ this.handleSave.bind(this) } type="button" data-dismiss="modal">Add to Cart</button>
         }
         {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
         {admin? <button type="button" onClick={ this.handleDelete.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Delete</button> : <div></div>}
