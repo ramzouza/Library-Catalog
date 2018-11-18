@@ -79,12 +79,13 @@ class LoanService {
     }
 
     static returnItem(isAdmin,itemId){
+        console.log({itemId})
         try{
             const isloaned = connection.query("select user_id from resource_line_item  WHERE id = "+itemId);
 
         pre({
             "title": "User must be an admin",
-            "expression": isAdmin // user must be a client
+            "expression": isAdmin // user must be an admin
         },
         {
             "title": "The resource must be loaned",
