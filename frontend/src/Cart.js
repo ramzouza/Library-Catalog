@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from './Navbar'
-import { apiCall, POST } from './ApiCall'
+import { apiCall, GET, POST } from './ApiCall'
 import cookie from 'react-cookies'
 import CartItem from './CartItem'
 
@@ -9,94 +9,79 @@ class Cart extends Component {
     super()
 
     this.state = {
-      logs: [],
-      message: "The following data will be modified:"
+      logs: []
     }
   }
+
   componentDidMount(){
-  const isAdmin = cookie.load('admin') === 'yes' ?  true : false
-  if(isAdmin){  
-    apiCall('/cart')
-      .then(res => res.json())
+    const isAdmin = cookie.load('admin') === 'yes' ?  true : false
+    const id = cookie.load('id')
+
+    apiCall('/cart', {isAdmin}, {id})
+      .then(res => res.json())
       .then( json => {
         console.log('res', json)
         this.setState({logs: json.results})
     })
-  }  
-  else{
-    const cart = cookie.load('userCart') || []
-    const wtf = cart.map(x => {return {resource: x, type: x.type, operation: 'Loan'}})
-    this.setState({logs: wtf})
-  }
   }
 
       // Call Controller when user clicks on save button
       handleClickSave() {
         const isAdmin = cookie.load('admin') === 'yes' ?  true : false
-        if(isAdmin){
-          POST('/saveCart')
-            .then(res => res.json())
-            .then( json => {
-              console.log(json.results)
-              this.setState({logs: []})
-          })
-        } else {
-          const {logs} = this.state
-          console.log({logs})
-          const id = cookie.load('id') || []
-          const ids = logs.map( x => x.resource).map(x => x.id)
-          POST('/loanItem', {item: ids, userId: id})
-            .then( res => res.json() )
-            .then(res => {
-              console.log({res})
-              const {status, message, info} = res
-              if(status === 0){
-                const nonAdded = info.filter( x => x.loan === 0 )
-                const nonAddedTitles = nonAdded.map(x => x.itemid)
-                                                .map( x => {
-                                                  let title = logs.map(y => y.resource).find(y => y.id === x ).title || ""
-                                                  return title
-                                                })
-                                                .join(',')
-                console.log({nonAdded,nonAddedTitles})
-                if(nonAdded.length > 0) this.setState({message:`Loan complete however, non available resource(s): ${nonAddedTitles}`})
-                else {
-                  this.setState({message:'Loan complete'}); 
-                }
-                this.setState({logs: []})
-                cookie.remove('userCart')
-              }
-              // res.filter(res => res)
-            })
-        }
+        const id = cookie.load('id')
+        alert("saving...");
+        POST('/saveCart', {is_Admin:isAdmin,id:id})
+          .then(res => res.json())
+          .then( json => {
+            console.log(json.results)
+            this.setState({logs: []})
+        })
       }
 
   render() {
     const {logs} = this.state
     
     return (
-      <div class= "logged-main">
-      <Navbar/>
-      <div class= "logged-body">
-          <h1>Cart</h1>
-          <h4>The following data will be modified:</h4>
-          {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
-          {cookie.load('admin') === 'yes'?
-            <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>:
-<<<<<<< HEAD
-            <button class="btn-cart btn btn-success action-bar-btn" type="button"><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
-      } 
-=======
-            <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
-          }
-          <h4>{this.state.message}</h4>
-          {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
->>>>>>> ea33089ffcab0b035bc67071e7c778ee3b2dac81
+      <div style={main}>
+        <Navbar/>
+        <div style={body}>
+          <h2>Cart</h2>
+          <hint>The following data will be modified:</hint>
+            <div>
+              {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
+            </div>
+          <button style={savebtn} type="button" onClick={() => this.handleClickSave()}> Save </ button>
+        </div>
       </div>
-      </div>
-      
     );
   }
 }
 
 export default Cart;
+
+const  main = {
+      display:'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      fontFamily: 'Impact',
+      borderRadius: 5,
+      width: '100%',
+}
+
+const body = {
+    'padding-top': '10%',
+    minWidth: '30%',
+    display:'flex',
+    flexDirection: 'column',
+    alignItems:'center',
+    justifyContent: 'center'
+}
+
+const savebtn = {
+  borderRadius: 5,
+  fontFamily: 'inherit',
+  padding: '5px 40px',
+  margin: 10,
+  boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
+}
