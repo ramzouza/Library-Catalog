@@ -31,6 +31,7 @@ class ResourceLineItem extends Component {
         .then(res => {
             alert('Resource returned')
             console.log('The res from loan',{res})
+            window.location.reload()
             this.setState({editing: false})
         })
     }
