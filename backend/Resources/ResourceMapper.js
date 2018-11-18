@@ -31,55 +31,55 @@ class ResourceMapper {
                     const resource_type = resource_data[0].type;
                     const query = connection.query(`SELECT * FROM ${resource_type} where resource_id= '${resource_id}'`)
                     const child_data = query[0];
-                    child_data.title = resource_data[0].title;                    
+                    child_data.title = resource_data[0].title;
                     switch(resource_type){
                         case "book":
                             resource = new Book(child_data,resource_id);
                             break;
                         case "magazine":
                             resource = new Magazine(child_data,resource_id);
-                            break;      
+                            break;
                         case "movie":
                             resource = new Movie(child_data,resource_id);
                             console.log(resource);
-                            break;        
+                            break;
                         case "music":
                             resource = new Music(child_data,resource_id);
                             break;
-                    } 
+                    }
                     resource.resource_type = resource_type;
                     IdentifyMap[resource_id] = resource;
                     return {status: 0, message: 'Ok', results: resource};
                 } else {
                     throw "Invalid Resource Id."
-                }    
+                }
             } catch (error){
                 return{ status: 1, message: 'Error: ' + error, error}
             }
 
         }
- 
+
     }
 
-    
+
     static advSelect(search,isadvancedSearch){
         if(isadvancedSearch){
             let verifyIfNoelement= { checked:[]};
             let AllInfo = [];
             let SearchInfoId = [];
             if(!(JSON.stringify(verifyIfNoelement) == JSON.stringify(search))){
-                
+
 
                 if(search['checked'].length !=0){  // if the client check at least one type
                     let parameter =false;
                     let query="";
                     for(let x=0;x<search['checked'].length;x++){
                         switch(search['checked'][x]){ // iterate over type checked
-                            case "book": 
+                            case "book":
                                 parameter = false;
                                  query =" Select * from book  LEFT JOIN resource on book.resource_id = resource.id ";
                                 if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
-                                    
+
                                     let titleToArray = search['titleSearch'].split(" "); // title to array by part
                                     query+="where ";
                                     parameter = true;
@@ -90,7 +90,7 @@ class ResourceMapper {
                                         query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                     }
                                     }
-                                    
+
                                 }
                                 if(!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != ''){
                                     if(parameter)
@@ -103,21 +103,21 @@ class ResourceMapper {
                                 if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
                                     if(parameter)
                                     query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     else{
                                         query+="where ";
                                         query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     }
                                 }
                                     const bookInfo = connection.query(query);
-                                    
+
                                     for (let i=0; i<bookInfo.length;i++){
                                         const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
-                                        
-                                        
+
+
                                         if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
-                                            
+
                                             SearchInfoId.push(bookInfo[i]['resource_id']);
                                             bookInfo[i]['loan']=LoanOrNot[0]['loan'];
                                             bookInfo[i]['available']=LoanOrNot[0]['available'];
@@ -132,10 +132,10 @@ class ResourceMapper {
                                         }
                                             AllInfo.push(bookInfo[i]);
                                         }
-                                        
+
                                     }
                                 break;
-                            case "magazine": 
+                            case "magazine":
                              parameter = false;
                              query =" Select * from magazine  LEFT JOIN resource on magazine.resource_id = resource.id ";
                             if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
@@ -149,7 +149,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != ''){
                                 if(parameter)
@@ -162,17 +162,17 @@ class ResourceMapper {
                                 if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
                                     if(parameter)
                                     query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     else{
                                         query+="where ";
                                         query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     }
                                 }
                                 const magazineInfo = connection.query(query);
                                 for (let i=0; i<magazineInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
-                                    
+
                                     if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(magazineInfo[i]['resource_id']);
                                         magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -206,7 +206,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedArtist'] == undefined) && search['pickedArtist'] != ''){
                                 if(parameter)
@@ -219,7 +219,7 @@ class ResourceMapper {
                                 const musicInfo = connection.query(query);
                                 for (let i=0; i<musicInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
-                                   
+
                                     if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(musicInfo[i]['resource_id']);
                                         musicInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -253,7 +253,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedDirector'] == undefined) && search['pickedDirector'] != ''){
                                 if(parameter)
@@ -266,7 +266,7 @@ class ResourceMapper {
                                 const movieInfo = connection.query(query);
                                 for (let i=0; i<movieInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
-                                    
+
                                     if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(movieInfo[i]['resource_id']);
                                         movieInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -296,7 +296,7 @@ class ResourceMapper {
                             if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != '') ||(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != '')){
                                  query =" Select * from book  LEFT JOIN resource on book.resource_id = resource.id ";
                                 if(!(search['titleSearch'] == undefined) && search['titleSearch'] != ''){
-                                    
+
                                     let titleToArray = search['titleSearch'].split(" "); // title to array by part
                                     query+="where ";
                                     parameter = true;
@@ -307,7 +307,7 @@ class ResourceMapper {
                                         query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                     }
                                     }
-                                    
+
                                 }
                                 if(!(search['pickedAuthor'] == undefined) && search['pickedAuthor'] != ''){
                                     if(parameter)
@@ -320,17 +320,17 @@ class ResourceMapper {
                                 if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
                                     if(parameter)
                                     query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     else{
                                         query+="where ";
                                         query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     }
                                 }
                                     const bookInfo = connection.query(query);
                                     for (let i=0; i<bookInfo.length;i++){
                                         const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
-                                        
+
                                         if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
                                             SearchInfoId.push(bookInfo[i]['resource_id']);
                                             bookInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -350,7 +350,7 @@ class ResourceMapper {
                                         }
                                     }
                                 }
-                                
+
                              parameter = false;
                              if((!(search['titleSearch'] == undefined) && search['titleSearch'] != '') || (!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != '') || (!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != '')){
                              query =" Select * from magazine  LEFT JOIN resource on magazine.resource_id = resource.id ";
@@ -365,7 +365,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedPublisher'] == undefined) && search['pickedPublisher'] != ''){
                                 if(parameter)
@@ -378,17 +378,17 @@ class ResourceMapper {
                                 if(!(search['ISBNSearch'] == undefined) && search['ISBNSearch'] != ''){
                                     if(parameter)
                                     query+=" OR ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     else{
                                         query+="where ";
                                         query+="ISBN_10 LIKE '%"+search['ISBNSearch']+"%' OR ISBN_13 LIKE '%"+search['ISBNSearch']+"%'";
-                                
+
                                     }
                                 }
                                 const magazineInfo = connection.query(query);
                                 for (let i=0; i<magazineInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
-                                    
+
                                     if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(magazineInfo[i]['resource_id']);
                                         magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -422,7 +422,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedArtist'] == undefined) && search['pickedArtist'] != ''){
                                 if(parameter)
@@ -435,7 +435,7 @@ class ResourceMapper {
                                 const musicInfo = connection.query(query);
                                 for (let i=0; i<musicInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
-                                   
+
                                     if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(musicInfo[i]['resource_id']);
                                         musicInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -469,7 +469,7 @@ class ResourceMapper {
                                     query+=" OR title LIKE '%"+titleToArray[i]+"%'";
                                 }
                                 }
-                                
+
                             }
                             if(!(search['pickedDirector'] == undefined) && search['pickedDirector'] != ''){
                                 if(parameter)
@@ -482,7 +482,7 @@ class ResourceMapper {
                                 const movieInfo = connection.query(query);
                                 for (let i=0; i<movieInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
-                                    
+
                                     if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(movieInfo[i]['resource_id']);
                                         movieInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -501,16 +501,16 @@ class ResourceMapper {
                                         AllInfo.push(movieInfo[i]);
                                     }
                                 }}
-                                
+
                     return AllInfo;
                 }
             }else{
-                           
+
                             let query =" Select * from book LEFT JOIN resource on book.resource_id = resource.id ";
                             const bookInfo = connection.query(query);
                                 for (let i=0; i<bookInfo.length;i++){
                                     const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+bookInfo[i]['resource_id']+"' ");
-                                    
+
                                     if(SearchInfoId.indexOf(bookInfo[i]['resource_id']) == -1){
                                         SearchInfoId.push(bookInfo[i]['resource_id']);
                                         bookInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -534,7 +534,7 @@ class ResourceMapper {
                                 const magazineInfo = connection.query(query);
                                     for (let i=0; i<magazineInfo.length;i++){
                                         const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+magazineInfo[i]['resource_id']+"' ");
-                                        
+
                                         if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
                                             SearchInfoId.push(magazineInfo[i]['resource_id']);
                                             magazineInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -558,7 +558,7 @@ class ResourceMapper {
                                     const movieInfo = connection.query(query);
                                         for (let i=0; i<movieInfo.length;i++){
                                             const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+movieInfo[i]['resource_id']+"' ");
-                                            
+
                                             if(SearchInfoId.indexOf(movieInfo[i]['resource_id']) == -1){
                                                 SearchInfoId.push(movieInfo[i]['resource_id']);
                                                 movieInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -577,12 +577,12 @@ class ResourceMapper {
                                                 AllInfo.push(movieInfo[i]);
                                             }
                                         }
-                                    
+
                                         query =" Select * from music LEFT JOIN resource on music.resource_id = resource.id ";
                                         const musicInfo = connection.query(query);
                                             for (let i=0; i<musicInfo.length;i++){
                                                 const LoanOrNot = connection.query("SELECT SUM(CASE WHEN user_id is NOT NULL THEN 1 else 0 END) as loan,  SUM(CASE WHEN user_id is NULL THEN 1 else 0 END) as available FROM resource_line_item where resource_id = '"+musicInfo[i]['resource_id']+"' ");
-                                                
+
                                                 if(SearchInfoId.indexOf(musicInfo[i]['resource_id']) == -1){
                                                     SearchInfoId.push(musicInfo[i]['resource_id']);
                                                     musicInfo[i]['loan']=LoanOrNot[0]['loan'];
@@ -605,7 +605,7 @@ class ResourceMapper {
                                             return AllInfo;
             }
         }else{
-            
+
             let SearchToArray = search.split(" ");
             console.log(SearchToArray);
             let AllInfo = [];
@@ -634,7 +634,7 @@ class ResourceMapper {
                         AllInfo.push(bookInfo[i]);
                     }
                 }
-                
+
                 const magazineInfo = connection.query("SELECT * FROM magazine LEFT JOIN resource on magazine.resource_id = resource.id where title LIKE '%"+SearchToArray[x]+"%' OR publisher LIKE '%"+SearchToArray[x]+"%' OR isbn_10 LIKE '%"+SearchToArray[x]+"%' OR isbn_13 LIKE '%"+SearchToArray[x]+"%'");
                 for (let i=0; i<magazineInfo.length;i++){
                     if(SearchInfoId.indexOf(magazineInfo[i]['resource_id']) == -1){
@@ -709,7 +709,7 @@ class ResourceMapper {
             let resources = [];
             let resource = {};
 
-            const book_data = connection.query(`select 
+            const book_data = connection.query(`select
             r.title,
             r.id,
             b.author,
@@ -724,7 +724,7 @@ class ResourceMapper {
             left join book as b on r.id=b.resource_id
             where type='book'
             `);
-            const music_data = connection.query(`select 
+            const music_data = connection.query(`select
             r.title,
             r.id,
             mu.type,
@@ -738,7 +738,7 @@ class ResourceMapper {
             where r.type='music'
             `);
             const movie_data = connection.query(`
-            select 
+            select
             r.title,
             r.id,
             mo.director,
@@ -755,7 +755,7 @@ class ResourceMapper {
             where r.type='movie'
             `);
             const magazine_data = connection.query(`
-            select 
+            select
             r.title,
             r.id,
             ma.publisher,
@@ -778,7 +778,7 @@ class ResourceMapper {
                     resource['lineItem'].push(eachInfo);
                 }
                 resources.push( resource );
-                IdentifyMap[resource.id] = resource;   
+                IdentifyMap[resource.id] = resource;
             }
             for (let i=0; i<magazine_data.length;i++){
                 resource = magazine_data[i]
@@ -795,7 +795,7 @@ class ResourceMapper {
             }
             for (let i=0; i<music_data.length;i++){
                 resource = music_data[i]
-                resource.restype = 'music'; 
+                resource.restype = 'music';
                 const LineItem = connection.query(`SELECT * FROM resource_line_item where resource_id =${resource.id}`);
                 resource['lineItem'] = [];
                 let eachInfo = {};
@@ -803,8 +803,8 @@ class ResourceMapper {
                     eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
                     resource['lineItem'].push(eachInfo);
                 }
-                resources.push( resource );    
-                IdentifyMap[resource.id] = resource;           
+                resources.push( resource );
+                IdentifyMap[resource.id] = resource;
             }
             for (let i=0; i<movie_data.length;i++){
                 resource = movie_data[i]
@@ -816,8 +816,8 @@ class ResourceMapper {
                     eachInfo = { id:LineItem[info]['id'], resource_id:LineItem[info]['resource_id'],user_id:LineItem[info]['user_id'],date_due:LineItem[info]['date_due']}
                     resource['lineItem'].push(eachInfo);
                 }
-                resources.push( resource );    
-                IdentifyMap[resource.id] = resource; 
+                resources.push( resource );
+                IdentifyMap[resource.id] = resource;
             }
 
             return {status: 0, message: 'Ok', results: resources};
@@ -846,13 +846,13 @@ class ResourceMapper {
         }
     }
 
-    // Method to insert resource into resources table 
+    // Method to insert resource into resources table
     static insert(resource_obj, type) {
-        
+
         try{
             type = type.toLowerCase();
             const parent_obj = {"type":type, "title": resource_obj.title, "id":0}; // parent resource obj fits this schema
-            delete resource_obj.id; // make it fit for the child table 
+            delete resource_obj.id; // make it fit for the child table
             delete resource_obj.title; // make it fit for the child table
             const parent_data = connection.query(`INSERT INTO resource VALUES( ${this.objectToQueryString(parent_obj)} )`); // Insert resource data (parent)
             resource_obj.resource_id = parent_data.insertId; // with the insert id of the resource table, reference the fk of the child data to the pk of the parent
@@ -860,7 +860,7 @@ class ResourceMapper {
             connection.query(`INSERT INTO ${type} VALUES (${this.objectToQueryString(resource_obj)})`); // Insert into the child table the child data (book, magazine, music, movie)
             //const date = new Date(Date.now() + (1000 /*sec*/ * 60 /*min*/ * 60 /*hour*/ * 24 /*day*/ * 10)).toString();
             const resource_line_item = {"id":0, "resource_id": parent_data.insertId, "user_id": null, "date_due": ''}; // declare schema for the line item instance (this table represents the number of instances)
-            connection.query(`INSERT INTO resource_line_item (id, resource_id, user_id, date_due) VALUES(0, ${resource_line_item.resource_id}, NULL, '${resource_line_item.date_due}')`); 
+            connection.query(`INSERT INTO resource_line_item (id, resource_id, user_id, date_due) VALUES(0, ${resource_line_item.resource_id}, NULL, '${resource_line_item.date_due}')`);
             const resource = this.select(parent_data.insertId).results
             return {status: 0, message: 'Resource Added', results: resource};
         }
@@ -911,9 +911,9 @@ class ResourceMapper {
     //Get all authors for advanced search
     static getAllAuthors(){
         try{
-          
+
             const data = connection.query(`SELECT DISTINCT author from book`);
-            
+
             return {status: 0, message: 'Ok', results: data};
         } catch (error){
             return{ status: 1, message: 'Error: ' + error, error}
@@ -925,7 +925,7 @@ class ResourceMapper {
      try{
 
         const data = connection.query(`SELECT DISTINCT director from movie`);
-       
+
         return {status: 0, message: 'Ok', results: data};
      } catch (error){
         return{ status: 1, message: 'Error: ' + error, error}
@@ -935,9 +935,9 @@ class ResourceMapper {
     //Get all publishers for advanced search
     static getAllPublishers(){
         try{
-   
+
            const data = connection.query(`select distinct publisher from magazine`);
-          
+
            return {status: 0, message: 'Ok', results: data};
         } catch (error){
            return{ status: 1, message: 'Error: ' + error, error}
@@ -947,9 +947,9 @@ class ResourceMapper {
        //Get all artists for advanced search
     static getAllArtists(){
         try{
-   
+
            const data = connection.query(`select distinct artist from music`);
-          
+
            return {status: 0, message: 'Ok', results: data};
         } catch (error){
            return{ status: 1, message: 'Error: ' + error, error}
@@ -957,11 +957,11 @@ class ResourceMapper {
        }
 
     // Helper. This method turns an object into a string formated for an SQL query
-    static objectToQueryString(object) { 
+    static objectToQueryString(object) {
         return Object.values(object).map(x => "'" + x + "'").join(',');
     }
 
-    static objectToUpdateString(object) { 
+    static objectToUpdateString(object) {
         return Object.keys(object).map(key =>'`' + key +'`'  + "='" + object[key] + "'").join(' , ')
     }
 }

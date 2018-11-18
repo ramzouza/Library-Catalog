@@ -24,7 +24,7 @@ class AuthService {
             const isAdmin = results[0].isAdmin
             const id = results[0].id
 
-            return { status: isAuthenticated ? 0 : 1, results: { id, isAuthenticated, isAdmin } }
+            return { status: isAuthenticated ? 0 : 1, results: { id, isAuthenticated, isAdmin }, message }
         }
     }
 
