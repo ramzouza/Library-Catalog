@@ -32,12 +32,21 @@ class CartItem extends Component {
         } 
     }
 
-    handleClickRemove(index){
-        DELETE('/cartItem', {"index": index})
-        .then( res => res.json() )
-        .then ( json => {
-          window.location.reload()
-        })
+    handleClickRemove(index, id){
+        const isAdmin = cookie.load("admin") === 'yes'
+        if(isAdmin){
+            DELETE('/cartItem', {"index": index})
+                .then( res => res.json() )
+                .then ( json => {
+                window.location.reload()
+                })
+        }else {
+            const cart = cookie.load('userCart')
+            const newCart = cart.filter(x => x.id !== id)
+            cookie.save('userCart', newCart)
+            alert('Item removed')
+            window.location.reload()
+        }
             
     }
 
@@ -45,8 +54,6 @@ class CartItem extends Component {
         const {resource_data, type, operation, index } = this.props
         const resource = resource_data;
         const admin = cookie.load('admin') === 'yes';
-        console.log(resource)
-        console.log(type);
         let Jsx;
         if (type == "book"){
             Jsx = <div>
@@ -107,7 +114,7 @@ class CartItem extends Component {
                 </p>
             </div>
             <div class="card-footer">
-            <button class="action-bar-btn btn btn-danger" type="button" onClick={() => this.handleClickRemove(index)}><i class="fas fa-trash-alt"></i> Remove</ button>
+            <button class="action-bar-btn btn btn-danger" type="button" onClick={() => this.handleClickRemove(index, resource_data.id)}><i class="fas fa-trash-alt"></i> Remove</ button>
             </div>
             </div>
             /*

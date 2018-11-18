@@ -69,13 +69,32 @@ class SearchResult extends Component {
     }
 
     handleSave(){
-        this.setState({editing: false})
+        let isAdmin = cookie.load('admin') === 'yes'
         const { id, type } = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
-        PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
-            .then( res => res.json())
-            .then( res => {
-            })
+        this.setState({editing: false})
+        
+        if(isAdmin){
+            PUT('/resources',{type, resource_id: id, resource_data: {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}})
+                .then( res => res.json())
+                .then( res => {
+                })
+        } else {
+            const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
+            this.addToCookies(resource_data)
+        }
+    }
+
+    addToCookies(newCartItem){
+        let cart = cookie.load('userCart') || []
+        let data = JSON.stringify(newCartItem)
+            data = JSON.parse(data)
+        if(!cart.find(x => x.id === newCartItem.id)){
+            cart.push(data)
+            cookie.save('userCart', cart)
+        } else alert('This resource is aleady in your cart !')
+
+        console.log('userCart',cookie.load('userCart'))
     }
 
     handleDelete(){

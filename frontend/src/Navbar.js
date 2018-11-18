@@ -16,6 +16,7 @@ LogOut(){
     cookie.remove('admin') 
     cookie.remove('email')
     cookie.remove('id')
+    cookie.remove('userCart')
     
     apiCall('/disconnect',{id})
     window.location.reload();
