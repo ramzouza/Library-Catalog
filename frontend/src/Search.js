@@ -231,12 +231,12 @@ render() {
             
             <div class="form-group">
              <label for="advanced_title">Title</label>
-             <input onChange={ e => this.setState({titleSearch: e.target.value})} class="form-control" id= "advanced_title"></input>
+             <input onChange={ e => this.setState({titleSearch: e.target.value})} class="form-control" id= "advanced_title" placeholder="Enter Title" ></input>
             </div>
 
             <div class="form-group">
              <label for="advanced_isbn">ISBN</label>
-             <input onChange={ e => this.setState({ISBNSearch: e.target.value})} class="form-control"  id= "advanced_isbn"></input>
+             <input onChange={ e => this.setState({ISBNSearch: e.target.value})} class="form-control"  id= "advanced_isbn" placeholder= "Enter ISBN"></input>
              </div>
 
         <div class="dropdown">
