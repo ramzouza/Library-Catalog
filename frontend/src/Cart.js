@@ -59,7 +59,8 @@ class Cart extends Component {
                                                 .join(',')
                 console.log({nonAdded,nonAddedTitles})
                 if(nonAdded.length > 0) alert(`Loan complete however, non available resource(s): ${nonAddedTitles}`)
-                else alert('Loan complete')
+                else {alert('Loan complete') ; window.location.reload()}
+
                 cookie.remove('userCart')
               }
               // res.filter(res => res)
