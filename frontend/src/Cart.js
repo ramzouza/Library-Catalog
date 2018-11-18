@@ -23,7 +23,7 @@ class Cart extends Component {
     })
   }  
   else{
-    const cart = cookie.load('userCart')
+    const cart = cookie.load('userCart') || []
     const wtf = cart.map(x => {return {resource: x, type: x.type, operation: 'Loan'}})
     this.setState({logs: wtf})
   }
@@ -42,7 +42,6 @@ class Cart extends Component {
 
   render() {
     const {logs} = this.state
-    const isClient = cookie.load('admin') === 'no'
     
     return (
       <div class= "logged-main">
@@ -54,7 +53,7 @@ class Cart extends Component {
             <button class="btn-cart btn btn-success action-bar-btn" type="button"><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
           }
           <h4>The following data will be modified:</h4>
-          {logs.map(item =><CartItem isClientCart={isClient} resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
+          {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
       </div>
       </div>
       

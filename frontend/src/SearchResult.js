@@ -90,8 +90,12 @@ class SearchResult extends Component {
         let data = JSON.stringify(newCartItem)
             data = JSON.parse(data)
         if(!cart.find(x => x.id === newCartItem.id)){
-            cart.push(data)
-            cookie.save('userCart', cart)
+            if(cart.length <= 9){
+                cart.push(data)
+                cookie.save('userCart', cart)
+                alert('Resource added !')
+            } else alert('You have too many items in your cart !')
+            
         } else alert('This resource is aleady in your cart !')
 
         console.log('userCart',cookie.load('userCart'))
