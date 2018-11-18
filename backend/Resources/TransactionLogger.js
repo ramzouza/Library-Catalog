@@ -14,9 +14,9 @@ const connection = new MySql({
 class TransactionLogger {
 
 
-    static log(user_id, resource_id, transaction_type){
+    static log(user_id, resource_id, transaction_type, date){
         try {
-            
+            console.log(arguments);
             pre(
                 {
                     "title": "User with id of user_id is a client.",
@@ -32,9 +32,9 @@ class TransactionLogger {
                 }
             )
             
-            
-            const data = connection.query(`INSERT INTO transactions (user_id, resource_id, transaction_type) VALUES (${user_id}, ${resource_id}, "${transaction_type}")`);
-            
+            console.log(`INSERT INTO transactions (user_id, resource_id, transaction_type, timestamp) VALUES (${user_id}, ${resource_id}, "${transaction_type}", "${date}")`)
+            const data = connection.query(`INSERT INTO transactions (user_id, resource_id, transaction_type, timestamp) VALUES (${user_id}, ${resource_id}, "${transaction_type}", "${date}")`);
+            console.log(data);
             ensure(
                 {
                     "title": "Transaction Log exists in database.",
@@ -49,7 +49,7 @@ class TransactionLogger {
 
 
     static getLogs(){
-        return  connection.query(`SELECT * FROM transactions`);
+        return connection.query(`SELECT * FROM transactions`);
     }
 
 

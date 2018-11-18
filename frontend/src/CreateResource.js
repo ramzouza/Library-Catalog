@@ -30,7 +30,7 @@ class CreateResource extends Component {
         <button  onClick={() => this.handleClick('/create/movie')} type="button">Movie <i class="fas fa-film"></i></button>
         <button  onClick={() => this.handleClick('/create/music')} type="button">Music <i class="fas fa-music"></i></button>
         
-        {!admin ? <Redirect to="/"/> : null}
+        {!admin ? <Redirect to="/cart"/> : null}
 
       </div>
       </div>

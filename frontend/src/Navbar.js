@@ -17,10 +17,16 @@ LogOut(){
     cookie.remove('email')
     cookie.remove('id')
     cookie.remove('userCart')
-    
     apiCall('/disconnect',{id})
     window.location.reload();
 }
+
+    constructor(){
+        super();
+        this.state = {
+            "notification": false
+        }
+    }
 
 
   
@@ -97,7 +103,7 @@ LogOut(){
         <NavItem eventKey="5" >
             <NavIcon>
             <Link to="/cart" >
-                <Glyphicon glyph='shopping-cart'/>
+            {this.state.notification ? <i class="fas fa-cart-plus notif" style={{ fontSize: '1.75em' }}></i> : <Glyphicon style={{ fontSize: '1.75em' }} glyph='shopping-cart'/> }
                 </Link>
             </NavIcon>
             <NavText style={{ fontSize: '1.2em' }}>

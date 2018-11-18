@@ -33,6 +33,7 @@ function pre(){
 
         // if the assertion doesn't hold, throw an error else log the success.
         if (!assertion.expression){
+            console.log(`${type} Error. ${type}: "${assertion.title}" is not satisfied. Expression evaluated to false.`);
             throw `${type} Error. ${type}: "${assertion.title}" is not satisfied. Expression evaluated to false.`;
         } else {
             console.log(`${type} : "${assertion.title}" has passed. ${assertion.expression}`)

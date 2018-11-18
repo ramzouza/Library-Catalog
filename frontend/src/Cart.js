@@ -9,7 +9,8 @@ class Cart extends Component {
     super()
 
     this.state = {
-      logs: []
+      logs: [],
+      message: "The following data will be modified:"
     }
   }
   componentDidMount(){
@@ -58,9 +59,11 @@ class Cart extends Component {
                                                 })
                                                 .join(',')
                 console.log({nonAdded,nonAddedTitles})
-                if(nonAdded.length > 0) alert(`Loan complete however, non available resource(s): ${nonAddedTitles}`)
-                else {alert('Loan complete') ; window.location.reload()}
-
+                if(nonAdded.length > 0) this.setState({message:`Loan complete however, non available resource(s): ${nonAddedTitles}`})
+                else {
+                  this.setState({message:'Loan complete'}); 
+                }
+                this.setState({logs: []})
                 cookie.remove('userCart')
               }
               // res.filter(res => res)
@@ -80,7 +83,7 @@ class Cart extends Component {
             <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>:
             <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
           }
-          <h4>The following data will be modified:</h4>
+          <h4>{this.state.message}</h4>
           {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  
       </div>
       </div>
