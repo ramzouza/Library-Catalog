@@ -36,11 +36,12 @@ class SearchResult extends Component {
 
 
 
-            line_items: []
+            line_items: [],
+            message: ""
         }
 
         this.handleDecrementAvailable = this.handleDecrementAvailable.bind(this)
-
+        this.handleIncrementAvailable = this.handleIncrementAvailable.bind(this)
     }
 
     handleNewResourceLineItem(){
@@ -59,6 +60,10 @@ class SearchResult extends Component {
         this.setState({"available":this.state.available-1})
     }
 
+    handleIncrementAvailable(){
+        this.setState({"available":this.state.available+1})
+    }
+
 
 
     componentDidMount(){
@@ -70,7 +75,7 @@ class SearchResult extends Component {
 
     handleSave(){
         let isAdmin = cookie.load('admin') === 'yes'
-        const { id, type } = this.props
+        const { id, type, resource } = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
         this.setState({editing: false})
         
@@ -81,11 +86,17 @@ class SearchResult extends Component {
                 })
         } else {
             const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
-            this.addToCookies(resource_data)
+            let found = this.findAvailable(resource.lineItem)
+            if(found) this.addToCookies({...resource_data, id: found.id})
+            else this.setState({message:`Sorry, we are out of ${title}. Try to loan it later.`});
         }
     }
 
+    findAvailable(lineItems){
+        return lineItems.find( x => x.user_id === null )
+    }
     addToCookies(newCartItem){
+        console.log({newCartItem})
         let cart = cookie.load('userCart') || []
         let data = JSON.stringify(newCartItem)
             data = JSON.parse(data)
@@ -93,10 +104,10 @@ class SearchResult extends Component {
             if(cart.length <= 9){
                 cart.push(data)
                 cookie.save('userCart', cart)
-                alert('Resource added !')
-            } else alert('You have too many items in your cart !')
+                this.setState({message: "Resource is returned."})
+            } else this.setState({message:'You have too many items in your cart !'})
             
-        } else alert('This resource is aleady in your cart !')
+        } else this.setState({message:'This resource is aleady in your cart !'});
 
         console.log('userCart',cookie.load('userCart'))
     }
@@ -213,6 +224,7 @@ class SearchResult extends Component {
     </div>
     <div class="modal-body">
         {Jsx}
+        <p class="animated fadeIn">{this.state.message}</p>
 {admin?
         <table class="table">
         <tr>
@@ -222,7 +234,7 @@ class SearchResult extends Component {
             <th>Date Due</th>
             <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
         </tr>
-        {this.state.line_items.map( line_item => <ResourceLineItem id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
+        {this.state.line_items.map( line_item => <ResourceLineItem id={resource.resource_id} handler={this.handleDecrementAvailable} handler2={this.handleIncrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
         </table>
 : <table></table>}
     </div>

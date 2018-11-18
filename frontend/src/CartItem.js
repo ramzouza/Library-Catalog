@@ -44,8 +44,7 @@ class CartItem extends Component {
             const cart = cookie.load('userCart')
             const newCart = cart.filter(x => x.id !== id)
             cookie.save('userCart', newCart)
-            alert('Item removed')
-            window.location.reload()
+            window.location.reload();
         }
             
     }

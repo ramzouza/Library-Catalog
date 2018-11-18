@@ -17,10 +17,10 @@ class LoanService {
         let alreadyLoanItem = [];
         for(let x=0;x<item.length;x++){
             try{
-                const getType = connection.query("SELECT type FROM resource_line_item LEFT JOIN resource ON resource_line_item .resource_id=resource .id where resource_line_item.id ="+item[x]+" ")
+                const getType = connection.query("SELECT type, resource_id FROM resource_line_item LEFT JOIN resource ON resource_line_item .resource_id=resource .id where resource_line_item.id ="+item[x]+" ")
                 const availability = connection.query("UPDATE resource_line_item SET semaphore = 1 WHERE id = '"+item[x]+"' and user_id is NULL and semaphore = 0");
 
-                item
+                
                 pre(
                 {
                     "title": "The resource must be available",
@@ -40,6 +40,7 @@ class LoanService {
                 }
                 const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"', date_due ='"+date+"', semaphore = 0 WHERE id = '"+item[x]+"' and user_id is NULL");
                 alreadyLoanItem.push({loan:1,itemid:item[x]})
+                TransactionLogger.log(userId, getType[0]['resource_id'], 'loan', date);
 
 
             ensure(
@@ -84,14 +85,15 @@ class LoanService {
 
         pre({
             "title": "User must be an admin",
-            "expression": isAdmin // user must be a client
+            "expression": isAdmin // user must be an admin
         },
         {
             "title": "The resource must be loaned",
             "expression": isloaned[0]['user_id'] != null // resource must be loaned meaning user id is not null
         })
         let update = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
-
+        const resid = connection.query("SELECT resource_id FROM resource_line_item LEFT JOIN resource ON resource_line_item .resource_id=resource .id where resource_line_item.id ="+itemId+" ")
+        TransactionLogger.log(isloaned[0]['user_id'], resid[0]['resource_id'], 'return', null);
         ensure(
             {
                 "title": "The resource is available and no longer loaned",

@@ -49,7 +49,7 @@ class CreateMovie extends Component {
         .then ( json => {
 
           if(json.status === 0){
-            this.props.history.push('/')
+            this.props.history.push('/cart')
           }
 
         })
@@ -88,7 +88,7 @@ class CreateMovie extends Component {
                 
         <button
            onClick={this.handleClick.bind(this)} type="button"><span>Create Movie</span></button>
-        {!admin ? <Redirect to="/"/> : null}
+        {!admin ? <Redirect to="/cart"/> : null}
       </div>
        </div>
        </div>
