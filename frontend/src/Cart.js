@@ -31,13 +31,40 @@ class Cart extends Component {
 
       // Call Controller when user clicks on save button
       handleClickSave() {
-      
-        POST('/saveCart')
-          .then(res => res.json())
-          .then( json => {
-            console.log(json.results)
-            this.setState({logs: []})
-        })
+        const isAdmin = cookie.load('admin') === 'yes' ?  true : false
+        if(isAdmin){
+          POST('/saveCart')
+            .then(res => res.json())
+            .then( json => {
+              console.log(json.results)
+              this.setState({logs: []})
+          })
+        } else {
+          const {logs} = this.state
+          console.log({logs})
+          const id = cookie.load('id') || []
+          const ids = logs.map( x => x.resource).map(x => x.id)
+          POST('/loanItem', {item: ids, userId: id})
+            .then( res => res.json() )
+            .then(res => {
+              console.log({res})
+              const {status, message, info} = res
+              if(status === 0){
+                const nonAdded = info.filter( x => x.loan === 0 )
+                const nonAddedTitles = nonAdded.map(x => x.itemid)
+                                                .map( x => {
+                                                  let title = logs.map(y => y.resource).find(y => y.id === x ).title || ""
+                                                  return title
+                                                })
+                                                .join(',')
+                console.log({nonAdded,nonAddedTitles})
+                if(nonAdded.length > 0) alert(`Loan complete however, non available resource(s): ${nonAddedTitles}`)
+                else alert('Loan complete')
+                cookie.remove('userCart')
+              }
+              // res.filter(res => res)
+            })
+        }
       }
 
   render() {
@@ -50,7 +77,7 @@ class Cart extends Component {
           <h1>Cart</h1>
           {cookie.load('admin') === 'yes'?
             <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Save</ button>:
-            <button class="btn-cart btn btn-success action-bar-btn" type="button"><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
+            <button class="btn-cart btn btn-success action-bar-btn" type="button" onClick={() => this.handleClickSave()}><i class="fas fa-save"></i> Loan</ button> // add handleClickLoan
           }
           <h4>The following data will be modified:</h4>
           {logs.map(item =><CartItem resource_data={item.resource} type={item.type} operation={item.operation} index={item.index} />)}  

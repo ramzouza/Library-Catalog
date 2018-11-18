@@ -70,7 +70,7 @@ class SearchResult extends Component {
 
     handleSave(){
         let isAdmin = cookie.load('admin') === 'yes'
-        const { id, type } = this.props
+        const { id, type, resource } = this.props
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label } = this.state
         this.setState({editing: false})
         
@@ -81,11 +81,17 @@ class SearchResult extends Component {
                 })
         } else {
             const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
-            this.addToCookies(resource_data)
+            let found = this.findAvailable(resource.lineItem)
+            if(found) this.addToCookies({...resource_data, id: found.id})
+            else alert(`Sorry, we are out of ${title}. Try to loan it later.`)
         }
     }
 
+    findAvailable(lineItems){
+        return lineItems.find( x => x.user_id === null )
+    }
     addToCookies(newCartItem){
+        console.log({newCartItem})
         let cart = cookie.load('userCart') || []
         let data = JSON.stringify(newCartItem)
             data = JSON.parse(data)

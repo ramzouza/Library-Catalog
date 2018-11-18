@@ -45,6 +45,7 @@ class Search extends Component {
         .then( res => res.json() )
         .then ( json => {
           let TotalArray = json.results;
+          console.log({TotalArray})
           this.setState({TotalArray}, () => this.setState({loading: false}))
         }).catch( err => {
           this.setState({loading: false})

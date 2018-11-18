@@ -24,6 +24,17 @@ class ResourceLineItem extends Component {
         })
     }
 
+    handleReturnResource(){
+        const id = cookie.load('id')
+        POST('/returnItem',{itemId: this.props.line_item.id}, {id} )
+        .then(res=>res.json())
+        .then(res => {
+            alert('Resource returned')
+            console.log('The res from loan',{res})
+            this.setState({editing: false})
+        })
+    }
+
     render() {
         //key={line_item.id} id={line_item.id} type={resource.restype} resource={resource}
         const { id, type, line_item, resource } = this.props
@@ -36,8 +47,9 @@ class ResourceLineItem extends Component {
             <td>{type}</td>
             <td>{line_item.user_id ? line_item.user_id : "Available"}</td>
             <td>{line_item.date_due}</td>
-            <td>
-                {admin? <button type="button" onClick={ _ => this.handleDeleteResourceLineItem()} class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button> : <div></div>}
+            <td style={{display: 'flex'}}>
+                {admin? <button type="button" onClick={ _ => this.handleDeleteResourceLineItem()} class="btn btn-danger btn-sm" style={{width: 35, marginRight: 5}}><i class="fas fa-trash"></i></button> : <div></div>}
+                {line_item.user_id ? <button type="button" onClick={ _ => this.handleReturnResource()} class="btn btn-warning btn-sm" style={{width: 35}}><i class="fas fa-inbox"></i></button> : <div></div>}
             </td>
         </tr> 
         }
