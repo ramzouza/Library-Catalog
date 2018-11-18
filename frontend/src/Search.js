@@ -301,8 +301,10 @@ render() {
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" onClick={ _ => this.handleClickSearch()} class="btn btn-primary" data-dismiss="modal">Search</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button class="btn btn-default btn-search animated fadeIn" onClick={ _ => this.handleClickSearch()} type="button" data-dismiss="modal">Search</button>
+                  <div>
+                  <button class="btn btn-default btn-search animated fadeIn"  type="button"  data-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
               
