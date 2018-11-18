@@ -50,7 +50,7 @@ class Cart extends Component {
             <div>
               {logs.map(item =><CartItem resource_data={item.resource} operation={item.operation} index={item.index} />)}  
             </div>
-          <button style={savebtn} type="button" onClick={() => this.handleClickSave()}> Save </ button>
+          <button class="btn btn-default btn-search animated fadeIn"  type="button"  onClick={() => this.handleClickSave()}> Save </ button>
         </div>
       </div>
     );
