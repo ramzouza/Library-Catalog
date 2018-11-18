@@ -19,8 +19,8 @@ class LoanService {
             try{
                 const getType = connection.query("SELECT type FROM resource_line_item LEFT JOIN resource ON resource_line_item .resource_id=resource .id where resource_line_item.id ="+item[x]+" ")
                 const availability = connection.query("UPDATE resource_line_item SET semaphore = 1 WHERE id = '"+item[x]+"' and user_id is NULL and semaphore = 0");
-           
-               
+
+                item
                 pre(
                 {
                     "title": "The resource must be available",
@@ -31,7 +31,7 @@ class LoanService {
                     "expression": getType[0]['type'] != "magazine" // no more than 10 resources
                 }
             )
-            
+
                 let date = new Date();
                 if(getType[0]['type'] == "movie" || getType[0]['type'] == "music"){
                     date.setDate(date.getDate() + 2);
@@ -41,17 +41,15 @@ class LoanService {
                 const alreadyloan = connection.query("UPDATE resource_line_item SET user_id = '"+userId+"', date_due ='"+date+"', semaphore = 0 WHERE id = '"+item[x]+"' and user_id is NULL");
                 alreadyLoanItem.push({loan:1,itemid:item[x]})
 
-                TransactionLogger.log(userId, item[x], "loan");
-            
-           
+
             ensure(
                 {
                     "title": "The resource is loaned and no longer available",
                     "expression": alreadyloan['changedRows'] == 1 // user must be a client
                 }
             )
-           
-        
+
+
         }catch(e){
            connection.query("UPDATE resource_line_item SET semaphore = 0 WHERE id = '"+item[x]+"' and user_id is NULL ");
            alreadyLoanItem.push({loan:0,itemid:item[x]})
@@ -74,7 +72,7 @@ class LoanService {
             }
         )
         return this.loan(userId,item)
-        
+
     }catch(e){
         return { status: 1, message: 'extra', info:alreadyloan[0]['count']}
         }
@@ -83,17 +81,17 @@ class LoanService {
     static returnItem(isAdmin,itemId){
         try{
             const isloaned = connection.query("select user_id from resource_line_item  WHERE id = "+itemId);
-            
+
         pre({
             "title": "User must be an admin",
             "expression": isAdmin // user must be a client
         },
         {
             "title": "The resource must be loaned",
-            "expression": isloaned[0]['user_id'] != null // resource must be available meaning user id is Null
+            "expression": isloaned[0]['user_id'] != null // resource must be loaned meaning user id is not null
         })
         let update = connection.query("UPDATE resource_line_item SET user_id = NULL, date_due ='Never' WHERE id = "+itemId);
-        TransactionLogger.log(userId, itemId, "return");
+
         ensure(
             {
                 "title": "The resource is available and no longer loaned",
