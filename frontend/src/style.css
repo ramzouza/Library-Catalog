@@ -67,6 +67,7 @@
     align-items: center;
     border-radius: 5px;
     width: 100%;
+    border: #037d9e;
 }
 
 
@@ -81,6 +82,7 @@
     border-radius: 5px;
     background-color: rgba(244, 244, 244, 0.7);
     font-size: 18px;
+    border:#037d9e;
 }
 
 .cart h2 {
