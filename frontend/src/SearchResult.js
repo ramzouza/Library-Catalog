@@ -36,11 +36,12 @@ class SearchResult extends Component {
 
 
 
-            line_items: []
+            line_items: [],
+            message: ""
         }
 
         this.handleDecrementAvailable = this.handleDecrementAvailable.bind(this)
-
+        this.handleIncrementAvailable = this.handleIncrementAvailable.bind(this)
     }
 
     handleNewResourceLineItem(){
@@ -57,6 +58,10 @@ class SearchResult extends Component {
 
     handleDecrementAvailable(){
         this.setState({"available":this.state.available-1})
+    }
+
+    handleIncrementAvailable(){
+        this.setState({"available":this.state.available+1})
     }
 
 
@@ -83,7 +88,7 @@ class SearchResult extends Component {
             const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
             let found = this.findAvailable(resource.lineItem)
             if(found) this.addToCookies({...resource_data, id: found.id})
-            else alert(`Sorry, we are out of ${title}. Try to loan it later.`)
+            else this.setState({message:`Sorry, we are out of ${title}. Try to loan it later.`});
         }
     }
 
@@ -99,10 +104,10 @@ class SearchResult extends Component {
             if(cart.length <= 9){
                 cart.push(data)
                 cookie.save('userCart', cart)
-                alert('Resource added !')
-            } else alert('You have too many items in your cart !')
+                this.setState({message: "Resource is returned."})
+            } else this.setState({message:'You have too many items in your cart !'})
             
-        } else alert('This resource is aleady in your cart !')
+        } else this.setState({message:'This resource is aleady in your cart !'});
 
         console.log('userCart',cookie.load('userCart'))
     }
@@ -219,6 +224,7 @@ class SearchResult extends Component {
     </div>
     <div class="modal-body">
         {Jsx}
+        <p class="animated fadeIn">{this.state.message}</p>
 {admin?
         <table class="table">
         <tr>
@@ -228,7 +234,7 @@ class SearchResult extends Component {
             <th>Date Due</th>
             <th><button type="button" onClick={ _ => this.handleNewResourceLineItem()} class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
         </tr>
-        {this.state.line_items.map( line_item => <ResourceLineItem id={resource.resource_id} handler={this.handleDecrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
+        {this.state.line_items.map( line_item => <ResourceLineItem id={resource.resource_id} handler={this.handleDecrementAvailable} handler2={this.handleIncrementAvailable} type={resource.restype} line_item={line_item} resource={resource} />)}
         </table>
 : <table></table>}
     </div>

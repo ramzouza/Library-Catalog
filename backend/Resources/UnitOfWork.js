@@ -75,9 +75,7 @@ class UnitOfWork {
             }
 
             if(unitofwork[sender_id][i].operation == 'delete'){
-                console.log("Skander")
                 var res = ResourceMapper.delete(unitofwork[sender_id][i].resourceData.id);
-                console.log("Skander2")
                 if(res.status == 1){
                     statusOfWork = true;
                     errMsg = res.error;

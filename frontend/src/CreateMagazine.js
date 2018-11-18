@@ -37,7 +37,7 @@ class CreateMagazine extends Component {
         .then ( json => {
 
           if(json.status === 0){
-            this.props.history.push('/')
+            this.props.history.push('/cart')
           }
 
         })
@@ -68,7 +68,7 @@ class CreateMagazine extends Component {
         
         <button
            onClick={this.handleClick.bind(this)} type="button"><span>Create Magazine</span></button>
-        {!admin ? <Redirect to="/"/> : null}
+        {!admin ? <Redirect to="/cart"/> : null}
       </div>
       </div>
       </div>

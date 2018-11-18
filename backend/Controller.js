@@ -174,7 +174,6 @@ app.post('/resources', (req, res) => {
 
     // make new resource
     const { status, message, results, error } = ResourceCatalog.MakeNewResource(resource_data, type, sender_id);
-
     if (status == 1) {
         res.status(400)
         res.json({ status, message, error })
@@ -191,7 +190,7 @@ app.post('/resources', (req, res) => {
 // GET ALL RESOURCES
 app.get('/resources', (req, res) => {
     // check if the sender is authenticated
-    // const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
     // const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
     // if (!auth.isAuthorized) {
     //     res.status(400)
@@ -381,14 +380,14 @@ app.post('/deleteLineItem', (req, res) => {
     if (!auth.isAuthorized) {
         res.status(400)
         res.json({ status: 1, message: "Not Authorized" })
-        logger(`PUT -  [/resources] - ${400} - ${sender_id} `)
+        logger(`PUT -  [/deleteLineItem] - ${400} - ${sender_id} `)
     }
     // get resources here
     const { resource_line_item_id } = req.body;
     const message = ResourceCatalog.deleteLineItem(resource_line_item_id);
 
     res.json({ "results": message });
-    logger(`GET - [/resources] - ${200} - ${sender_id} `)
+    logger(`GET - [/deleteLineItem] - ${200} - ${sender_id} `)
 })
 
 
@@ -408,9 +407,9 @@ app.post('/resource', (req, res) => {
     // get resources here
     const { resource_data, isFilter } = req.body;
     const advancedInfo = ResourceCatalog.SearchResource(resource_data, isFilter);
-    console.log(advancedInfo);
+    console.log(1);
     res.json({ "results": advancedInfo });
-    logger(`GET - [/resources] - ${200} - ${sender_id} `);
+    logger(`POST - [/resource] - ${200} - ${sender_id} `);
 
 })
 
