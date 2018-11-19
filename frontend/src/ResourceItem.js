@@ -35,11 +35,6 @@ class ResourceItem extends Component {
                 return defPic
         } 
     }
-
-
-
-
-
   handleClickEdit(id){
     if(this.state.editing) {
         const {title} = this.state;
@@ -52,7 +47,6 @@ class ResourceItem extends Component {
         PUT('/resources', obj)
           .then( res => res.json() )
           .then ( json => {
-            alert(json.message)
             if(json.status === 0){
                 window.location.reload()
             }
@@ -69,7 +63,6 @@ class ResourceItem extends Component {
       DELETE('/resources', {"resource_id": id})
         .then( res => res.json() )
         .then ( json => {
-          alert(json.message)
           window.location.reload()
         })
       
@@ -81,7 +74,7 @@ class ResourceItem extends Component {
         const admin = cookie.load('admin') === 'yes';
 
         return (
-            <div style={main}>
+            <div class="resource-item">
                 <div>
                     
                     <img alt="" style={picStyle} src={this.typeToPicture(type)}/>
@@ -109,18 +102,6 @@ class ResourceItem extends Component {
 }
 
 export default ResourceItem;
-const main = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    height: 50,
-    width: '100%',
-    borderBottom: '1px solid black',
-    backgroundColor: 'white',
-    padding: "0px 5px"
-}
 
 const picStyle = {
     width: '1%'

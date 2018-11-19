@@ -19,11 +19,10 @@ class Logged extends Component {
     const logged = cookie.load('logged') === 'yes'
     console.log(logged)
     return (
-      <div style={main} >
+      <div class= "logged-main">
         <Navbar/>
-        <div style={body}>
+        <div class= "logged-body">
             <Search/>
-            <Resources/>
         </div>
         {!logged ? <Redirect to="/login"/> : null}
       </div>
@@ -32,23 +31,3 @@ class Logged extends Component {
 }
 
 export default Logged;
-const  main = {
-    display:'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    borderRadius: 5,
-    height: 900,
-    width: '100%',
-}
-
-const body = {
-    height: '100%',
-    width: '100%',
-    display:'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingTop: '10%',
-}

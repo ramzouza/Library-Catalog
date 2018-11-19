@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { apiCall } from './ApiCall'
-
 import { Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
+import Navbar from './Navbar'
+
 
 class NewUser extends Component {
   constructor(){
@@ -36,13 +37,9 @@ class NewUser extends Component {
         phoneNumber, isAdmin}
 
 
-        console.log(newUser)
-
-
         apiCall('/createnewuser', newUser)
         .then( res => res.json() )
         .then (json => {
-          alert(json.message)
 
           if(json.status === 0){
             this.props.history.push('/')
@@ -53,67 +50,37 @@ class NewUser extends Component {
   }
   render() {
   const admin = cookie.load('admin') === 'yes'
-    return (
-      <div style={main} >
-        <span style={{fontWeight: 'bold'}} >New User</span>
+    return (<div>
+      <Navbar/>
+      <div class="create-padding">
+      <div class="newuser-main" >
+      
+        <h1 id="text">Create User</h1>
         
-        <input onChange={evt => {this.setState({firstName: evt.target.value})}} style={input} type="text" placeholder="First Name" ></input>
+        <input onChange={evt => {this.setState({firstName: evt.target.value})}} type="text" placeholder="First Name" ></input>
 
-        <input onChange={evt => {this.setState({lastName: evt.target.value})}} style={input} type="text" placeholder="Last Name" ></input>
+        <input onChange={evt => {this.setState({lastName: evt.target.value})}} type="text" placeholder="Last Name" ></input>
         
-        <input onChange={evt => {this.setState({password: evt.target.value})}} style={input} type="password" placeholder="Password" ></input>
+        <input onChange={evt => {this.setState({password: evt.target.value})}} type="password" placeholder="Password" ></input>
         
-        <input onChange={evt => {this.setState({email: evt.target.value})}} style={input} type="text" placeholder="Email" ></input>
+        <input onChange={evt => {this.setState({email: evt.target.value})}} type="text" placeholder="Email" ></input>
         
-        <input onChange={evt => {this.setState({address: evt.target.value})}} style={input} type="text" placeholder="Address" ></input>
+        <input onChange={evt => {this.setState({physicalAddress: evt.target.value})}} type="text" placeholder="Address" ></input>
 
-        <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} style={input} type="text" placeholder="Phone Number" ></input>
+        <input onChange={evt => {this.setState({phoneNumber: evt.target.value})}} type="text" placeholder="Phone Number" ></input>
         
-        <div style={{display: 'flex', alignItems:'center'}}>
-            Admin 
-            <input onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"></input>
-        </div>
         
-        <button style={button}
-           onClick={this.handleClick.bind(this)} type="button">Create</button>
+            <label><input id="checkbox" onChange={evt => {this.setState({isAdmin: evt.target.value? 1 : 0})}} type="checkbox"/> Admin</label>
+
+        
+        <button 
+           onClick={this.handleClick.bind(this)} type="button"><span>Create</span></button>
         {!admin ? <Redirect to="/"/> : null}
+      </div>
+      </div>
       </div>
     );
   }
 }
 
 export default NewUser;
-const  main = {
-    display:'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    borderRadius: 5,
-    minHeight: 400,
-    fontSize: 30,
-    padding: 30,
-    boxShadow: '0px 0px 30px rgba(0,0,0,0.1)',
-    backgroundColor: 'rgba(244,244,244,0.7)',
-    marginTop: '10%',
-    // width: 200,
-}
-
-const input = {
-    fontSize: 30,
-    textAlign: 'center',
-    padding: 10,
-    borderRadius: 5,
-    margin: 5
-}
-
-const button = {
-    height: 50,
-    width: '100%',
-    fontSize: 20,
-    borderRadius: 5,
-    fontFamily: 'inherit',
-    // padding: '0px 10px',
-    // boxShadow: '0px 5px 5px rgba(0,0,0,0.5)',
-
-}

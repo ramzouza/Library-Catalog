@@ -1,39 +1,54 @@
 const IdentifyMap = require("../IdentityMap.js");
 const ResourceMapper = require('./ResourceMapper');
 
-var unitofwork = [];
-var index = 0;
-var callbackMsg = "";
+var unitofwork = {};
+var index = {};
 
 class UnitOfWork {
-    static InsertResource(resourceData, type){
-       unitofwork[index] = {resourceData,type, operation: 'insert',resource:resourceData}
-       index++;
+    
+    static InsertResource(resourceData, type, sender_id){
+        console.log('Insert: ' + sender_id);
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
+        unitofwork[sender_id][index[sender_id]]  = {resourceData,type, operation: 'insert',resource:resourceData}
+       index[sender_id]++;
        return {status: 0, message: 'Insert Resource sent to cart', results: resourceData};
     }
 
-    static EditResource(resourceData, type){
-        unitofwork[index] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
-        index++;
+    static EditResource(resourceData, type, sender_id){
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
+        IdentifyMap[resourceData.id]=resourceData
+        unitofwork[sender_id][index[sender_id]] = {resourceData,type, operation: 'update', resource:IdentifyMap[resourceData.id]}
+        index[sender_id]++;;
         return {status: 0, message: 'Update Resource sent to cart', results: resourceData};
     }
 
-    static DeleteResource(id){
-        unitofwork[index] = {id, operation: 'delete', resource: IdentifyMap[id]}
-        index++;
-        return {status: 0, message: 'Delete Resource sent to cart', results: id};
+    static DeleteResource(resourceData, type, sender_id){
+        if(index[sender_id] == undefined){
+            index[sender_id] = 0;
+            unitofwork[sender_id] = [];
+        }
+        IdentifyMap[resourceData.id]=resourceData
+        unitofwork[sender_id][index[sender_id]] = {resourceData,type, operation: 'delete', resource:IdentifyMap[resourceData.id]}
+        index[sender_id]++;;
+        return {status: 0, message: 'Delete Resource sent to cart', results: resourceData};
     }
 
-    static save(){
-        var unitOfStatus = []; // of same length as the unitofwork array
+    static save(sender_id){
+            var unitOfStatus = []; // of same length as the unitofwork array
             var statusOfWork = false; // false means no error
             var errMsg;
-        for (var i = 0; i < unitofwork.length ; i++){
+        for (var i = 0; i < unitofwork[sender_id].length ; i++){
             unitOfStatus = [];
             statusOfWork = false;
             errMsg='';
-            if(unitofwork[i].operation == 'insert'){
-                var res = ResourceMapper.insert(unitofwork[i].resourceData, unitofwork[i].type);
+            if(unitofwork[sender_id][i].operation == 'insert'){
+                var res = ResourceMapper.insert(unitofwork[sender_id][i].resourceData, unitofwork[sender_id][i].type);
                 
                 if(res.status == 1){
                     statusOfWork = true;
@@ -45,9 +60,9 @@ class UnitOfWork {
                 }
             }
 
-            if(unitofwork[i].operation == 'update'){
+            if(unitofwork[sender_id][i].operation == 'update'){
                 
-                var res = ResourceMapper.update(unitofwork[i].resourceData, unitofwork[i].type);
+                var res = ResourceMapper.update(unitofwork[sender_id][i].resourceData, unitofwork[sender_id][i].type);
                 
                 if(res.status == 1){
                     statusOfWork = true;
@@ -59,8 +74,20 @@ class UnitOfWork {
                 }
             }
 
-            if(unitofwork[i].operation == 'delete'){
-                var res = ResourceMapper.delete(unitofwork[i].id);
+            if(unitofwork[sender_id][i].operation == 'delete'){
+                var res = ResourceMapper.delete(unitofwork[sender_id][i].resourceData.id);
+                if(res.status == 1){
+                    statusOfWork = true;
+                    errMsg = res.error;
+                }
+                else if(res.status == 0) {
+                    statusOfWork = false;
+                    unitOfStatus[i] = {status : 0, message : 'looks good brotha'};
+                }
+            }
+
+            if(unitofwork[sender_id][i].operation == 'loan'){
+                var res = LoanService.loanItem(unitofwork[sender_id][i].id);
 
                 if(res.status == 1){
                     statusOfWork = true;
@@ -72,9 +99,10 @@ class UnitOfWork {
                 }
             }
         }
-        
+
+        unitofwork[sender_id] = [];
+
         if(statusOfWork == false){
-            unitofwork = []; // clear array once completed successfully
             return {status : 0, message : 'Resources have been updated.'};
         }
         else
@@ -82,17 +110,21 @@ class UnitOfWork {
 
     }
 
-    static RemoveItem(index){
+    static RemoveItem(index, sender_id){
         try{
-            unitofwork.splice(index,1)
-            return {status : 0, message : "Item removed from cart", result: unitofwork}
+            unitofwork[sender_id].splice(index,1)
+            return {status : 0, message : "Item removed from cart", result: unitofwork[sender_id]}
         }catch(e){
             return {status : 1, message : 'Error' +e, e}
         }
     }
 
-    static ViewUnitOfWork(){
-        return unitofwork.map((item, index) => { return { resource: item.resource, operation: item.operation, index: index }});
+    static ViewUnitOfWork(sender_id){
+        if(index[sender_id] == undefined){
+            unitofwork[sender_id] = [];
+        }
+        unitofwork[sender_id] = unitofwork[sender_id].filter(Boolean);
+        return unitofwork[sender_id].map((item, index) => { return { resource: item.resource, type:item.type, operation: item.operation, index: index }});
     }
 }
 

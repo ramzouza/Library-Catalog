@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './style.css';
 
 import Login from './Login'
 import Logged from './Logged'
@@ -10,6 +10,7 @@ import CreateBook from './CreateBook'
 import CreateMagazine from './CreateMagazine'
 import CreateMovie from './CreateMovie'
 import CreateMusic from './CreateMusic'
+import Transactions from './Transactions'
 import Cart from './Cart'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies'
@@ -44,7 +45,7 @@ class App extends Component {
   
   render() {
     return (
-      <div style={main}>
+      <div class="app-main">
         <Router>
           <Switch>
             <Route exact path="/login" component={Login}/>
@@ -56,6 +57,7 @@ class App extends Component {
             <Route exact path="/create/movie" component={CreateMovie} />
             <Route exact path="/create/music" component={CreateMusic} />
             <Route exact path="/loggedusers" component={LoggedUsers} />
+            <Route exact path="/transactions" component={Transactions} />
             <Route exact path="/cart" component={Cart} />
           </Switch>
         </Router>
@@ -65,9 +67,3 @@ class App extends Component {
 }
 
 export default App;
-const main = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-  fontFamily: 'Impact'
-}

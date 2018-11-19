@@ -34,7 +34,7 @@ class Resources extends Component {
   render() {
     const {resource_list} = this.state;
     return (
-      <div style={main}>
+      <div class="resource-main">
         <h1>High Quality Database</h1>
         {resource_list.map( ({type, resource_data}) => <ResourceItem key={resource_data.id} id={resource_data.id} type={type} resource_data={resource_data} />)}
       </div>
@@ -43,11 +43,3 @@ class Resources extends Component {
 }
 
 export default Resources;
-const  main = {
-    minWidth: '30%',
-    display:'flex',
-    flexDirection: 'column',
-    alignItems:'center',
-    justifyContent: 'center'
-    
-}

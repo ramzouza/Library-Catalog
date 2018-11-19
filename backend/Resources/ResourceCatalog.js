@@ -11,17 +11,33 @@ class ResourceCatalog {
     // with all possible resources.
     // title
 
-    static MakeNewResource(resourceData, type){
+    static MakeNewResource(resourceData, type, sender_id){
         //return ResourceMapper.insert(resourceData, type);
-        return UnitOfWork.InsertResource(resourceData, type)
+        return UnitOfWork.InsertResource(resourceData, type, sender_id);
         
     }
 
-    static Find(id) {
+    static addLineItem(resource_id){
+        return ResourceMapper.addLineItem(resource_id);
+    }
+
+    static loanItem(userId,item){
+        return ResourceMapper.loanItem(userId,item);
+    }
+
+    static returnItem(itemId){
+        return ResourceMapper.returnItem(itemId);
+    }
+
+    static deleteLineItem(resource_line_item_id){
+        return ResourceMapper.deleteLineItem(resource_line_item_id);
+    }
+
+    static GetResourceById(id) {
       return ResourceMapper.select(id);
     }
 
-    static Find(search,isadvancedSearch){
+    static SearchResource(search,isadvancedSearch){
         return ResourceMapper.advSelect(search,isadvancedSearch);
     }
 
@@ -44,16 +60,19 @@ class ResourceCatalog {
     static getAllArtists() {
         return ResourceMapper.getAllArtists();
     }
-  
-    static EditResource(resource_id, resourceData, type){
+
+    static EditResource(resource_id, resourceData, type, sender_id){
         resourceData.id = resource_id;
-       // return ResourceMapper.update(resourceData, type);
-       return UnitOfWork.EditResource(resourceData, type);
+       return UnitOfWork.EditResource(resourceData, type, sender_id);
     }
 
-    static DeleteResource(id){
-        //return ResourceMapper.delete(id); 
-        return  UnitOfWork.DeleteResource(id);
+    static DeleteResource(resource_id, resourceData, type, sender_id){
+        resourceData.id = resource_id;
+        return  UnitOfWork.DeleteResource(resourceData, type, sender_id);
+    }
+
+    static LoanResource(resource_id, resourceData, type, sender_id) { // must be changed
+        return UnitOfWork.LoanResource( resourceData, resource_id); // must be changed with correct parameters
     }
 
 }

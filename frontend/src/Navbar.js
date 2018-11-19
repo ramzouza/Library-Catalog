@@ -3,84 +3,198 @@ import {Link} from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
+import { Glyphicon,MenuItem, DropdownButton, ButtonToolbar,Image,Dropdown,SplitButton } from 'react-bootstrap';
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import './SideBar.css';
+
 
 class Navbar extends Component {
+
+LogOut(){
+  const id = cookie.load('id')  
+    cookie.remove('logged') 
+    cookie.remove('admin') 
+    cookie.remove('email')
+    cookie.remove('id')
+    cookie.remove('userCart')
+    apiCall('/disconnect',{id})
+    window.location.reload();
+}
+
+    constructor(){
+        super();
+        this.state = {
+            "notification": false
+        }
+    }
+
+
+  
   render() {
     const logged = cookie.load('logged') === 'yes'
     const admin = cookie.load('admin') === 'yes'
 
     return (
-      <div style={main} >
-
-        {!logged?<Redirect to="/login"/> : null}
-
-        {logged?         
-         (<Link to="/" style={{textDecoration: 'none', color:'white' }}>
-            <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',padding: 15}}>Home</div>
-          </Link>)
-          : null }
-          
-        <div/>
-
-        <div style={{fontSize: 20,display:'flex',flexDirection: 'row',justifyContent: 'space-between',}}>
+      
+      
+   
+   <div class='navbar-main' >
+   {admin ?(
+    <SideNav 
+    onSelect={(selected) => {
         
-        { admin?         
-         (<Link to="/create/user" style={{textDecoration: 'none', color:'white' }}>
-            <div style={{padding: 15}}>Create User</div>
-          </Link>)
-          : null }
-          
-          { admin? 
-           (<Link to="/loggedusers" style={{textDecoration: 'none', color:'white' }}>
-              <div style={{padding: 15}}>Logged Users</div>
-            </Link>)
-          : null }
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav defaultSelected="home">
+   
+        <NavItem eventKey="1" >
+        
+            <NavIcon><Link to="/" >
+                <i className="fa fa-fw fa-search" style={{ fontSize: '1.75em' }} /></Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/" >
+                   Home
+            </Link>
+            </NavText>
+            
+        </NavItem>
+        
+        <NavItem eventKey="2" >
+            <NavIcon>
+            <Link to="/create/user" >
+                <Glyphicon glyph='user'/>
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }} >
+            <Link to="/create/user" >
+        Create User
+            </Link>
+            </NavText>
+        </NavItem>
 
-          { admin? 
-           (<Link to="/create" style={{textDecoration: 'none', color:'white' }}>
-              <div style={{padding: 15}}>Create ressource</div>
-            </Link>)
-          : null }
+        <NavItem eventKey="3" >
+            <NavIcon>
+            <Link to="/create" >
+                <Glyphicon glyph='pencil'/>
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/create" >
+        Create Resource
+            </Link>
+            </NavText>
+        </NavItem>
 
-           { admin? 
-           (<Link to="/cart" style={{textDecoration: 'none', color:'white' }}>
-              <div style={{padding: 15}}>View Cart</div>
-            </Link>)
-          : null }
-          
-          <Link to="/login" style={{textDecoration: 'none', color:'white' }}>
-          <div onClick={ _ => {
-                const id = cookie.load('id')  
-                cookie.remove('logged') 
-                cookie.remove('admin') 
-                cookie.remove('email')
-                cookie.remove('id')
-                
-                alert('Goodbye!')
-                apiCall('/disconnect',{id})
-              }} 
-                style={{padding: 15}}>Log out</div>
-          </Link>
-          
-        </div>
+        <NavItem eventKey="4" >
+            <NavIcon>
+            <Link to="/loggedusers" >
+                <Glyphicon glyph='eye-open'/>
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/loggedusers" >
+            View Logged Users
+            </Link>
+            </NavText>
+        </NavItem>
+
+        <NavItem eventKey="5" >
+            <NavIcon>
+            <Link to="/cart" >
+            {this.state.notification ? <i class="fas fa-cart-plus notif" style={{ fontSize: '1.75em' }}></i> : <Glyphicon style={{ fontSize: '1.75em' }} glyph='shopping-cart'/> }
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/cart" >
+        View Cart
+            </Link>
+            </NavText>
+        </NavItem>
+       
+        <NavItem eventKey="6" >
+            <NavIcon>
+            <Link to="/Transactions" >
+                <Glyphicon glyph='list-alt'/>
+                </Link>
+            </NavIcon>
+            <NavText  style={{ fontSize: '1.2em' }}>
+            <Link to="/Transactions" >
+        Transactions History
+            </Link>
+            </NavText>
+        </NavItem>
+
+
+
+        <NavItem eventKey="7" onClick={this.LogOut}>
+            <NavIcon>
+            <Link to="/" >
+                <Glyphicon glyph='log-out'/>
+                </Link>
+            </NavIcon>
+            <NavText  style={{ fontSize: '1.2em' }}>
+            <Link to="/" >
+        Log Out
+            </Link>
+            </NavText>
+        </NavItem>
+       
+    </SideNav.Nav>
+</SideNav>) :
+<SideNav 
+    onSelect={(selected) => {
+        
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav defaultSelected="home">
+        <NavItem eventKey="1" >
+            <NavIcon><Link to="/" >
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
+            </NavIcon>
+            <NavText  style={{ fontSize: '1.2em' }}>
+            <Link to="/" >
+                   Home
+            </Link>
+            </NavText>
+        </NavItem>
+
+        <NavItem eventKey="2" >
+            <NavIcon>
+            <Link to="/cart" >
+                <Glyphicon glyph='shopping-cart'/>
+                </Link>
+            </NavIcon>
+            <NavText style={{ fontSize: '1.2em' }}>
+            <Link to="/cart" >
+        View Cart
+            </Link>
+            </NavText>
+        </NavItem>
+       
+        <NavItem eventKey="3" onClick={this.LogOut}>
+            <NavIcon>
+            <Link to="/" >
+                <Glyphicon glyph='log-out'/>
+                </Link>
+            </NavIcon>
+            <NavText  style={{ fontSize: '1.2em' }}>
+            <Link to="/" >
+        Log Out
+            </Link>
+            </NavText>
+        </NavItem>
+       
+    </SideNav.Nav>
+</SideNav>}
+      
       </div>
-    );
+      
+            );
   }
 }
 
 export default Navbar;
-const  main = {
-    position: 'absolute',
-    display:'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontFamily: 'Impact',
-    width:'100%',
-    height: 80,
-    fontSize: 25,
-    // padding: '0px 15px',
-    color: 'white',
-    boxShadow: '5px 2px 10px rgba(0,0,0,0.5)',
-    backgroundColor: 'rgba(0,0,0,0.5)'
-}
+
