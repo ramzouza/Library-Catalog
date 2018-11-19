@@ -15,40 +15,40 @@ import Cart from './Cart'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies'
 import { apiCall } from './ApiCall';
-
+import Loans from './Loans';
 class App extends Component {
 
-  componentWillMount(){
+  componentWillMount() {
     const id = cookie.load('id')
-    
-    if(id) 
-      apiCall('/connect', {id})
+
+    if (id)
+      apiCall('/connect', { id })
   }
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.keepOnPage);
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.keepOnPage);
   }
-  
+
   keepOnPage(e) {
     e.returnValue = '';
-    
+
     const id = cookie.load('id')
-    
-    console.log('id',id)
-    if(id)
-      apiCall('/disconnect', {id})
+
+    console.log('id', id)
+    if (id)
+      apiCall('/disconnect', { id })
   }
-  
+
   render() {
     return (
       <div class="app-main">
         <Router>
           <Switch>
-            <Route exact path="/login" component={Login}/>
+            <Route exact path="/login" component={Login} />
             <Route initial exact path="/" component={Logged} />
             <Route exact path="/create/user" component={NewUser} />
             <Route exact path="/create" component={CreateResource} />
@@ -58,6 +58,7 @@ class App extends Component {
             <Route exact path="/create/music" component={CreateMusic} />
             <Route exact path="/loggedusers" component={LoggedUsers} />
             <Route exact path="/transactions" component={Transactions} />
+            <Route exact path="/loans" component={Loans} />
             <Route exact path="/cart" component={Cart} />
           </Switch>
         </Router>

@@ -349,11 +349,11 @@ app.post('/addLineItem', (req, res) => {
 
 app.post('/loanItem', (req, res) => {
 
-    const { userId,item } = req.body;// will userId suceed if no data sent.
+    const { userId, item } = req.body;// will userId suceed if no data sent.
     const auth = AuthService.AuthorizeUser(userId, requiresAdmin = false);
 
-    const { status, message, info } = LoanService.loanItem(userId,item,auth.isAuthorized);
-    res.json({ "status": status, "message": message ,"info":info});
+    const { status, message, info } = LoanService.loanItem(userId, item, auth.isAuthorized);
+    res.json({ "status": status, "message": message, "info": info });
     logger(`POST - [/loanItem] - ${200} - ${userId} `)
 });
 
@@ -368,7 +368,7 @@ app.post('/returnItem', (req, res) => {
     }
     // get resources here
     const { itemId } = req.body;
-    const { status } = LoanService.returnItem(auth.isAuthorized,itemId);
+    const { status } = LoanService.returnItem(auth.isAuthorized, itemId);
     res.json({ "status": status });
     logger(`POST - [/returnItem] - ${200} - ${sender_id} `)
 })
@@ -462,7 +462,7 @@ app.delete('/cartItem', (req, res) => {
         const { index } = req.body;
 
         // Edit the Resource
-        const { status, message, results, error } = UnitOfWork.RemoveItem(index,sender_id);
+        const { status, message, results, error } = UnitOfWork.RemoveItem(index, sender_id);
         if (status == 1) {
             res.status(400);
             res.json({ status, message, error });
@@ -496,7 +496,7 @@ app.post('/saveCart', (req, res) => {
 
 })
 
-// Route to handle the Unit Of Work's save
+
 app.post('/transactions', (req, res) => {
     // check if the sender is authenticated
     const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
@@ -507,7 +507,7 @@ app.post('/transactions', (req, res) => {
         logger(`GET -  [/transactions] - ${400} - ${sender_id} `)
     } else {
         let transactions = TransactionLogger.getLogs(); // get the transaction logs
-        transactions = transactions.map( x => {
+        transactions = transactions.map(x => {
             return {
                 ...x,
                 userData: UserCatalog.GetUserById(x.user_id)
@@ -519,6 +519,43 @@ app.post('/transactions', (req, res) => {
     }
 
 })
+
+app.post('/loans', (req, res) => {
+    // check if the sender is authenticated
+    const sender_id = req.headers.id || 34242; // will always suceed if no data sent.
+    const auth = AuthService.AuthorizeUser(sender_id, permissionLevel = true);
+    console.log(auth);
+    console.log(auth.isAuthorized);
+    if (!auth.isAuthorized) { /// this doesnt work <--
+        let loans = LoanService.allLoanUser(sender_id);
+        console.log("this is the loans" + loans);
+        for (i = 0; i < loans.length; i++) {
+            loans[i].userData = UserCatalog.GetUserById(loans[i].user_id);
+        }
+
+        res.status(200)
+        res.json({ status: 0, results: loans })
+        logger(`POST - [/loans] - ${200} - Ok`)
+    } else {
+        // Do querry where you select all loaned items 
+        let loans = LoanService.allLoanAdmin();
+
+        console.log(loans);
+        for (i = 0; i < loans.length; i++) {
+            loans[i].userData = UserCatalog.GetUserById(loans[i].user_id);
+        }
+
+        res.status(200)
+        res.json({ status: 0, results: loans })
+        logger(`POST - [/loans] - ${200} - Ok`)
+    }
+
+})
+
+
+
+
+
 
 server = app.listen(port, () => {
     logger('backend started on port ' + port)

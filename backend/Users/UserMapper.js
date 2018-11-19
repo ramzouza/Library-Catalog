@@ -70,7 +70,6 @@ class UserMapper{
             } else {
                 last_login = null;
             }
-            console.log(last_login)
 
             const data = connection.query(`UPDATE users SET isActive=${isActive}, last_login=${last_login}  WHERE id='${id}'`)
             return { status: 0, results: data }
