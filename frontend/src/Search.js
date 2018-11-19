@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
 import SearchResult from './SearchResult.js';
 import Loading from 'react-loading-components';
-
+import Particles from 'react-particles-js';
+import {particles} from './particles.config.json'
 class Search extends Component {
 
   constructor(){
@@ -177,11 +178,13 @@ handleDetails(res_id){
 
 render() {
     const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
-    
+    console.log({particles})
     return (
       <div class="search-main">
-
-        <img class="App-logo animated fadeIn" src={require('./TheZone.png')}/><br/>
+        <Particles
+                style={{marginTop: '-30%', width: '120%', opacity: 0.5}}
+                params={{particles}} />
+        <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-20%', zIndex: 1}} /><br/>
         <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 
         <div style={main}>

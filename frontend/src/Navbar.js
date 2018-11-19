@@ -18,7 +18,6 @@ LogOut(){
     cookie.remove('id')
     cookie.remove('userCart')
     apiCall('/disconnect',{id})
-    window.location.reload();
 }
 
     constructor(){
