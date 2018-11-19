@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {GET, POST, PUT, DELETE} from './ApiCall';
 import cookie from 'react-cookies'
 import ResourceLineItem from './ResourceLineItem';
+import swal from 'sweetalert2'
 
 class SearchResult extends Component {
 
@@ -84,6 +85,14 @@ class SearchResult extends Component {
                 .then( res => res.json())
                 .then( res => {
                 })
+                swal({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Updation is added to cart',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    width:"20%"
+                  })
         } else {
             const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
             let found = this.findAvailable(resource.lineItem)
@@ -119,6 +128,14 @@ class SearchResult extends Component {
             .then( res => res.json())
             .then( res => {
             })
+            swal({
+                position: 'top-end',
+                type: 'success',
+                title: 'Deletion is added to cart',
+                showConfirmButton: false,
+                timer: 1000,
+                width:"20%"
+              })
     }
 
     render() {

@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import { apiCall, POST } from './ApiCall'
 import cookie from 'react-cookies'
 import CartItem from './CartItem'
+import swal from 'sweetalert2'
 
 class Cart extends Component {
   constructor(){
@@ -39,6 +40,15 @@ class Cart extends Component {
             .then( json => {
               console.log(json.results)
               this.setState({logs: []})
+              swal({
+                title: 'Ok!',
+                text: "The data has been modified!",
+                type: 'success',
+                confirmButtonColor: '#037d9e',
+                confirmButtonText: 'Ok!',
+                allowOutsideClick:false
+              
+              })
           })
         } else {
           const {logs} = this.state
@@ -59,9 +69,30 @@ class Cart extends Component {
                                                 })
                                                 .join(',')
                 console.log({nonAdded,nonAddedTitles})
-                if(nonAdded.length > 0) this.setState({message:`Loan complete however, non available resource(s): ${nonAddedTitles}`})
+                if(nonAdded.length > 0) {
+                this.setState({message:`Loan complete however, non available resource(s): ${nonAddedTitles}`})
+                swal({
+                  title: 'Ok!',
+                  text: `Your loan has been accepted but these are not available:+ ${nonAddedTitles}`,
+                  type: 'success',
+                  confirmButtonColor: '#037d9e',
+                  confirmButtonText: 'Ok!',
+                  allowOutsideClick:false
+                
+                })
+              
+                }
                 else {
                   this.setState({message:'Loan complete'}); 
+                  swal({
+                    title: 'Ok!',
+                    text: "Your loan has been accepted!",
+                    type: 'success',
+                    confirmButtonColor: '#037d9e',
+                    confirmButtonText: 'Ok!',
+                    allowOutsideClick:false
+                  
+                  })
                 }
                 this.setState({logs: []})
                 cookie.remove('userCart')

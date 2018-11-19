@@ -688,5 +688,8 @@ nav.sidenav---sidenav---_2tBP.sidenav---expanded---1KdUL {
 .card-header{
     font-size: 2em;
 }
+.swal2-popup {
+    font-size: 1.6rem !important;
+  }
 
 

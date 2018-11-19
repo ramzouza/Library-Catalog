@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import {apiCall} from './ApiCall';
 import cookie from 'react-cookies'
 import Navbar from './Navbar'
-
+import swal from 'sweetalert2'
 
 class CreateMusic extends Component {
   constructor(){
@@ -44,8 +44,20 @@ class CreateMusic extends Component {
         .then ( json => {
 
           if(json.status === 0){
-            this.props.history.push('/cart')
-          }
+            swal({
+              title: 'Created!',
+              text: "A new Book is created!",
+              type: 'success',
+              confirmButtonColor: '#037d9e',
+              confirmButtonText: 'Ok!',
+              allowOutsideClick:false
+            
+            }).then((result) => {
+              if (result.value) {
+                this.props.history.push('/')
+              }
+            })
+           }
 
         })
       
