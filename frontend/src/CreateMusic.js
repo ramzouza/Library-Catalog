@@ -47,7 +47,7 @@ class CreateMusic extends Component {
         if (json.status === 0) {
           swal({
             title: 'Created!',
-            text: "A new Book has been added to the cart!",
+            text: "A new Music Iem has been added to the cart!",
             type: 'success',
             confirmButtonColor: '#037d9e',
             confirmButtonText: 'Ok!',
