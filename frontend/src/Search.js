@@ -208,9 +208,9 @@ render() {
     return (
       <div class="search-main">
         <Particles
-                style={{marginTop: '-30%', width: '120%', opacity: 0.5}}
+                style={{marginTop: '-30%', opacity: 0.5, zIndex: 0}}
                 params={{particles}} />
-        <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-20%', zIndex: 1}} /><br/>
+        <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-30%', zIndex: 1}} /><br/>
         <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 
         <div style={main}>

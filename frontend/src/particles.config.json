@@ -1,7 +1,7 @@
 {
     "particles": {
       "number": {
-        "value": 317,
+        "value": 100,
         "density": {
           "enable": false,
           "value_area": 315.65905665290904
@@ -78,7 +78,7 @@
           "enable": false,
           "mode": "remove"
         },
-        "resize": true
+        "resize": false
       },
       "modes": {
         "grab": {
@@ -95,8 +95,8 @@
           "speed": 3
         },
         "repulse": {
-          "distance": 100,
-          "duration": 0.4
+          "distance": 400,
+          "duration": 1
         },
         "push": {
           "particles_nb": 4
