@@ -8,6 +8,7 @@ class Loan extends Component {
         super()
 
         this.state = {
+            isAdmin: false,
             loan: {
                 "Title": "",
                 "id": "",
@@ -19,7 +20,8 @@ class Loan extends Component {
     }
 
     componentDidMount() {
-        const isAdmin = cookie.load('admin') === 'yes'
+        const isAdmin = cookie.load('admin') === 'yes' ? true : false
+
         this.setState({ "loaned": this.props.Loan, isAdmin })
     }
     
@@ -42,7 +44,8 @@ class Loan extends Component {
     }
 
     render() {
-        const { loan, isAdmin} = this.props
+        const { loan } = this.props
+        const { isAdmin } = this.state
         return (
             <React.Fragment>
                 <tr>
