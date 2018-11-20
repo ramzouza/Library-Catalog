@@ -110,7 +110,8 @@ class Search extends Component {
         .then ( json => {
 
           let TotalArray = json.results;
-          this.setState({TotalArray})
+          let ids = TotalArray.map(x => x.id)
+          this.setState({TotalArray, ids})
           this.setState({loading: false})
           cookie.save('searchres', TotalArray)
           // SEARCH ADVANCED 
@@ -192,7 +193,9 @@ random(){
   GET('/resources')
       .then(res => res.json())
       .then( json => {
-        this.setState({TotalArray: this.shuffle(json.results)})
+        let shuffled = this.shuffle(json.results)
+        let ids = shuffled.map(x => x.id)
+        this.setState({TotalArray :shuffled, ids })
         this.setState({loading: false})
       }
       )
