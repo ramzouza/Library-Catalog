@@ -235,7 +235,7 @@ class SearchResult extends Component {
         <div class="modal-title">
         {editing ? <h1><input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.value})}} /></h1> : <h1>{resource.title}</h1>}
         </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" id="12" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -263,6 +263,8 @@ class SearchResult extends Component {
         }
         {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
         {admin? <button type="button" onClick={ this.handleDelete.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Delete</button> : <div></div>}
+        <button type="button" onClick={ _ => this.props.prev() }  class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i></button>
+        <button type="button" onClick={ _ => this.props.next() }  class="btn btn-secondary"><i class="fas fa-arrow-circle-right"></i></button>
     </div>
     </div>
 </div>
