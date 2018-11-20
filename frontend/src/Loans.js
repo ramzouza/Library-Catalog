@@ -54,7 +54,7 @@ class Loans extends Component {
                 <th>User Email</th>
                 <th>User Id</th>
                 <th>Resource Id</th>
-                <th>Timestamp</th>
+                <th>Due Date</th>
               </tr>
 
             </thead>

@@ -64,7 +64,7 @@ class Navbar extends Component {
                             <NavItem eventKey="2" >
                                 <NavIcon>
                                     <Link to="/loans" >
-                                        <i class="fas fa-inbox"></i>
+                                        <Glyphicon glyph='inbox' />
                                     </Link>
                                 </NavIcon>
                                 <NavText style={{ fontSize: '1.2em' }} >
@@ -166,7 +166,7 @@ class Navbar extends Component {
                         <SideNav.Nav defaultSelected="home">
                             <NavItem eventKey="1" >
                                 <NavIcon><Link to="/" >
-                                    <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} /></Link>
+                                    <i className="fa fa-fw fa-search" style={{ fontSize: '1.75em' }} /></Link>
                                 </NavIcon>
                                 <NavText style={{ fontSize: '1.2em' }}>
                                     <Link to="/" >
