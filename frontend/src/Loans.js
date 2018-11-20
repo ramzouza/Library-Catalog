@@ -16,7 +16,7 @@ class Loans extends Component {
       userEmail: "",
       resourceID: "",
       timestamp: ""
-    }
+      }
   }
 
   componentDidMount() {
@@ -37,7 +37,7 @@ class Loans extends Component {
 
   render() {
     const { loans } = this.state
-    let jsx = loans.map((loan) => <Loan loan={loan} />);
+    let jsx = loans.map((loan) => <Loan refresh={ _ => this.refresh() } loan={loan} />);
     return (
 
       <div class="logged-main">
@@ -50,6 +50,7 @@ class Loans extends Component {
             <thead>
 
               <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>User Email</th>
                 <th>User Id</th>
