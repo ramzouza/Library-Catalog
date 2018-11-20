@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {GET, POST, PUT, DELETE} from './ApiCall';
 import cookie from 'react-cookies'
 import ResourceLineItem from './ResourceLineItem';
+import swal from 'sweetalert2'
 
 class SearchResult extends Component {
 
@@ -84,6 +85,14 @@ class SearchResult extends Component {
                 .then( res => res.json())
                 .then( res => {
                 })
+                swal({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Updation is added to cart',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    width:"20%"
+                  })
         } else {
             const resource_data =  {id, type, title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label}
             let found = this.findAvailable(resource.lineItem)
@@ -119,6 +128,14 @@ class SearchResult extends Component {
             .then( res => res.json())
             .then( res => {
             })
+            swal({
+                position: 'top-end',
+                type: 'success',
+                title: 'Deletion is added to cart',
+                showConfirmButton: false,
+                timer: 1000,
+                width:"20%"
+              })
     }
 
     render() {
@@ -218,7 +235,7 @@ class SearchResult extends Component {
         <div class="modal-title">
         {editing ? <h1><input placeholder={resource.title}  onChange={evt => {this.setState({title: evt.target.value})}} /></h1> : <h1>{resource.title}</h1>}
         </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" id="12" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -246,6 +263,8 @@ class SearchResult extends Component {
         }
         {admin? <button type="button" onClick={ this.handleSave.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Save</button> : <div></div>}
         {admin? <button type="button" onClick={ this.handleDelete.bind(this) }  class="btn btn-secondary" data-dismiss="modal">Delete</button> : <div></div>}
+        <button type="button" onClick={ _ => this.props.prev() }  class="btn btn-secondary"><i class="fas fa-arrow-circle-left"></i></button>
+        <button type="button" onClick={ _ => this.props.next() }  class="btn btn-secondary"><i class="fas fa-arrow-circle-right"></i></button>
     </div>
     </div>
 </div>

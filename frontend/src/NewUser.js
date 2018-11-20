@@ -3,6 +3,8 @@ import { apiCall } from './ApiCall'
 import { Redirect } from 'react-router-dom'
 import cookie from 'react-cookies'
 import Navbar from './Navbar'
+import swal from 'sweetalert2'
+
 
 
 class NewUser extends Component {
@@ -42,7 +44,19 @@ class NewUser extends Component {
         .then (json => {
 
           if(json.status === 0){
-            this.props.history.push('/')
+            swal({
+              title: 'Created!',
+              text: "A new User is created!",
+              type: 'success',
+              confirmButtonColor: '#037d9e',
+              confirmButtonText: 'Ok!',
+              allowOutsideClick:false
+            
+            }).then((result) => {
+              if (result.value) {
+                this.props.history.push('/')
+              }
+            })
           }
 
         })

@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import {GET, POST} from './ApiCall';
 import SearchResult from './SearchResult.js';
 import Loading from 'react-loading-components';
+import cookie from 'react-cookies';
 
+import Particles from 'react-particles-js';
+import {particles} from './particles.config.json'
 class Search extends Component {
 
   constructor(){
     super()
     this.state = {
       resource_list: [],
-      TotalArray: []
+      TotalArray: [],
+      ids: [],
     }
     this.advancedSearch = {
       title: "",
@@ -36,6 +40,28 @@ class Search extends Component {
 
   }
 
+  handleClickNext(id){
+    const {ids} = this.state
+    let currentIdIndex = ids.indexOf(id)
+    let nextId = ids[currentIdIndex+1]
+    document.querySelectorAll(`button[data-target="#edit${id}"]`)[0].click()
+    if(nextId)
+      document.querySelectorAll(`button[data-target="#edit${nextId}"]`)[0].click()
+    else 
+      document.querySelectorAll(`button[data-target="#edit${ids[0]}"]`)[0].click()
+  }
+
+  handleClickPrev(id){
+    const {ids} = this.state
+    let currentIdIndex = ids.indexOf(id)
+    let nextId = ids[currentIdIndex-1]
+    document.querySelectorAll(`button[data-target="#edit${id}"]`)[0].click()
+    if(nextId)
+      document.querySelectorAll(`button[data-target="#edit${nextId}"]`)[0].click()
+    else 
+      document.querySelectorAll(`button[data-target="#edit${ids[ids.length-1]}"]`)[0].click()
+  }
+
 
   
   handleClick(){
@@ -46,7 +72,8 @@ class Search extends Component {
         .then ( json => {
           let TotalArray = json.results;
           console.log({TotalArray})
-          this.setState({TotalArray}, () => this.setState({loading: false}))
+          let ids = TotalArray.map(x => x.id)
+          this.setState({TotalArray, ids}, () => this.setState({loading: false}))
         }).catch( err => {
           this.setState({loading: false})
         })
@@ -85,7 +112,7 @@ class Search extends Component {
           let TotalArray = json.results;
           this.setState({TotalArray})
           this.setState({loading: false})
-
+          cookie.save('searchres', TotalArray)
           // SEARCH ADVANCED 
         })
       
@@ -177,11 +204,13 @@ handleDetails(res_id){
 
 render() {
     const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
-    
+    console.log({particles})
     return (
       <div class="search-main">
-
-        <img class="App-logo animated fadeIn" src={require('./TheZone.png')}/><br/>
+        <Particles
+                style={{marginTop: '-30%', opacity: 0.5, zIndex: 0}}
+                params={{particles}} />
+        <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-30%', zIndex: 1}} /><br/>
         <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 
         <div style={main}>
@@ -314,7 +343,7 @@ render() {
         </div>
 
 
-        {TotalArray.map( resource => <SearchResult id={resource.resource_id} handler={this.handleDetails} type={resource.restype} resource={resource} />)}
+        {TotalArray.map( resource => <SearchResult prev={ _ => this.handleClickPrev(resource.resource_id)} next={ _ => this.handleClickNext(resource.resource_id)} id={resource.resource_id} handler={this.handleDetails} type={resource.restype} resource={resource} />)}
         
          <div style ={loader}>     
         {loading ? <Loading type='tail_spin' width={100} height={100} fill='#037d9e'   /> : null}  
