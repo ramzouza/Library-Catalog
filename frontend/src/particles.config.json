@@ -1,7 +1,7 @@
 {
     "particles": {
       "number": {
-        "value": 100,
+        "value": 60,
         "density": {
           "enable": false,
           "value_area": 315.65905665290904
@@ -36,7 +36,7 @@
         }
       },
       "size": {
-        "value": 4.008530152163807,
+        "value":7,
         "random": true,
         "anim": {
           "enable": false,
@@ -59,7 +59,7 @@
         "random": false,
         "straight": false,
         "out_mode": "out",
-        "bounce": false,
+        "bounce": true,
         "attract": {
           "enable": false,
           "rotateX": 600,
@@ -95,11 +95,11 @@
           "speed": 3
         },
         "repulse": {
-          "distance": 400,
+          "distance": 200,
           "duration": 1
         },
         "push": {
-          "particles_nb": 4
+          "particles_nb": 10
         },
         "remove": {
           "particles_nb": 2

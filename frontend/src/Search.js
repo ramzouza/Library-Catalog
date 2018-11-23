@@ -207,12 +207,12 @@ handleDetails(res_id){
 
 render() {
     const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
-    console.log({particles})
+    const id = cookie.load('id')
     return (
       <div class="search-main">
-        <Particles
+        {id?<Particles
                 style={{marginTop: '-30%', opacity: 0.5, zIndex: 0}}
-                params={{particles}} />
+                params={{particles}} />: null}
         <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-30%', zIndex: 1}} /><br/>
         <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 

@@ -113,7 +113,7 @@ class SearchResult extends Component {
             if(cart.length <= 9){
                 cart.push(data)
                 cookie.save('userCart', cart)
-                this.setState({message: "Resource is returned."})
+                this.setState({message: "Resource added to the cart."})
             } else this.setState({message:'You have too many items in your cart !'})
             
         } else this.setState({message:'This resource is aleady in your cart !'});
