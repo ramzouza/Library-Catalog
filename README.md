@@ -1,4 +1,4 @@
-# Library-Catalog-Web-App
+# Library-Catalog-Web-App (TheLoanZone.ca)[http://theloanzone.ca]  
 Web application for a Software Architecture and Design course
 [Check out the wiki](https://github.com/ramzouza/Library-Catalog/wiki)
 
