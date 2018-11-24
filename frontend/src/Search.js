@@ -110,7 +110,8 @@ class Search extends Component {
         .then ( json => {
 
           let TotalArray = json.results;
-          this.setState({TotalArray})
+          let ids = TotalArray.map(x => x.id)
+          this.setState({TotalArray, ids})
           this.setState({loading: false})
           cookie.save('searchres', TotalArray)
           // SEARCH ADVANCED 
@@ -192,7 +193,9 @@ random(){
   GET('/resources')
       .then(res => res.json())
       .then( json => {
-        this.setState({TotalArray: this.shuffle(json.results)})
+        let shuffled = this.shuffle(json.results)
+        let ids = shuffled.map(x => x.id)
+        this.setState({TotalArray :shuffled, ids })
         this.setState({loading: false})
       }
       )
@@ -204,12 +207,12 @@ handleDetails(res_id){
 
 render() {
     const {loading, TotalArray, author_dropdown, director_dropdown, publisher_dropdown,artist_dropdown} = this.state;
-    console.log({particles})
+    const id = cookie.load('id')
     return (
       <div class="search-main">
-        <Particles
+        {id?<Particles
                 style={{marginTop: '-30%', opacity: 0.5, zIndex: 0}}
-                params={{particles}} />
+                params={{particles}} />: null}
         <img class="App-logo animated fadeIn" src={require('./TheZone.png')} style={{marginTop: '-30%', zIndex: 1}} /><br/>
         <h2 class="animated fadeIn">THE LOAN ZONE</h2><br/>
 

@@ -177,7 +177,7 @@ class Navbar extends Component {
                             <NavItem eventKey="2" >
                                 <NavIcon>
                                     <Link to="/Loans" >
-                                        <i class="fas fa-inbox"></i>
+                                        <Glyphicon glyph='inbox' />
                                     </Link>
                                 </NavIcon>
                                 <NavText style={{ fontSize: '1.2em' }} >

@@ -18,7 +18,7 @@ class Login extends Component {
     apiCall('/login', {email, password})
       .then(response => response.json())
       .then( response => {
-        this.setState({message:response.message})
+        this.setState({message:response.message || 'Bad Credentials'})
 
         if(response.status === 0){
           
