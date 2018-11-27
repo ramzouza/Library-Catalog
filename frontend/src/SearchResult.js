@@ -4,6 +4,7 @@ import cookie from 'react-cookies'
 import ResourceLineItem from './ResourceLineItem';
 import swal from 'sweetalert2'
 
+const defaultUrl = "https://i.qwerby.com/2018/07/img-placeholder.png"
 class SearchResult extends Component {
 
 
@@ -36,7 +37,7 @@ class SearchResult extends Component {
             run_time:'',
 
 
-
+            pic: '',
             line_items: [],
             message: ""
         }
@@ -72,6 +73,14 @@ class SearchResult extends Component {
         const {title, author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors,  subtitles,dubbed, release_date,run_time, artist, release,ASIN, label} = resource
         this.setState({title,author, format, pages, publisher, language , isbn_10, isbn_13, available , director, producers, actors, subtitles,dubbed, release_date,run_time, artist, release,ASIN, label })
         this.setState({"line_items": resource.lineItem})
+        GET(`/url/${title + this.props.type + this.author}`)
+            .then(res => res.json())
+            .then( res => {
+                if(res.message !== 'ok')
+                    console.log('problem fetching! -- ',res.message)
+                else
+                    this.setState({pic: res.url})
+            })
     }
 
     handleSave(){
@@ -220,10 +229,13 @@ class SearchResult extends Component {
 <React.Fragment>
         <div class="card search-result animated fadeInUp">
             <div class="card-body">
-                {icon}
-                <h1>{resource.title}</h1>
-                {cardJsx}
-                <button type="button" class="btn btn-default btn-search" onClick={ _ => this.props.handler(resource.id)}  data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
+                <img alt="resource.title" src={this.state.pic || defaultUrl} style={{height: 200, width: 250, padding: 10}}/>
+                <div style={{width: '80%', heigh: '100%'}}>
+                    {icon}
+                    <h1>{resource.title}</h1>
+                    {cardJsx}
+                    <button type="button" class="btn btn-default btn-search" onClick={ _ => this.props.handler(resource.id)}  data-toggle="modal" data-target={"#edit"+resource.id}>Details</button>
+                </div>
             </div>
         </div>
 

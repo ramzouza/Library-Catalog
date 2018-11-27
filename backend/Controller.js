@@ -5,6 +5,7 @@ const log = require('fancy-log')
 const argv = require('yargs').argv
 const { p = 3000, port = p, withlog } = argv
 const bodyParser = require('body-parser')
+const picSearch = require('./Users/ImageSearch')
 const logger = (message) => {
     withlog ? log('Controller - ' + message) : null
 }
@@ -29,6 +30,15 @@ app.get('/', (req, res) => {
     res.status(200)
     res.json({ message: 'healthy' })
     logger('GET - [/] ')
+})
+
+app.get('/url/:query', (req, res) => {
+    const query = req.params.query
+    picSearch(query, ({error, url}) => {
+        res.status(error ? 500 : 200)
+        res.json({ message: error ? error : 'ok' ,url })
+        logger('GET - [/url] - '+query)
+    })
 })
 
 app.post('/login', (req, res) => {
